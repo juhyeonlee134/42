@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:43:50 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:36:02 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:40:30 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,12 @@ void	alloc_forks(t_philo *philo, t_fork *forks)
 		philo->r = &forks[philo->index];
 		philo->l = &forks[(philo->index + 1) % philo->data.size];
 	}
+}
+
+t_time	get_msec(void)
+{
+	struct timeval	current;
+
+	gettimeofday(&current, NULL);
+	return (current.tv_sec * 1000 + current.tv_usec / 1000);
 }

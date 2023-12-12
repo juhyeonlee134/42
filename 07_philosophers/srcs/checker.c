@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 01:01:37 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:38:35 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:40:20 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,4 @@ void	wait_msec(t_time time)
 
 	while (get_msec() - start_time < time)
 		usleep(200);
-}
-
-t_time	get_msec(void)
-{
-	struct timeval	current;
-
-	gettimeofday(&current, NULL);
-	return (current.tv_sec * 1000 + current.tv_usec / 1000);
 }
