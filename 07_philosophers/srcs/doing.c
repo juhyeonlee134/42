@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:43:50 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:40:30 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:52:40 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	eat(t_thread *thread)
 	thread->stat = e_eat;
 	print_thread(thread, "is eating");
 	wait_msec(thread->data.eating);
-	pthread_mutex_lock(thread->to_act);
+	pthread_mutex_lock(thread->to_access);
 	thread->cnt++;
 	thread->last_eating = get_msec();
-	pthread_mutex_unlock(thread->to_act);
+	pthread_mutex_unlock(thread->to_access);
 	thread->stat = e_ready;
 	pthread_mutex_unlock(thread->l);
 	pthread_mutex_unlock(thread->r);

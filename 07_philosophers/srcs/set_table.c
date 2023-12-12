@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:19:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:35:12 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:53:23 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int		set_table(t_table *table)
 	table->forks = set_forks(table->data.size);
 	if (!table->forks)
 		return (0);
-	table->to_act = set_mutex();
-	if (!table->to_act)
+	table->to_access = set_mutex();
+	if (!table->to_access)
 		return (0);
 	table->to_print = set_mutex();
 	if (!table->to_print)
@@ -30,7 +30,7 @@ int		set_table(t_table *table)
 	if (!table->philos)
 		return (0);
 	alloc_mutexes(table->philos, table->to_print, \
-				table->to_act, table->to_check);
+				table->to_access, table->to_check);
 	return (1);
 }
 

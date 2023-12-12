@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:43:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:35:32 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:53:11 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void	join(t_table *table)
 
 void	clear_table(t_table *table)
 {
-	if (table->to_act)
+	if (table->to_access)
 	{
-		pthread_mutex_destroy(table->to_act);
-		free(table->to_act);
+		pthread_mutex_destroy(table->to_access);
+		free(table->to_access);
 	}
 	if (table->to_print)
 	{
@@ -88,14 +88,14 @@ void	clear_table(t_table *table)
 }
 
 void	alloc_mutexes(t_philo *philos, t_mutex *to_print, \
-					t_mutex *to_act, t_mutex *to_check)
+					t_mutex *to_access, t_mutex *to_check)
 {
 	size_t	index;
 
 	index = 0;
 	while (index < philos[0].data.size)
 	{
-		philos[index].to_act = to_act;
+		philos[index].to_access = to_access;
 		philos[index].to_print = to_print;
 		philos[index].to_check = to_check;
 		index++;
