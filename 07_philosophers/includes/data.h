@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:57:44 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/12 23:16:08 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/12 23:16:31 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DATA_H
 
 # include <unistd.h>
+
 typedef struct s_data
 {
 	size_t	size;
