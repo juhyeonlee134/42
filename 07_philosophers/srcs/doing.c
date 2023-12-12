@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:43:50 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:52:40 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 03:40:22 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void *doing(void *arg)
 		eat(thread);
 		print_thread(thread, "is sleeping");
 		wait_msec(thread->data.sleeping);
-		print_thread(thread, "is thinking");
+		if (is_not_dead(thread))
+			print_thread(thread, "is thinking");
 	}
 	return (arg);
 }

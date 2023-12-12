@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:43:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:53:11 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 03:45:21 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	start(t_table *table)
 						doing, &table->philos[index]))
 			return (0);
 		index++;
-		usleep(1);
 	}
 	usleep(1);
 	if (pthread_create(&table->checker, NULL, check_all_threads, table))

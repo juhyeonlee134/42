@@ -6,21 +6,11 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 01:01:37 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 02:10:22 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 03:44:17 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int		is_over(t_thread *thread)
-{
-	t_time	diff_time;
-
-	diff_time = get_msec() - thread->last_eating;
-	if (thread->stat != e_eat && diff_time > thread->data.dead)
-		return (1);
-	return (0);
-}
 
 void	*check_all_threads(void *arg)
 {
@@ -30,13 +20,13 @@ void	*check_all_threads(void *arg)
 
 	table = arg;
 	n_dead = 0;
-	pthread_mutex_lock(table->to_check);
 	while(n_dead < table->data.size)
 	{
 		n_dead = 0;
 		index = 0;
 		while (index < table->data.size)
 		{
+			pthread_mutex_lock(table->to_check);
 			if (table->philos[index].stat == e_dead)
 				n_dead++;
 			else if (is_over(&table->philos[index]))
@@ -46,10 +36,20 @@ void	*check_all_threads(void *arg)
 				n_dead++;
 			}
 			index++;
+			pthread_mutex_unlock(table->to_check);
 		}
 	}
-	pthread_mutex_unlock(table->to_check);
 	return (arg);
+}
+
+int		is_over(t_thread *thread)
+{
+	t_time	diff_time;
+
+	diff_time = get_msec() - thread->last_eating;
+	if (thread->stat != e_eat && diff_time > thread->data.dead)
+		return (1);
+	return (0);
 }
 
 void	wait_msec(t_time time)
