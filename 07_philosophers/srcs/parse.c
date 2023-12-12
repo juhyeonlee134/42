@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:00:31 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:02:30 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:10:30 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	is_not_dead(t_thread *thread)
 {
 	pthread_mutex_lock(thread->to_check);
 	if (thread->stat == e_dead)
-		return (pthread_mutex_unlock(thread->to_check), 1);
+		return (pthread_mutex_unlock(thread->to_check), 0);
 	pthread_mutex_unlock(thread->to_check);
-	return (0);
+	return (1);
 }

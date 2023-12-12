@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:43:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:03:43 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:16:24 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int	start(t_table *table)
 	index = 0;
 	while (index < table->data.size)
 	{
-		table->philos[index].start_time = 0;
-		table->philos[index].last_eating = 0;
+		table->philos[index].start_time = get_msec();
+		table->philos[index].last_eating = get_msec();
 		if (pthread_create(&table->philos[index].th, NULL, \
 						doing, &table->philos[index]))
 			return (0);
 		index++;
+		usleep(1);
 	}
 	return (1);
 }

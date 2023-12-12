@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:43:50 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:03:41 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:19:38 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	eat(t_thread *thread)
 	}
 	pthread_mutex_lock(thread->l);
 	print_thread(thread, "has taken a fork");
-	pthread_mutex_lock(thread->to_eat);
-	print_thread(thread, "is eating");
 	thread->stat = e_eat;
+	print_thread(thread, "is eating");
 	wait_msec(thread->data.eating);
+	pthread_mutex_lock(thread->to_eat);
 	thread->cnt++;
-	thread->stat = e_ready;
 	thread->last_eating = get_msec();
 	pthread_mutex_unlock(thread->to_eat);
+	thread->stat = e_ready;
 	pthread_mutex_unlock(thread->l);
 	pthread_mutex_unlock(thread->r);
 }

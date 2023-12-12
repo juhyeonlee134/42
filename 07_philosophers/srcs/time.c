@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 01:01:37 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:06:24 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:14:10 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	wait_msec(t_time time)
 {
 	const t_time	start_time = get_msec();
 
-	while (get_msec() - start_time > time)
+	while (get_msec() - start_time < time)
 		usleep(200);
 }
 
