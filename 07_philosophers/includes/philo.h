@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:28:24 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:05:59 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:35:21 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_thread
 	pthread_t	th;
 	t_fork		*r;
 	t_fork		*l;
-	t_mutex		*to_eat;
+	t_mutex		*to_act;
 	t_mutex		*to_print;
 	t_mutex		*to_check;
 	t_stat		stat;
@@ -56,7 +56,7 @@ typedef struct s_table
 {
 	t_philo		*philos;
 	t_fork		*forks;
-	t_mutex		*to_eat;
+	t_mutex		*to_act;
 	t_mutex		*to_check;
 	t_mutex		*to_print;
 	t_data		data;
@@ -73,7 +73,7 @@ t_fork	*set_forks(const size_t size);
 t_mutex	*set_mutex(void);
 void	clear_forks(t_fork *forks, const size_t size);
 void	alloc_mutexes(t_philo *philos, t_mutex *to_print, \
-					t_mutex *to_eat, t_mutex *to_check);
+					t_mutex *to_act, t_mutex *to_check);
 void	alloc_forks(t_philo *philo, t_fork *forks);
 t_philo	*set_phlios(const t_data data, t_fork *forks);
 
@@ -85,6 +85,9 @@ int		is_not_dead(t_thread *thread);
 void	*doing(void *arg);
 void	eat(t_thread *thread);
 void	print_thread(t_thread *thread, const char *str);
+
+int		is_over(t_thread *thread);
+void	*check_all_threads(void *arg);
 
 void	wait_msec(t_time time);
 t_time	get_msec(void);

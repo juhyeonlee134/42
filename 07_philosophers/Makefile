@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 21:11:29 by juhyelee          #+#    #+#              #
-#    Updated: 2023/12/13 01:01:33 by juhyelee         ###   ########.fr        #
+#    Updated: 2023/12/13 01:27:00 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS=srcs/main.c \
 	 srcs/parse.c \
 	 srcs/set_table.c \
 	 srcs/doing.c \
-	 srcs/time.c
+	 srcs/checker.c
 OBJS=$(SRCS:.c=.o)
 NAME=philo
 

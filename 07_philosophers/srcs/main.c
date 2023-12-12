@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:43:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:16:24 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:35:32 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int	start(t_table *table)
 		index++;
 		usleep(1);
 	}
+	usleep(1);
+	if (pthread_create(&table->checker, NULL, check_all_threads, table))
+		return (0);
 	return (1);
 }
 
@@ -58,14 +61,15 @@ void	join(t_table *table)
 		pthread_join(table->philos[index].th, NULL);
 		index++;
 	}
+	pthread_join(table->checker, NULL);
 }
 
 void	clear_table(t_table *table)
 {
-	if (table->to_eat)
+	if (table->to_act)
 	{
-		pthread_mutex_destroy(table->to_eat);
-		free(table->to_eat);
+		pthread_mutex_destroy(table->to_act);
+		free(table->to_act);
 	}
 	if (table->to_print)
 	{
@@ -84,14 +88,14 @@ void	clear_table(t_table *table)
 }
 
 void	alloc_mutexes(t_philo *philos, t_mutex *to_print, \
-					t_mutex *to_eat, t_mutex *to_check)
+					t_mutex *to_act, t_mutex *to_check)
 {
 	size_t	index;
 
 	index = 0;
 	while (index < philos[0].data.size)
 	{
-		philos[index].to_eat = to_eat;
+		philos[index].to_act = to_act;
 		philos[index].to_print = to_print;
 		philos[index].to_check = to_check;
 		index++;
