@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:43:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 03:45:21 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 03:52:00 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ int	start(t_table *table)
 	index = 0;
 	while (index < table->data.size)
 	{
-		table->philos[index].start_time = get_msec();
-		table->philos[index].last_eating = get_msec();
 		if (pthread_create(&table->philos[index].th, NULL, \
 						doing, &table->philos[index]))
 			return (0);
+		usleep(1);
 		index++;
 	}
-	usleep(1);
 	if (pthread_create(&table->checker, NULL, check_all_threads, table))
 		return (0);
 	return (1);
@@ -54,13 +52,13 @@ void	join(t_table *table)
 {
 	size_t	index;
 
+	pthread_join(table->checker, NULL);
 	index = 0;
 	while (index < table->data.size)
 	{
 		pthread_join(table->philos[index].th, NULL);
 		index++;
 	}
-	pthread_join(table->checker, NULL);
 }
 
 void	clear_table(t_table *table)

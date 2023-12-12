@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:19:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:53:23 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 03:50:15 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ t_philo	*set_phlios(const t_data data, t_fork *forks)
 	index = 0;
 	while (index < data.size)
 	{
+		philos[index].start_time = get_msec();
+		philos[index].last_eating = get_msec();
 		philos[index].stat = e_ready;
 		philos[index].data = data;
 		philos[index].index = index;

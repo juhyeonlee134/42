@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:28:24 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 03:27:19 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 04:01:16 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,3 +93,5 @@ void	wait_msec(t_time time);
 t_time	get_msec(void);
 
 #endif
+
+// to-do : checker에서 stat를 dead로 변경했을 때, 
