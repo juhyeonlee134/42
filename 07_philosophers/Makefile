@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 21:11:29 by juhyelee          #+#    #+#              #
-#    Updated: 2023/12/12 23:14:52 by juhyelee         ###   ########.fr        #
+#    Updated: 2023/12/12 23:19:14 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ RM=rm -rf
 
 INCS=includes
 SRCS=srcs/main.c \
-	 srcs/data.c
+	 srcs/data.c \
+	 srcs/mutex.c
 OBJS=$(SRCS:.c=.o)
 NAME=philo
 

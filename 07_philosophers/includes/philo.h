@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:28:24 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/12 22:57:13 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/12 23:18:02 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 
 typedef __uint128_t		t_time;
 typedef pthread_t		t_thread;
-typedef pthread_mutex_t	t_mutex;
-typedef t_mutex			t_fork;
 
 typedef enum e_stat
 {
@@ -30,14 +28,6 @@ typedef enum e_stat
 	e_eat,
 	e_dead
 }t_stat;
-typedef struct s_data
-{
-	size_t	size;
-	size_t	cnt_eat;
-	size_t	d_time;
-	size_t	e_time;
-	size_t	s_time;
-}t_data;
 typedef struct s_philo
 {
 	t_thread	*th;
