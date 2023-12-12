@@ -6,35 +6,93 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:43:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/12 23:30:21 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:03:43 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data.h"
-#include "mutex.h"
+#include "philo.h"
 #include <stdio.h>
 
 int	main(int argc, char *argv[])
 {
-	t_fork	*forks;
-	t_mutex	*to_print;
-	t_mutex	*to_eat;
-	t_mutex	*to_check;
-	t_data	data;
+	t_table	table;
 
-	if (!parse(argc, (const char **)argv, &data))
+	if (!parse(argc, (const char **)argv, &table.data))
 		return (1);
-	forks = set_forks(data.size);
-	if (!forks)
+	if (!set_table(&table))
+	{
+		clear_table(&table);
 		return (1);
-	to_print = set_mutex();
-	if (!to_print)
-		return (1);
-	to_eat = set_mutex();
-	if (!to_eat)
-		return (1);
-	to_check = set_mutex();
-	if (!to_check)
-		return (1);
+	}
+	if (start(&table))
+		join(&table);
+	clear_table(&table);
 	return (0);
+}
+
+int	start(t_table *table)
+{
+	size_t	index;
+
+	index = 0;
+	while (index < table->data.size)
+	{
+		table->philos[index].start_time = 0;
+		table->philos[index].last_eating = 0;
+		if (pthread_create(&table->philos[index].th, NULL, \
+						doing, &table->philos[index]))
+			return (0);
+		index++;
+	}
+	return (1);
+}
+
+void	join(t_table *table)
+{
+	size_t	index;
+
+	index = 0;
+	while (index < table->data.size)
+	{
+		pthread_join(table->philos[index].th, NULL);
+		index++;
+	}
+}
+
+void	clear_table(t_table *table)
+{
+	if (table->to_eat)
+	{
+		pthread_mutex_destroy(table->to_eat);
+		free(table->to_eat);
+	}
+	if (table->to_print)
+	{
+		pthread_mutex_destroy(table->to_print);
+		free(table->to_print);
+	}
+	if (table->to_check)
+	{
+		pthread_mutex_destroy(table->to_check);
+		free(table->to_check);
+	}
+	if (table->forks)
+		clear_forks(table->forks, table->data.size);
+	if (table->philos)
+		free(table->philos);
+}
+
+void	alloc_mutexes(t_philo *philos, t_mutex *to_print, \
+					t_mutex *to_eat, t_mutex *to_check)
+{
+	size_t	index;
+
+	index = 0;
+	while (index < philos[0].data.size)
+	{
+		philos[index].to_eat = to_eat;
+		philos[index].to_print = to_print;
+		philos[index].to_check = to_check;
+		index++;
+	}
 }
