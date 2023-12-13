@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 22:28:24 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 04:01:16 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:26:59 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_stat
 typedef struct s_data
 {
 	size_t	size;
-	size_t	cnt;
+	long	cnt;
 	size_t	dead;
 	size_t	eating;
 	size_t	sleeping;
@@ -94,4 +94,4 @@ t_time	get_msec(void);
 
 #endif
 
-// to-do : checker에서 stat를 dead로 변경했을 때, 
+// to-do : checker에서 stat를 dead로 변경했을 때,

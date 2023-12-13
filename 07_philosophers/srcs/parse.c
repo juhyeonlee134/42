@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:00:31 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 01:10:30 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:27:39 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parse(const size_t argc, const char *argv[], t_data *data)
 	data->dead = convert_to_num(argv[2]);
 	data->eating = convert_to_num(argv[3]);
 	data->sleeping = convert_to_num(argv[4]);
-	data->cnt = 0;
+	data->cnt = -2;
 	if (argc == 6)
 		data->cnt = convert_to_num(argv[5]);
 	return (is_invalid(*data));
@@ -36,7 +36,7 @@ int	is_invalid(const t_data data)
 		return (print_error("invalid argument"), 0);
 	if (data.sleeping == (size_t)-1 || data.sleeping == 0)
 		return (print_error("invalid argument"), 0);
-	if (data.cnt == (size_t)-1)
+	if (data.cnt == -1 || data.cnt == 0)
 		return (print_error("invalid argument"), 0);
 	return (1);
 }

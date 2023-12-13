@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 23:43:50 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/13 04:19:14 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:27:54 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void *doing(void *arg)
 		}
 		if (is_not_dead(thread))
 			print_thread(thread, "is thinking");
+		if (thread->data.cnt != -2 && thread->cnt >= (size_t)thread->data.cnt)
+			break ;
 	}
 	return (arg);
 }
