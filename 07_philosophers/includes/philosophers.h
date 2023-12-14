@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:01:10 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 17:36:56 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:35:56 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define INCORRECT (size_t)-1
 # define NO_OPTION -2
 
 typedef __int128_t		t_long;
@@ -27,6 +26,13 @@ typedef __uint128_t		t_time;
 typedef pthread_mutex_t	t_mutex;
 typedef t_mutex			t_fork;
 typedef pthread_t		t_thread;
+
+typedef enum e_stat
+{
+	e_ready,
+	e_eat,
+	e_end
+}t_stat;
 
 typedef struct s_arguments
 {
@@ -47,9 +53,9 @@ typedef struct s_locks
 
 typedef struct s_identifier
 {
-	int			is_eating;
 	int			*is_dead;
 	size_t		number;
+	t_stat		stat;
 	t_long		cnt_eat;
 	t_time		start_time;
 	t_time		last_eating;
@@ -95,10 +101,12 @@ void	clear_table(t_table *table);
 void	*act(void *arg);
 void	eat(t_philo *philo);
 void	print_stat(t_philo *philo, const char *message);
+int		take_right_fork(t_philo *philo);
+int		take_left_fork(t_philo *philo);
 int		is_over(t_philo *philo);
-int		is_dead(t_philo *philo);
 
 void	*check(void *arg);
-int		check_all_threads(t_table *table);
+int		check_is_not_dead_one(t_table *table);
+int		check_is_not_over_all(t_table *table);
 
 #endif

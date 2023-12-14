@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:59:39 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 17:31:22 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:32:36 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	init_philos(t_table *table)
 {
 	size_t	index;
 
-	table->philos =
+	table->philos = \
 		(t_philo *)malloc(sizeof(t_philo) * table->args.num_of_philos);
 	if (!table->philos)
 		return (print_error("malloc failed"), 0);
@@ -74,7 +74,7 @@ int	init_philos(t_table *table)
 		table->philos[index].args = table->args;
 		table->philos[index].id.number = index;
 		table->philos[index].id.cnt_eat = 0;
-		table->philos[index].id.is_eating = 0;
+		table->philos[index].id.stat = e_ready;
 		table->philos[index].id.is_dead = &table->thread_dead_flag;
 		table->philos[index].id.start_time = get_current_time();
 		table->philos[index].id.last_eating = get_current_time();
@@ -102,7 +102,7 @@ void	alloc_forks(t_table *table, const size_t index)
 	else
 	{
 		table->philos[index].locks.right_fork = &table->forks[index];
-		table->philos[index].locks.left_fork =
+		table->philos[index].locks.left_fork = \
 			&table->forks[(index + 1) % table->args.num_of_philos];
 	}
 }

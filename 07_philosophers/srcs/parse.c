@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:30:31 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 14:48:41 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:31:30 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	parse(const size_t argc, const char *argv[], t_arguments *args)
 	args->num_of_eating = NO_OPTION;
 	if (argc == 6)
 		args->num_of_eating = convert_to_number(argv[5]);
-	if (args->num_of_philos == INCORRECT || args->num_of_philos == 0)
+	if (args->num_of_philos == (size_t)-1 || args->num_of_philos == 0)
 		return (print_error("1st argument is incorrect"), 0);
-	if (args->time_to_die == INCORRECT || args->time_to_die == 0)
+	if (args->time_to_die == (size_t)-1 || args->time_to_die == 0)
 		return (print_error("2nd argument is incorrect"), 0);
-	if (args->time_to_eat == INCORRECT || args->time_to_eat == 0)
+	if (args->time_to_eat == (size_t)-1 || args->time_to_eat == 0)
 		return (print_error("3rd argument is incorrect"), 0);
-	if (args->time_to_sleep == INCORRECT || args->time_to_sleep == 0)
+	if (args->time_to_sleep == (size_t)-1 || args->time_to_sleep == 0)
 		return (print_error("4th argument is incorrect"), 0);
 	if (args->num_of_eating == -1 || args->num_of_eating == 0)
 		return (print_error("5th argument is incorrect"), 0);

@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 22:43:37 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 01:00:28 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:32:10 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ int	create_threads(t_table *table)
 	index = 0;
 	while (index < table->args.num_of_philos)
 	{
-		if (pthread_create(&table->philos[index].thread, NULL,
+		if (pthread_create(&table->philos[index].thread, NULL, \
 							act, &table->philos[index]))
 			return (0);
 		index++;
 	}
 	if (pthread_create(&table->checker, NULL, check, table))
 		return (0);
-
 	return (1);
 }
 
