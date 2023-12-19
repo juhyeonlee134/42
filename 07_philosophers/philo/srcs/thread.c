@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 22:58:11 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 18:40:54 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/20 05:54:34 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ void	eat(t_philo *philo)
 		return ;
 	print_stat(philo, "is eating");
 	pthread_mutex_lock(philo->locks.stat_lock);
-	philo->id.stat = e_eat;
 	philo->id.last_eating = get_current_time();
 	pthread_mutex_unlock(philo->locks.stat_lock);
 	wait_msec(philo->args.time_to_eat);
 	pthread_mutex_lock(philo->locks.stat_lock);
-	philo->id.stat = e_ready;
 	philo->id.cnt_eat++;
 	pthread_mutex_unlock(philo->locks.stat_lock);
 	pthread_mutex_unlock(philo->locks.left_fork);

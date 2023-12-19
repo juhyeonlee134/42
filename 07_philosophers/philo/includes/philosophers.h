@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:01:10 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 18:35:56 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/20 05:53:01 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,7 @@ typedef __uint128_t		t_time;
 typedef pthread_mutex_t	t_mutex;
 typedef t_mutex			t_fork;
 typedef pthread_t		t_thread;
-
-typedef enum e_stat
-{
-	e_ready,
-	e_eat,
-	e_end
-}t_stat;
+typedef __uint8_t		t_boolean;
 
 typedef struct s_arguments
 {
@@ -53,12 +47,12 @@ typedef struct s_locks
 
 typedef struct s_identifier
 {
-	int			*is_dead;
 	size_t		number;
-	t_stat		stat;
 	t_long		cnt_eat;
 	t_time		start_time;
 	t_time		last_eating;
+	t_boolean	is_end;
+	t_boolean	*is_dead;
 }t_identifier;
 
 typedef struct s_philo
@@ -71,7 +65,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int			thread_dead_flag;
+	t_boolean	dead_flag;
 	t_philo		*philos;
 	t_fork		*forks;
 	t_mutex		*stat_lock;
@@ -106,7 +100,7 @@ int		take_left_fork(t_philo *philo);
 int		is_over(t_philo *philo);
 
 void	*check(void *arg);
-int		check_is_not_dead_one(t_table *table);
-int		check_is_not_over_all(t_table *table);
+int		is_not_dead_one(t_table *table);
+int		is_not_over_all(t_table *table);
 
 #endif

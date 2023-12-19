@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:59:39 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/14 18:32:36 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/20 05:53:12 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_table(t_table *table)
 {
-	table->thread_dead_flag = 0;
+	table->dead_flag = 0;
 	if (!init_locks(table))
 		return (0);
 	if (!init_forks(table))
@@ -74,8 +74,8 @@ int	init_philos(t_table *table)
 		table->philos[index].args = table->args;
 		table->philos[index].id.number = index;
 		table->philos[index].id.cnt_eat = 0;
-		table->philos[index].id.stat = e_ready;
-		table->philos[index].id.is_dead = &table->thread_dead_flag;
+		table->philos[index].id.is_end = 0;
+		table->philos[index].id.is_dead = &table->dead_flag;
 		table->philos[index].id.start_time = get_current_time();
 		table->philos[index].id.last_eating = get_current_time();
 		alloc_forks(table, index);
