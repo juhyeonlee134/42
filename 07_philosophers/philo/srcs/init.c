@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:59:39 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/20 05:53:12 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:36:06 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	init_philos(t_table *table)
 	while (index < table->args.num_of_philos)
 	{
 		table->philos[index].args = table->args;
-		table->philos[index].id.number = index;
+		table->philos[index].id.number = index + 1;
 		table->philos[index].id.cnt_eat = 0;
 		table->philos[index].id.is_end = 0;
 		table->philos[index].id.is_dead = &table->dead_flag;

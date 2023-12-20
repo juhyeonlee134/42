@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 22:58:11 by juhyelee          #+#    #+#             */
-/*   Updated: 2023/12/20 05:54:34 by juhyelee         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:36:14 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_stat(t_philo *philo, const char *message)
 
 	pthread_mutex_lock(philo->locks.writing_lock);
 	diff_time = get_current_time() - philo->id.start_time;
-	printf("%zu %zu %s\n", diff_time, philo->id.number + 1, message);
+	printf("%zu %zu %s\n", diff_time, philo->id.number, message);
 	pthread_mutex_unlock(philo->locks.writing_lock);
 }
 
