@@ -1,0 +1,59 @@
+get next line (fd)
+{
+	t_list list
+	t_list p
+
+	p is find fd
+	if p is null
+		p is add fd
+	while is not output
+	{
+		if get buffer is fail
+		{
+			clear p
+			return null
+		}
+	}
+	return output
+}
+
+find fd(t_list list, integer fd)
+{
+	t_list p
+
+	p is list
+	while p is not null
+	{
+		if fd of p same fd
+			return p
+		p is next of p
+	}
+	return null
+}
+
+add fd(t_list list, integer fd)
+{
+	t_list new fd
+
+	allocate new fd
+	fd of new fd is fd
+	remain of new fd is null
+	
+}
+
+is not output (string remain of p, string buffer)
+{
+	if remain of p is null
+		return true
+	if buffer not contain new line
+		return true
+	return false
+}
+
+get buffer(integer fd of p, string buffer)
+{
+	read fd
+	if read fail
+		return false
+	return true
+}
