@@ -1,59 +1,56 @@
-get next line (fd)
-{
-	t_list list
-	t_list p
 
-	p is find fd
-	if p is null
-		p is add fd
-	while is not output
+structure : file data
+{
+	integer file descriptor
+	string remain
+	file data pointer prev
+	file data pointer next
+} => circle list but last node's next is null
+
+string
+get next line(integer file descriptor)
+{
+	static file data pointer list
+	string ret
+	char array buffer[BUFFER_SIZE + 1]
+	file data pointer current file
+	integer read result
+
+	current file = find file descriptor(list, file descriptor)
+	if not found file descriptor in last
+		current file = add file descriptor(address of list, file descriptor)
+	if fail to add file descriptor
+		return null
+	while get output(current file, ret)
 	{
-		if get buffer is fail
-		{
-			clear p
+		read result = read buffer(current file, buffer)
+		if read result is negative
 			return null
-		}
+		if read result is zero
+			return ret
 	}
-	return output
+	return ret
 }
 
-find fd(t_list list, integer fd)
+get output
 {
-	t_list p
+	if not contain in current file's remain
+		need more data from file. so, return false
+	duplicate ret from start of current file's remain to newline of current file's remain
+	push to front current file's remain's remains
+}
 
-	p is list
-	while p is not null
+read buffer
+{
+	read buffer
+	if fail to read buffer
+		return negative
+	if file pointer is end
 	{
-		if fd of p same fd
-			return p
-		p is next of p
+		duplicate current file's remain to ret
+		remove current file
+		return zero
 	}
-	return null
-}
-
-add fd(t_list list, integer fd)
-{
-	t_list new fd
-
-	allocate new fd
-	fd of new fd is fd
-	remain of new fd is null
-	
-}
-
-is not output (string remain of p, string buffer)
-{
-	if remain of p is null
-		return true
-	if buffer not contain new line
-		return true
-	return false
-}
-
-get buffer(integer fd of p, string buffer)
-{
-	read fd
-	if read fail
-		return false
-	return true
+	merge current's remain and buffer
+	return one
 }
