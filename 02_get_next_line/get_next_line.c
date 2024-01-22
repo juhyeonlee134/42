@@ -1,105 +1,97 @@
 #include "get_next_line.h"
 
+static int	is_not_contain_nl(const char *str);
+static char	*merge(char *s1, const char *s2);
+static char	*dup_str(const char *str, const char sp_char);
+static void	org_remain(char **remain);
+
 char	*get_next_line(int fd)
 {
-	static t_list	*list;
-	t_list			*curr;
-	char			*ret;
-	char			buffer[BUFFER_SIZE];
-	int				read_ret;
+	static char	*remain;
+	char		*ret;
+	char		buffer[BUFFER_SIZE + 1];
+	int			len;
 
-	curr = find_fd((const t_list *)list, fd);
-	if (!curr)
-		curr = add_fd(&list, fd);
-	if (!curr)
-		return (NULL);
-	while (get_output(curr, ret))
+	while (is_not_contain_nl(remain))
 	{
-		read_ret = read_buffer(curr, ret,  buffer);
-		if (read_ret < 0)
-			return (NULL);
-		if (read_ret == 0)
-			return (ret);
+		len = read(fd, buffer, BUFFER_SIZE);
+		if (len < 0)
+			break ;
+		buffer[len] = '\0';
+		remain = merge(remain, buffer);
+		if (len == 0)
+			break ;
 	}
+	ret = dup_str(remain, '\n');
+	org_remain(&remain);
 	return (ret);
 }
 
-int	get_output(t_list *curr, char *ret)
+static int	is_not_contain_nl(const char *str)
 {
-	size_t	index;
-	int		is_newline;
-
-	if (curr->remain == NULL)
+	if (!str)
 		return (1);
-	index = 0;
-	is_newline = 0;
-	while (curr->remain[index])
+	while (*str)
 	{
-		if (curr->remain[index] == '\n')
-		{
-			is_newline = 1;
-			break ;
-		}
-		index++;
+		if (*str == '\n')
+			return (0);
+		str++;
 	}
-	if (!is_newline)
-		return (1);
-	ret = duplicate(curr->remain, '\n');
-	push_to_front(curr->remain, index);
-	return (0);
-}
-
-int	read_buffer(t_list *curr, char *ret, char *buffer)
-{
-	int	read_ret;
-
-	read_ret = read(curr->fd, buffer, BUFFER_SIZE);
-	if (read_ret < 0)
-		return (-1);
-	if (read_ret == 0)
-	{
-		ret = duplicate(curr->remain)
-		curr->prev->next = curr->next;
-		curr->next->prev = curr->prev;
-		free(curr->remain);
-		free(curr);
-		return (0);
-	}
-	merge(remain, buffer);
 	return (1);
 }
 
-t_list	*find_fd(const t_list *list, const int fd)
+static char	*merge(char *s1, const char *s2)
 {
-	while (list)
-	{
-		if (list->fd == fd)
-			return (list);
-		list = list->next;
-	}
-	return (NULL);
+	const size_t	s1_len = get_len(s1, '\0');
+	const size_t	s2_len = get_len(s2, '\0');
+	char	*ret;
+
+	if (!*s2)
+		return (NULL);
+	ret = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!ret)
+		return (NULL);
+	copy_str(ret, s1, s1_len + 1);
+	copy_str(ret + s1_len, s2, s2_len + 1);
+	if (s1)
+		free(s1);
+	s1 = NULL;
+	return (ret);
 }
 
-t_list	*add_fd(t_list **list, const int fd)
+static char	*dup_str(const char *str, const char sp_char)
 {
-	t_list	*new_fd;
+	const size_t	size = get_len(str, sp_char) + 1;
+	char			*ret;
 
-	new_fd = (t_list *)malloc(sizeof(t_list));
-	if (!new_fd)
+	if (!str)
 		return (NULL);
-	new_fd->fd = fd;
-	new_fd->remain = NULL;
-	new_fd->next = NULL;
-	if (!*list)
+	ret = (char *)malloc(sizeof(char) * size);
+	if (!ret)
+		return (NULL);
+	copy_str(ret, str, size);
+	return (ret);
+}
+
+static void	org_remain(char **remain)
+{
+	const size_t	nl_len = get_len(*remain, '\n');
+	const size_t	end_len = get_len(*remain, '\0');
+	const size_t	size = end_len - nl_len + 1;
+	char			*ret;
+
+	if (!*remain)
+		return ;
+	ret = (char *)malloc(sizeof(char) * size);
+	if (!ret)
+		return ;
+	copy_str(ret, *remain + nl_len, size);
+	free(*remain);
+	*remain = dup_str(ret + 1, '\0');
+	free(ret);
+	if (!(*remain)[0])
 	{
-		new_fd->prev = new_fd;
-		*list = new_fd;
+		free(*remain);
+		*remain = NULL;
 	}
-	else
-	{
-		new_fd->prev = *list->prev;
-		*list->prev->next = new_fd;
-		*list->prev = new_fd;
-	}
-	return (new_fd);
 }
