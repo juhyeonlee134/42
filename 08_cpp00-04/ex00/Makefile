@@ -1,20 +1,19 @@
 RM		= rm -rf
 CPP		= c++
 CFLAG	= -std=c++98 -Wall -Wextra -Werror
-SRCS	= megaphone.cpp 
-OBJS	= ${SRCS:.cpp = .o}
+SRC		= megaphone.cpp
+OBJ		= ${SRC:.cpp=.o}
 NAME	= megaphone
 
-.PHONY	= all clean fclean re
-
+.PHONY	: all clean fclean re
 all		: ${NAME}
 clean	:
-	${RM} ${OBJS}
+	${RM} ${OBJ}
 fclean	: clean
 	${RM} ${NAME}
 re		: fclean all
 
-${NAME}	: ${OBJS}
-	${CPP} ${OBJS} -o ${NAME}
+${NAME}	: ${OBJ}
+	${CPP} ${OBJ} -o ${NAME}
 %.o		: %.cpp
 	${CPP} ${CFLAG} $< -o $@ -c
