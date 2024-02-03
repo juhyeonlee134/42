@@ -28,7 +28,6 @@ void PhoneBook::searchContact(void) const
 
 	std::cout << "Enter index(1~8): ";
 	std::cin >> index;
-	std::cin.ignore();
 	if (index > 8 || index < 1)
 	{
 		std::cout << "Error: Invalid range" << std::endl;
