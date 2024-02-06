@@ -1,68 +1,82 @@
 #include "PhoneBook.hpp"
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+
+void PhoneBook::preview(void) const
+{
+	std::cout << "---------------------------------------------" << std::endl;
+	std::cout << '|' << std::setw(10) << "index";
+	std::cout << '|' << std::setw(10) << "first name";
+	std::cout << '|' << std::setw(10) << "last name";
+	std::cout << '|' << std::setw(10) << "nickname" << '|' << std::endl;
+	for (size_t index = 0; index < this->endPoint; index++)
+	{
+		std::cout << '|' << std::setw(10) << index + 1;
+		std::cout << '|' << std::setw(10) << this->contacts[index].getFirstName();
+		std::cout << '|' << std::setw(10) << this->contacts[index].getLastName();
+		std::cout << '|' << std::setw(10) << this->contacts[index].getNickname() << '|' << std::endl;
+	}
+	std::cout << "---------------------------------------------" << std::endl;
+}
+
+int PhoneBook::getIndex(void) const
+{
+	int index;
+	std::string userInput;
+
+	if (std::cin.eof())
+	{
+		throw std::invalid_argument("eof");
+	}
+	while (1)
+	{
+		userInput = getUserInput("Enter index (1 ~ 8)");
+		std::stringstream toNum(userInput);
+		if (toNum >> index)
+		{
+			break ;
+		}
+		if (toNum.fail())
+		{
+			std::cerr << "Error: is not number" << std::endl;
+		}
+	}
+	return index;
+}
 
 PhoneBook::PhoneBook()
 {
-	std::cout << "------------ * PHONE BOOK * ------------" << std::endl;
-	this->index = -1;
+	std::cout << "-------------- * PHONE BOOK * --------------" << std::endl;
+	this->index = 0;
 	this->endPoint = 0;
 };
 
 PhoneBook::~PhoneBook()
 {
-	std::cout << "----------------------------------------" << std::endl;
+	std::cout << std::endl << "--------------------------------------------" << std::endl;
 }
 
-void PhoneBook::addContact(void)
+void PhoneBook::Add(void)
 {
-	Contact newContact = Contact();
-
-	newContact.setContact();
-	this->endPoint = this->endPoint >= 8 ? 8 : this->endPoint + 1;
+	this->contacts[this->index].SetContact();
 	this->index = (this->index + 1) % 8;
-	this->contacts[this->index] = newContact;
+	this->endPoint = this->endPoint >= 8 ? 8 : this->endPoint + 1;
 }
 
-void PhoneBook::searchContact(void) const
+void PhoneBook::Search(void) const
 {
 	int index;
 
-	std::cout << "Enter index(1~8): ";
-	std::cin >> index;
-	if (index > 8 || index < 1)
+	preview();
+	index = getIndex();
+	index--;
+	if (index < (int)this->endPoint && index >= 0)
 	{
-		std::cout << "Error: Invalid range" << std::endl;
-	}
-	else if (index - 1 >= (int)this->endPoint)
-	{
-		std::cout << "Error: Invalid index" << std::endl;
+		this->contacts[index].PrintContact();
 	}
 	else
 	{
-		std::cout << "---------------------------------------------" << std::endl;
-		std::cout << '|' << std::setw(10) << "index";
-		std::cout << '|' << std::setw(10) << "first name";
-		std::cout << '|' << std::setw(10) << "last name";
-		std::cout << '|' << std::setw(10) << "nickname" << '|' << std::endl;
-		std::cout << "---------------------------------------------" << std::endl;
-		std::cout << '|' << std::setw(10) << index;
-		this->contacts[index - 1].printContact();
-		std::cout << "---------------------------------------------" << std::endl;
+		std::cerr << "Error: invalid range" << std::endl;
 	}
-}
-
-std::string getCommand(void)
-{
-	std::string command = "";
-
-	std::cout << "Enter command(ADD, SEARCH, EXIT): ";
-	while (std::getline(std::cin, command))
-	{
-		std::cin.clear();
-		if (!command.empty() && !isBlank(command))
-		{
-			break;
-		}
-		std::cout << "Enter command(ADD, SEARCH, EXIt): ";
-	}
-	return command;
 }

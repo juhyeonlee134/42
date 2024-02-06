@@ -1,4 +1,6 @@
 #include "Contact.hpp"
+#include <cctype>
+#include <iostream>
 
 Contact::Contact()
 {}
@@ -6,68 +8,58 @@ Contact::Contact()
 Contact::~Contact()
 {}
 
-void Contact::setContact(void)
+void Contact::SetContact(void)
 {
-	this->firstName = getUserInput("first name");
-	if (this->firstName.empty())
-	{
-		std::cout << std::endl;
-		return;
-	}
-	this->lastName = getUserInput("last name");
-	if (this->lastName.empty())
-	{
-		std::cout << std::endl;
-		return;
-	}
-	this->nickname = getUserInput("nickname");
-	if (this->nickname.empty())
-	{
-		std::cout << std::endl;
-		return;
-	}
-	this->phoneNum = getUserInput("phone number");
-	if (this->phoneNum.empty())
-	{
-		std::cout << std::endl;
-		return;
-	}
-	this->secret = getUserInput("darkest secret");
-	if (this->secret.empty())
-	{
-		std::cout << std::endl;
-		return;
-	}
+	this->mFirstName = getUserInput("Enter first name");
+	this->mLastName = getUserInput("Enter last name");
+	this->mNickname = getUserInput("Enter nickname");
+	this->mPhoneNum = getUserInput("Enter phone number");
+	this->mDarkestSecret = getUserInput("Enter darkest secret");
 }
 
-void Contact::printContact(void) const
+void Contact::PrintContact(void) const
 {
-	printString(this->firstName);
-	printString(this->lastName);
-	printString(this->nickname);
-	std::cout << '|' << std::endl;
+	std::cout << "1. Frist name: " << this->mFirstName << std::endl;
+	std::cout << "2. Last name: " << this->mLastName << std::endl;
+	std::cout << "3. Nickname: " << this->mNickname << std::endl;
+	std::cout << "4. Phone number: " << this->mPhoneNum << std::endl;
+	std::cout << "5. Darkest secret: " << this->mDarkestSecret << std::endl;
 }
 
-void printString(const std::string str)
+std::string Contact::getFirstName(void) const
 {
-	if (str.length() > 10)
+	if (this->mFirstName.length() <= 10)
 	{
-		std::cout << '|' << str.substr(0, 9) << '.';
+		return this->mFirstName;
 	}
-	else
+	return this->mFirstName.substr(0, 9) + '.';
+}
+
+std::string Contact::getLastName(void) const
+{
+	if (this->mLastName.length() <= 10)
 	{
-		std::cout << '|' << std::setw(10) << str;
+		return this->mLastName;
 	}
+	return this->mLastName.substr(0, 9) + '.';
+}
+
+std::string Contact::getNickname(void) const
+{
+	if (this->mNickname.length() <= 10)
+	{
+		return this->mNickname;
+	}
+	return this->mNickname.substr(0, 9) + '.';
 }
 
 bool isBlank(const std::string str)
 {
-	size_t blankCnt;
+	size_t blankCnt = 0;
 
-	blankCnt = 0;
 	for (size_t index = 0; index < str.length(); index++)
 	{
-		if (str[index] == ' ' || str[index] == '\t' || str[index] == '\n' || str[index] == '\r')
+		if (std::iswblank(str[index]))
 		{
 			blankCnt++;
 		}
@@ -79,19 +71,26 @@ bool isBlank(const std::string str)
 	return false;
 }
 
-std::string getUserInput(const std::string type)
+std::string getUserInput(const std::string message)
 {
-	std::string userInput = "";
+	std::string userInput;
 
-	std::cout << "Enter " << type << ": ";
-	while (std::getline(std::cin, userInput))
+	if (std::cin.eof())
 	{
+		throw std::invalid_argument("eof");
+	}
+	while (1)
+	{
+		std::cout << message << ": ";
+		if (!std::getline(std::cin, userInput))
+		{
+			throw std::invalid_argument("eof");
+		}
 		std::cin.clear();
 		if (!userInput.empty() && !isBlank(userInput))
 		{
 			break;
 		}
-		std::cout << "Enter " << type << ": ";
 	}
 	return userInput;
 }

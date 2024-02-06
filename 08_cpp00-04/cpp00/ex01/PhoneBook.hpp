@@ -7,16 +7,16 @@
 class PhoneBook
 {
 private:
-	int index;
+	size_t index;
 	size_t endPoint;
 	Contact contacts[8];
+	void preview(void) const;
+	int getIndex(void) const;
 public:
 	PhoneBook();
 	~PhoneBook();
-	void addContact(void);
-	void searchContact(void) const;
+	void Add(void);
+	void Search(void) const;
 };
-
-std::string getCommand(void);
 
 #endif

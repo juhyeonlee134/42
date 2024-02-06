@@ -1,34 +1,42 @@
 #include "PhoneBook.hpp"
+#include <iostream>
+
+static bool executeCommand(PhoneBook &phoneBook);
 
 int main(void)
 {
 	PhoneBook phoneBook = PhoneBook();
+	while (executeCommand(phoneBook));
+	return 0;
+}
+
+static bool executeCommand(PhoneBook &phoneBook)
+{
 	std::string userInput;
 
-	while (1)
+	try
 	{
-		userInput = getCommand();
-		if (userInput.empty())
-		{
-			break;
-		}
+		userInput = getUserInput("Enter command (ADD, SEARCH, EXIT)");
 		if (userInput == "ADD")
 		{
-			phoneBook.addContact();
+			phoneBook.Add();
 		}
 		else if (userInput == "SEARCH")
 		{
-			phoneBook.searchContact();
+			phoneBook.Search();
 		}
 		else if (userInput == "EXIT")
 		{
-			break;
+			return false;
 		}
 		else
 		{
-			std::cout << "Error: Invalid command" << std::endl;
+			std::cerr << "Error: invalid command" << std::endl;
 		}
 	}
-	std::cout << std::endl;
-	return 0;
+	catch(const std::invalid_argument& e)
+	{
+		return false;
+	}
+	return true;
 }
