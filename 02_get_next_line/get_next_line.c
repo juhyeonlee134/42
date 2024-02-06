@@ -15,12 +15,10 @@ char	*get_next_line(int fd)
 	while (is_not_contain_nl(remain))
 	{
 		len = read(fd, buffer, BUFFER_SIZE);
-		if (len < 0)
+		if (len <= 0)
 			break ;
 		buffer[len] = '\0';
 		remain = merge(remain, buffer);
-		if (len == 0)
-			break ;
 	}
 	ret = dup_str(remain, '\n');
 	org_remain(&remain);
