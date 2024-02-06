@@ -7,21 +7,28 @@ static void	org_remain(char **remain);
 
 char	*get_next_line(int fd)
 {
-	static char	*remain;
+	static t_fd	*fds;
+	t_fd		*curr;
 	char		*ret;
 	char		buffer[BUFFER_SIZE + 1];
 	int			len;
 
-	while (is_not_contain_nl(remain))
+	curr = find_fd(fds, fd);
+	if (!curr)
+		curr = add_fd(&fds, fd);
+	if (!curr)
+		return (NULL);
+	while (is_not_contain_nl(curr->remain))
 	{
 		len = read(fd, buffer, BUFFER_SIZE);
 		if (len <= 0)
 			break ;
 		buffer[len] = '\0';
-		remain = merge(remain, buffer);
+		curr->remain = merge(curr->remain, buffer);
 	}
-	ret = dup_str(remain, '\n');
-	org_remain(&remain);
+	ret = dup_str(curr->remain, '\n');
+	org_remain(&(curr->remain));
+	remove_fd(&fds, curr);
 	return (ret);
 }
 
