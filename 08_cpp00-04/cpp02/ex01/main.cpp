@@ -14,19 +14,36 @@ int main(void)
 	std::cout << "b is " << b << std::endl;
 	std::cout << "c is " << c << std::endl;
 	std::cout << "d is " << d << std::endl;
-	
+
 	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
 
-	/*std::cout << "--------------------------------------------------------------" << std::endl;
-	
-	Fixed f1(3.141592f);
-	Fixed f2(-100.1f);
+	/*
+	std::cout << "---------------------------------------------------" << std::endl;
 
-	std::cout << "f1 : " << f1 << std::endl;
-	std::cout << "f2 : " << f2 << std::endl; */
+	Fixed const f1(0);
+	Fixed const f2(0.0f);
+	Fixed const f3(0.1f);
+	std::cout << "0 is " << f1 << std::endl;
+	std::cout << "0.0f is " << f2 << std::endl;
+	std::cout << "0.1f is " << f3 << std::endl;
 
+	Fixed maxFixed;
+	Fixed minFixed;
+	Fixed const infFixed(10.0f / 0);
+	Fixed const nanFixed(0.0f / 0.0f);
+
+	maxFixed.setRawBits(0xFFFFFFFF);
+	minFixed.setRawBits(0x1);
+
+	std::cout << "maximum is " << maxFixed << std::endl;
+	std::cout << "minimum is " << minFixed << std::endl;
+	std::cout << "infinity is " << infFixed << std::endl;
+	std::cout << "NaN is " << nanFixed << std::endl;
+
+	std::cout << "---------------------------------------------------" << std::endl;
+	*/
 	return 0;
 }

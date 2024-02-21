@@ -56,13 +56,10 @@ int Fixed::getExp(void) const
 
 Fixed::Fixed()
 	: mFixedNum(0)
-{
-	std::cout << "Default constructor called" << std::endl;
-}
+{}
 
 Fixed::Fixed(int const num)
 {
-	std::cout << "Int constructor called" << std::endl;
 	unsigned int sign = num & (1 << 31);
 	unsigned int intFixed = num * (sign ? (-1) : 1);
 	this->mFixedNum = sign | (intFixed << this->FRAC_SZ);
@@ -70,8 +67,6 @@ Fixed::Fixed(int const num)
 
 Fixed::Fixed(float const num)
 {
-	std::cout << "Float constructor called" << std::endl;
-
 	float roundNum = roundf(static_cast<float>(num * (1 << this->FRAC_SZ))) / (1 << this->FRAC_SZ);
 	Float org;
 
@@ -99,21 +94,125 @@ Fixed::Fixed(float const num)
 }
 
 Fixed::~Fixed()
-{
-	std::cout << "Destructor called" << std::endl;
-}
+{}
 
 Fixed::Fixed(Fixed const& other)
 {
-	std::cout << "Copy constructor called" << std::endl;
 	*this = other;
 }
 
 Fixed& Fixed::operator=(Fixed const& other)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
 	this->setRawBits(other.getRawBits());
 	return *this;
+}
+
+bool Fixed::operator>(Fixed const& other) const
+{
+	int n1 = roundf(this->toFloat() * (1 << this->FRAC_SZ));
+	int n2 = roundf(other.toFloat() * (1 << this->FRAC_SZ));
+	return (n1 > n2);
+}
+
+bool Fixed::operator<(Fixed const& other) const
+{
+	int n1 = roundf(this->toFloat() * (1 << this->FRAC_SZ));
+	int n2 = roundf(other.toFloat() * (1 << this->FRAC_SZ));
+	return (n1 < n2);
+}
+
+bool Fixed::operator>=(Fixed const& other) const
+{
+	return (*this > other) || (*this == other);
+}
+
+bool Fixed::operator<=(Fixed const& other) const
+{
+	return (*this < other) || (*this == other);
+}
+
+bool Fixed::operator==(Fixed const& other) const
+{
+	return !((*this > other) && (*this < other));
+}
+
+bool Fixed::operator!=(Fixed const& other) const
+{
+	return !(*this == other);
+}
+
+Fixed Fixed::operator+(Fixed const& other) const
+{
+	Fixed ret;
+	float f1 = this->toFloat();
+	float f2 = other.toFloat();
+	ret = Fixed(f1 + f2);
+	return ret;
+}
+
+Fixed Fixed::operator-(Fixed const& other) const
+{
+	Fixed ret;
+	float f1 = this->toFloat();
+	float f2 = other.toFloat();
+	ret = Fixed(f1 - f2);
+	return ret;
+}
+
+Fixed Fixed::operator*(Fixed const& other) const
+{
+	Fixed ret;
+	float f1 = this->toFloat();
+	float f2 = other.toFloat();
+	ret = Fixed(f1 * f2);
+	return ret;
+}
+
+Fixed Fixed::operator/(Fixed const& other) const
+{
+	Fixed ret;
+	float f1 = this->toFloat();
+	float f2 = other.toFloat();
+	ret = Fixed(f1 / f2);
+	return ret;
+}
+
+Fixed& Fixed::operator++(void)
+{
+	Fixed eps;
+
+	eps.setRawBits(0x1);
+	*this = *this + eps;
+	return *this;
+}
+
+Fixed Fixed::operator++(int dummy)
+{
+	Fixed eps(dummy);
+	Fixed ret = *this;
+
+	eps.setRawBits(0x1);
+	*this = *this + eps;
+	return ret;
+}
+
+Fixed& Fixed::operator--(void)
+{
+	Fixed eps;
+
+	eps.setRawBits(0x1);
+	*this = *this - eps;
+	return *this;
+}
+
+Fixed Fixed::operator--(int dummy)
+{
+	Fixed eps(dummy);
+	Fixed ret = *this;
+
+	eps.setRawBits(0x1);
+	*this = *this - eps;
+	return ret;
 }
 
 int Fixed::getRawBits(void) const
@@ -158,6 +257,26 @@ int Fixed::toInt(void) const
 	int ret = intFixed * (sign ? (-1) : 1);
 
 	return ret;
+}
+
+Fixed& Fixed::min(Fixed& f1, Fixed& f2)
+{
+	return f1 < f2 ? f1 : f2;
+}
+
+Fixed& Fixed::min(Fixed const& f1, Fixed const& f2)
+{
+	return const_cast<Fixed&>(f1 < f2 ? f1 : f2);
+}
+
+Fixed& Fixed::max(Fixed& f1, Fixed& f2)
+{
+	return f1 > f2 ? f1 : f2;
+}
+
+Fixed& Fixed::max(Fixed const& f1, Fixed const& f2)
+{
+	return const_cast<Fixed&>(f1 > f2 ? f1 : f2);
 }
 
 std::ostream& operator<<(std::ostream& os, Fixed const& num)
