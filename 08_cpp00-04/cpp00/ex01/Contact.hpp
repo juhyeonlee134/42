@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __CONTACT_H__
-#define __CONTACT_H__
+#ifndef CONTACT_HPP
+#define CONTACT_HPP
 
 #include <string>
 
