@@ -1,17 +1,6 @@
 #include "Character.hpp"
 #include <iostream>
 
-Character::Character()
-	: mName("noname")
-	, mIndex(0)
-{
-	for (size_t index = 0; index < 4; index++)
-	{
-		this->mSlot[index] = NULL;
-	}
-	std::cout << "noname" << std::endl;
-}
-
 Character::Character(std::string const& name)
 	: mName(name)
 	, mIndex(0)
@@ -20,7 +9,6 @@ Character::Character(std::string const& name)
 	{
 		this->mSlot[index] = NULL;
 	}
-	std::cout << name << std::endl;
 }
 
 Character::Character(Character const& org)
