@@ -7,7 +7,6 @@
 class Character : public ICharacter
 {
 public:
-	Character();
 	Character(std::string const& name);
 	Character(Character const& org);
 	~Character();
