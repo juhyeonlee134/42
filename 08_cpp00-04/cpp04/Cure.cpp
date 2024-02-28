@@ -2,7 +2,7 @@
 #include <iostream>
 
 Cure::Cure()
-    : AMateria("Cure")
+    : AMateria("cure")
 {}
 
 Cure::Cure(Cure const& org)
@@ -14,7 +14,7 @@ Cure::Cure(Cure const& org)
 Cure::~Cure()
 {}
 
-Cure& Cure::operator = (Cure const& org)
+Cure& Cure::operator=(Cure const& org)
 {
     if (this == &org)
     {
@@ -24,12 +24,12 @@ Cure& Cure::operator = (Cure const& org)
     return *this;
 }
 
-AMateria* Cure::clone() const
+AMateria* Cure::clone(void) const
 {
     return new Cure(*this);
 }
 
 void Cure::use(ICharacter& target)
 {
-    std::cout << "* heals " << target.getName() << "’s wounds *" << std::endl;
+    std::cout << "* heals " << target.getName() << "\'s wounds *" << std::endl;
 }

@@ -2,37 +2,27 @@
 #include <iostream>
 
 AMateria::AMateria()
-    : mType("")
+	: mType("")
 {}
 
 AMateria::AMateria(std::string const& type)
-    :mType(type)
+	: mType(type)
 {}
 
 AMateria::AMateria(AMateria const& org)
 {
-    *this = org;
+	*this = org;
 }
 
 AMateria::~AMateria()
 {}
 
-AMateria& AMateria::operator = (AMateria const& org)
+std::string const& AMateria::getType(void) const
 {
-    if (this == &org)
-    {
-        return *this;
-    }
-    this->mType = org.getType();
-    return *this;
-}
-
-std::string const& AMateria::getType() const
-{
-    return this->mType;
+	return this->mType;
 }
 
 void AMateria::use(ICharacter& target)
 {
-    std::cout << this->mType << std::endl;
+	std::cout << this->mType << std::endl;
 }

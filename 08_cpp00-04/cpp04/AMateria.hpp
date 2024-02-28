@@ -2,24 +2,23 @@
 #ifndef __A_MATERIA_H__
 #define __A_MATERIA_H__
 
+#include "ICharacter.hpp"
 #include <string>
 
 class ICharacter;
 
 class AMateria
 {
-public:
-    AMateria();
-    AMateria(std::string const & type);
-    AMateria(AMateria const& org);
-    ~AMateria();
-    AMateria& operator = (AMateria const& org);
-    std::string const & getType() const; //Returns the materia type
-    virtual AMateria* clone() const = 0;
-    virtual void use(ICharacter& target);
 protected:
-    ~AMateria();
-    std::string mType;
+	std::string mType;
+public:
+	AMateria(std::string const& type);
+	AMateria();
+	AMateria(AMateria const& org);
+	virtual ~AMateria();
+	std::string const & getType() const;
+	virtual AMateria* clone() const = 0;
+	virtual void use(ICharacter& target);
 };
 
 #endif

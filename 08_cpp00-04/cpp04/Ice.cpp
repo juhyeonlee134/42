@@ -2,34 +2,34 @@
 #include <iostream>
 
 Ice::Ice()
-    : AMateria("Ice")
+	: AMateria("ice")
 {}
 
 Ice::Ice(Ice const& org)
-    : AMateria(org)
+	: AMateria(org)
 {
-    *this = org;
+	*this = org;
 }
 
 Ice::~Ice()
 {}
 
-Ice& Ice::operator = (Ice const& org)
+Ice& Ice::operator=(Ice const& org)
 {
-    if (this == &org)
-    {
-        return *this;
-    }
-    this->mType = org.getType();
-    return *this;
+	if (this == &org)
+	{
+		return *this;
+	}
+	this->mType = org.getType();
+	return *this;
 }
 
-AMateria* Ice::clone() const
+AMateria* Ice::clone(void) const
 {
-    return new Ice(*this);
+	return new Ice(*this);
 }
 
 void Ice::use(ICharacter& target)
 {
-    std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
+	std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
 }

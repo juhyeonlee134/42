@@ -10,8 +10,8 @@ public:
     Cure();
     Cure(Cure const& org);
     ~Cure();
-    Cure& operator = (Cure const& org);
-    AMateria* clone() const;
+    Cure& operator=(Cure const& org);
+    AMateria* clone(void) const;
     void use(ICharacter& target);
 };
 
