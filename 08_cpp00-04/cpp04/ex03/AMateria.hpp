@@ -2,7 +2,6 @@
 #ifndef __A_MATERIA_H__
 #define __A_MATERIA_H__
 
-#include "ICharacter.hpp"
 #include <string>
 
 class ICharacter;

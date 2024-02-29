@@ -1,3 +1,4 @@
+#include "ICharacter.hpp"
 #include "Cure.hpp"
 #include <iostream>
 

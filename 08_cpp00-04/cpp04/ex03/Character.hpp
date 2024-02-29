@@ -17,7 +17,6 @@ public:
 	size_t getIndex(void) const;
 	void setName(std::string const& name);
 
-
 	void equip(AMateria* m);
 	void unequip(int idx);
 	void use(int idx, ICharacter& target);

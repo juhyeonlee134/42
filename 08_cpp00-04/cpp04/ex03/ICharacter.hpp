@@ -2,7 +2,6 @@
 #ifndef __I_CHARACTER_H__
 #define __I_CHARACTER_H__
 
-#include "AMateria.hpp"
 #include <string>
 
 class AMateria;

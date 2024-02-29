@@ -1,3 +1,4 @@
+#include "AMateria.hpp"
 #include "Character.hpp"
 #include <iostream>
 
@@ -66,13 +67,22 @@ void Character::setName(std::string const& name)
 
 void Character::equip(AMateria* m)
 {
+	if (m == NULL)
+	{
+		return;
+	}
 	if (this->mIndex == 4)
 	{
 		std::cout << "Slot is fulled" << std::endl;
 		return;
 	}
+	if (this->mSlot[this->mIndex])
+	{
+		delete this->mSlot[this->mIndex];
+	}
 	this->mSlot[this->mIndex] = m->clone();
 	this->mIndex++;
+	delete m;
 }
 
 void Character::unequip(int idx)

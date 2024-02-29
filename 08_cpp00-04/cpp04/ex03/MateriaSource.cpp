@@ -55,7 +55,7 @@ void MateriaSource::learnMateria(AMateria* materia)
 {
 	if (this->mIndex < 4)
 	{
-		this->mMateria[this->mIndex] = materia->clone();
+		this->mMateria[this->mIndex] = materia;
 		this->mIndex++;
 	}
 }

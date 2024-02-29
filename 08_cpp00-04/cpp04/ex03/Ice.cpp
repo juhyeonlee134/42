@@ -1,3 +1,4 @@
+#include "ICharacter.hpp"
 #include "Ice.hpp"
 #include <iostream>
 
