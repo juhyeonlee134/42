@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:52 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 13:46:16 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:57:46 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*__get_string(int const fd)
 	}
 	ret = __extract_string(remain, '\n');
 	__separate_string(remain, '\n');
+	while (remain[0] == '\n')
+		__separate_string(remain, '\n');
 	return (ret);
 }
 
