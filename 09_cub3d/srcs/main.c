@@ -6,10 +6,13 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:13:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 15:19:45 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:21:29 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	todo : __get_string에서 메모리 누수 찾기
+*/
 #include "parsing.h"
 #include <fcntl.h>
 #include <stdio.h>
