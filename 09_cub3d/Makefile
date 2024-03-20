@@ -6,12 +6,13 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/20 14:21:41 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/20 14:29:44 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS		= includes
 SRCS		= srcs/main.c \
+			  srcs/set_textures.c \
 			  srcs/get_string.c
 OBJS		= ${SRCS:.c=.o}
 LIBFTDIR	= libft
