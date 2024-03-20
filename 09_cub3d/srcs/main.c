@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:13:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 13:50:12 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:22:39 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(void)
 		ret = __get_string(fd);
 		if (!ret)
 			break ;
-		printf("%s | ", ret);
+		printf("%s", ret);
 		free(ret);
 	}
 	return (0);

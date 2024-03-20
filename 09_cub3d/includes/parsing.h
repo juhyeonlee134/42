@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:15 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 13:36:06 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:21:10 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define PARSING_H
 
 # define BUFFER_SIZE 31
+
+typedef struct s_textures
+{
+	char			*north_texture;
+	char			*south_texture;
+	char			*west_texture;
+	char			*east_texture;
+}t_textures;
 
 char	*__get_string(int const fd);
 int		__is_not_contain(char const *string, char const delimiter);

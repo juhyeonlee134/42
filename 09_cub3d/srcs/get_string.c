@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:52 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 13:57:46 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:25:43 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ char	*__get_string(int const fd)
 	}
 	ret = __extract_string(remain, '\n');
 	__separate_string(remain, '\n');
-	while (remain[0] == '\n')
-		__separate_string(remain, '\n');
 	return (ret);
 }
 
@@ -85,6 +83,8 @@ char	*__extract_string(char const *string, char const delimiter)
 	len_to_del = 0;
 	while (string[len_to_del] != delimiter)
 		len_to_del++;
+	if (len_to_del == 0)
+		len_to_del = 1;
 	ret = (char *)malloc(sizeof(char) * (len_to_del + 1));
 	if (!ret)
 		exit(EXIT_FAILURE);
@@ -100,10 +100,12 @@ void	__separate_string(char *string, char const delimiter)
 	len_to_del = 0;
 	while (string[len_to_del] != delimiter)
 		len_to_del++;
+	if (len_to_del == 0)
+		len_to_del = 1;
 	index = 0;
-	while (string[len_to_del + index + 1])
+	while (string[len_to_del + index])
 	{
-		string[index] = string[len_to_del + index + 1];
+		string[index] = string[len_to_del + index];
 		index++;
 	}
 	string[index] = '\0';
