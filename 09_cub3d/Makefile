@@ -1,49 +1,42 @@
-CC=cc
-CFLAG=-Wall -Wextra -Werror -Imlx -Iincludes -c
-LFLAG=-Lmlx -lmlx -framework OpenGL -framework Appkit -Llibft -lft
-NAME=so_long
-SRCS=srcs/ft_printf.c \
-	 srcs/util.c \
-	 srcs/get_next_line.c \
-	 srcs/get_next_line_utils.c \
-	 srcs/utils_1.c \
-	 srcs/utils_2.c \
-	 srcs/parsing_1.c \
-	 srcs/parsing_2.c \
-	 srcs/parsing_3.c \
-	 srcs/parsing_4.c \
-	 srcs/parsing_5.c \
-	 srcs/game_1.c \
-	 srcs/game_2.c \
-	 srcs/game_3.c \
-	 srcs/main.c
-OBJS=$(SRCS:.c=.o)
-LIBFTDIR=libft
-MLXDIR=mlx
-LIBFT=$(LIBFTDIR)/libft.a
-MLX=$(MLXDIR)/libmlx.dylib
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
+#    Updated: 2024/03/20 13:53:45 by juhyelee         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-all: $(NAME)
+INCS		= includes
+SRCS		= srcs/main.c \
+			  srcs/get_string.c
+OBJS		= ${SRCS:.c=.o}
+LIBFTDIR	= libft
+LIBFT		= ${LIBFTDIR}/libft.a
+NAME		= cub3d
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $^ $(LFLAG) -o $@
+RM			= rm -rf
+MK			= make
+CC			= cc
+CFLAG		= -Wall -Wextra -Werror -I${INCS} -g3
+LFLAG		= -Llibft -lft
 
-$(MLX):
-	make -C $(MLXDIR)
+.PHONY		: all clean fclean re
+all			: ${NAME}
+clean		:
+	${RM} ${OBJS}
+	${MK} clean -C ${LIBFTDIR}
+fclean		: clean
+	${RM} ${NAME}
+	${MK} fclean -C ${LIBFTDIR}
+re			: fclean all
 
-$(LIBFT):
-	make -C $(LIBFTDIR)
-
-%.o: %.c
-	$(CC) $(CFLAG) $< -o $@
-
-clean:
-	make clean -C $(LIBFTDIR)
-	rm -rf $(OBJS)
-
-fclean: clean
-	make fclean -C $(LIBFTDIR)
-	make clean -C $(MLXDIR)
-	rm -rf $(NAME)
-
-re: fclean all
+${NAME}		: ${OBJS} ${LIBFT}
+	${CC} $^ ${LFLAG} -o $@
+${LIBFT}	:
+	${MK} -C ${LIBFTDIR}
+%.o			: %.c
+	${CC} ${CFLAG} $< -o $@ -c
