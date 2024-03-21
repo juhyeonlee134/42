@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:52 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/21 23:55:15 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/22 01:56:01 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ char	*__merge(char *dest, char const *org)
 	dest_len = ft_strlen(dest);
 	ret = (char *)malloc(sizeof(char) * (dest_len + org_len) + 1);
 	if (!ret)
-		exit(1);
+		exit(EXIT_FAILURE);
 	ft_strlcpy(ret, dest, dest_len + 1);
 	ft_strlcat(ret, org, dest_len + org_len + 1);
+	free(dest);
 	return (ret);
 }
 

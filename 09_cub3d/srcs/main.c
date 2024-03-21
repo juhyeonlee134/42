@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:13:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/21 23:56:27 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/22 03:33:18 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@ void	check(void)
 
 int	main(int argc, char *argv[])
 {
-	t_sources	sources;
+	t_map	map;
 
 	if (argc < 2)
 	{
-		perror("Need more argument\n");
+		perror("Need more argument");
 		return (1);
 	}
 	if (argc > 2)
 	{
-		perror("Too many arguments\n");
+		perror("Too many arguments");
 		return (1);
 	}
-	init_sources(&sources, argv[1]);
-	printf("%s\n%s\n%s\n%s\n", sources.textures[0], sources.textures[1], sources.textures[2], sources.textures[3]);
-	printf("%d, %d, %d\n", sources.colors[0][0], sources.colors[0][1], sources.colors[0][2]);
-	printf("%d, %d, %d\n", sources.colors[1][0], sources.colors[1][1], sources.colors[1][2]);
+	init_map(&map, argv[1]);
+	printf("textures : %s | %s | %s | %s\n", map.textures[0], map.textures[1], map.textures[2], map.textures[3]);
+	printf("colros : %d,%d,%d | %d,%d,%d\n", map.colors[0][0], map.colors[0][1], map.colors[0][2], map.colors[1][0], map.colors[1][1], map.colors[1][2]);
+	for (size_t h = 0; h < map.map_h; h++)
+		printf("%s\n", map.map[h]);
 	atexit(check);
 	return (0);
 }

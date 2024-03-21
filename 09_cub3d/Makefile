@@ -6,15 +6,16 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/22 00:11:12 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/22 03:14:05 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS		= includes
 SRCS		= srcs/main.c \
-			  srcs/init_sources.c \
-			  srcs/get_string.c \
-			  srcs/set_textures.c
+			  srcs/init_map.c \
+			  srcs/set_sources.c \
+			  srcs/set_map.c \
+			  srcs/get_string.c
 OBJS		= ${SRCS:.c=.o}
 LIBFTDIR	= libft
 LIBFT		= ${LIBFTDIR}/libft.a

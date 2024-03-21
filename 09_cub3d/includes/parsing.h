@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:15 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 00:02:19 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/22 03:12:57 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdlib.h>
 # define BUFFER_SIZE 31
 
-typedef enum e_texture_index
+typedef enum e_id
 {
 	E_ER = -2,
 	E_NL,
@@ -29,21 +29,40 @@ typedef enum e_texture_index
 	E_EA,
 	E_FL,
 	E_CE
-}t_index;
+}t_id;
 
-typedef struct s_sources
+enum e_dir
+{
+	E_LEFT,
+	E_DOWN,
+	E_RIGHT,
+	E_UP
+};
+
+typedef struct s_map
 {
 	char			*textures[4];
 	unsigned char	colors[2][3];
-}t_sources;
+	char			**map;
+	size_t			map_w;
+	size_t			map_h;
+}t_map;
 
-void	init_sources(t_sources *const sources, char const *file);
-int		__get_file_descriptor(char const *file);
-void	__set_colors(unsigned char *colors, char const *const string);
+void	init_map(t_map *const map, char const *const file_name);
+int		__open_file(char const *file_name);
+void	__init_sources(t_map *const map, int const fd);
+void	__init_map(t_map *const map, int const fd);
 
-void	__set_textures(char *textures[], char const *const string);
-t_index	__identify_type(char const *string);
-char	*__get_source(char const *string);
+int		__set_sources(t_map *const map, char const *string);
+t_id	__get_id(char const *string);
+char	*__set_texture(char const *string);
+void	__set_color(unsigned char *color, char const *string);
+size_t	__check_string(char const *string);
+
+void	__set_map(t_map *const map, char const *map_string);
+void	__set_map_size(char const *map_string, size_t *h, size_t *w);
+size_t	__get_line_len(char const *string);
+void	__full_blank(char *map, size_t const w);
 
 char	*__get_string(int const fd);
 int		__is_not_contain(char const *string, char const delimiter);
