@@ -5,15 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 14:29:51 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/21 23:13:36 by juhyelee         ###   ########.fr       */
+/*   Created: 2024/03/22 00:00:11 by juhyelee          #+#    #+#             */
+/*   Updated: 2024/03/22 00:00:18 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "parsing.h"
-#include <fcntl.h>
-#include <stdlib.h>
 
 void	__set_textures(char *textures[], char const *const string)
 {
@@ -21,7 +18,7 @@ void	__set_textures(char *textures[], char const *const string)
 
 	if (index == E_ER)
 	{
-		/* print error message */
+		perror("Invaild file\n");
 		exit(EXIT_FAILURE);
 	}
 	if (index == E_NO)

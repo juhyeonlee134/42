@@ -6,13 +6,17 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:15 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/21 23:13:16 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:02:19 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "libft.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 # define BUFFER_SIZE 31
 
 typedef enum e_texture_index
@@ -27,11 +31,15 @@ typedef enum e_texture_index
 	E_CE
 }t_index;
 
-typedef struct s_source
+typedef struct s_sources
 {
-	int				fd[4];
-	unsigned char	color[2][3];
-}t_source;
+	char			*textures[4];
+	unsigned char	colors[2][3];
+}t_sources;
+
+void	init_sources(t_sources *const sources, char const *file);
+int		__get_file_descriptor(char const *file);
+void	__set_colors(unsigned char *colors, char const *const string);
 
 void	__set_textures(char *textures[], char const *const string);
 t_index	__identify_type(char const *string);

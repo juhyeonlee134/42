@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:13:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/21 23:09:00 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:56:27 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,24 @@ void	check(void)
 	system("leaks cub3d");
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
-	int const	fd = open("test", O_RDONLY);
-	char		*ret;
-	char		*textures[E_SZ];
+	t_sources	sources;
 
-	while (1)
+	if (argc < 2)
 	{
-		ret = __get_string(fd);
-		if (!ret)
-			break ;
-		if (__set_textures(textures, ret) == 0)
-		{
-			printf("error\n");
-			free(ret);
-			return (1);
-		}
-		free(ret);
+		perror("Need more argument\n");
+		return (1);
 	}
-	for (size_t index = 0; index < E_SZ; index++)
+	if (argc > 2)
 	{
-		printf("%s\n", textures[index]);
-		free(textures[index]);
+		perror("Too many arguments\n");
+		return (1);
 	}
+	init_sources(&sources, argv[1]);
+	printf("%s\n%s\n%s\n%s\n", sources.textures[0], sources.textures[1], sources.textures[2], sources.textures[3]);
+	printf("%d, %d, %d\n", sources.colors[0][0], sources.colors[0][1], sources.colors[0][2]);
+	printf("%d, %d, %d\n", sources.colors[1][0], sources.colors[1][1], sources.colors[1][2]);
 	atexit(check);
 	return (0);
 }

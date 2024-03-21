@@ -6,11 +6,10 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:52 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 14:25:43 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:55:15 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "parsing.h"
 
 char	*__get_string(int const fd)
