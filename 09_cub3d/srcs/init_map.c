@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 00:43:18 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 03:21:38 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/22 03:50:02 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	__init_map(t_map *const map, int const fd)
 {
 	char	*string;
 	char	*map_string;
+	size_t	start_point;
 
 	map_string = NULL;
 	while (1)
@@ -70,7 +71,10 @@ void	__init_map(t_map *const map, int const fd)
 		map_string = __merge(map_string, string);
 		free(string);
 	}
-	__set_map_size(map_string, &map->map_h, &map->map_w);
-	__set_map(map, map_string);
+	start_point = 0;
+	while (map_string[start_point] && map_string[start_point] == '\n')
+		start_point++;
+	__set_map_size(map_string + start_point, &map->map_h, &map->map_w);
+	__set_map(map, map_string + start_point);
 	free(map_string);
 }

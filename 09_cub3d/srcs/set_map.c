@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:58:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 03:22:08 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/22 04:02:20 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	__set_map(t_map *const map, char const *map_string)
 		if (!map->map_w)
 			exit(EXIT_FAILURE);
 		line_len = __get_line_len(map_string + map_idx);
-		ft_strlcpy(map->map[index], map_string + map_idx, map->map_w + 1);
+		ft_strlcpy(map->map[index], map_string + map_idx, line_len + 1);
 		__full_blank(map->map[index], map->map_w);
 		map->map[index][map->map_w] = '\0';
 		map_idx += (line_len + 1);
