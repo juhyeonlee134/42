@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:15 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 15:16:11 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:13:16 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,17 @@ typedef enum e_texture_index
 	E_SO,
 	E_WE,
 	E_EA,
-	E_SZ
+	E_FL,
+	E_CE
 }t_index;
 
-int		__set_textures(char *textures[], char const *const string);
+typedef struct s_source
+{
+	int				fd[4];
+	unsigned char	color[2][3];
+}t_source;
+
+void	__set_textures(char *textures[], char const *const string);
 t_index	__identify_type(char const *string);
 char	*__get_source(char const *string);
 

@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:29:51 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/20 15:16:32 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:13:36 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-int	__set_textures(char *textures[], char const *const string)
+void	__set_textures(char *textures[], char const *const string)
 {
 	t_index const	index = __identify_type(string);
 
 	if (index == E_ER)
 	{
 		/* print error message */
-		return (0);
+		exit(EXIT_FAILURE);
 	}
 	if (index == E_NO)
 		textures[E_NO] = __get_source(string);
@@ -32,7 +32,10 @@ int	__set_textures(char *textures[], char const *const string)
 		textures[E_WE] = __get_source(string);
 	else if (index == E_EA)
 		textures[E_EA] = __get_source(string);
-	return (1);
+	else if (index == E_FL)
+		textures[E_FL] = __get_source(string);
+	else if (index == E_CE)
+		textures[E_CE] = __get_source(string);
 }
 
 t_index	__identify_type(char const *string)
@@ -48,6 +51,10 @@ t_index	__identify_type(char const *string)
 		ret = E_WE;
 	else if (ft_strncmp(string, "EA", 2) == 0 && string[2] == ' ')
 		ret = E_EA;
+	else if (string[0] == 'F' && string[1] == ' ')
+		ret = E_FL;
+	else if (string[0] == 'C' && string[1] == ' ')
+		ret = E_CE;
 	else if (string[0] == '\n' && string[1] == '\0')
 		ret = E_NL;
 	return (ret);
