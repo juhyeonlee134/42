@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:58:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 04:02:20 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:44:29 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	__set_map(t_map *const map, char const *map_string)
 		line_len = __get_line_len(map_string + map_idx);
 		ft_strlcpy(map->map[index], map_string + map_idx, line_len + 1);
 		__full_blank(map->map[index], map->map_w);
-		map->map[index][map->map_w] = '\0';
 		map_idx += (line_len + 1);
 		index++;
 	}
@@ -83,4 +82,5 @@ void	__full_blank(char *map, size_t const w)
 		map[index] = ' ';
 		index++;
 	}
+	map[w] = '\0';
 }
