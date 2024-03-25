@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/22 03:14:05 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/25 20:14:02 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ NAME		= cub3d
 RM			= rm -rf
 MK			= make
 CC			= cc
-CFLAG		= -Wall -Wextra -Werror -I${INCS} -g3
+CFLAG		= -Wall -Wextra -Werror -I${INCS}
 LFLAG		= -Llibft -lft
 
 .PHONY		: all clean fclean re
@@ -38,7 +38,7 @@ fclean		: clean
 re			: fclean all
 
 ${NAME}		: ${OBJS} ${LIBFT}
-	${CC} $^ ${LFLAG} -o $@
+	${CC} $^ ${LFLAG} -o $@ -fsanitize=leak
 ${LIBFT}	:
 	${MK} -C ${LIBFTDIR}
 %.o			: %.c
