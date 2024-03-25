@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 20:20:45 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:41:35 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:52:16 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void	__full_blank(char *const map, size_t const w);
 size_t	__get_line_len(char const *str);
 
 void	__check_map(t_map map);
+
+void	clear_map(t_map *const map);
 
 #endif

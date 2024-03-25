@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 21:03:12 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:12:37 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:54:52 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	__set_color(t_color *color, char const *string)
 	color[2] = __convert_to_num(string);
 }
 
-char	*__set_texture(char const *string)
+char	*__set_textures(char const *str)
 {
 	char			*texture;
-	size_t const	start_point = __check_string(string);
+	size_t const	spnt = __check_string(str);
 
-	texture = ft_strdup(string + start_point + 1);
+	texture = ft_strdup(str + spnt + 1);
 	if (!texture)
 		exit(EXIT_FAILURE);
 	return (texture);
@@ -76,7 +76,7 @@ int	__init_textures(t_text *const text, char const *str)
 	if (id > E_NL)
 		cnt++;
 	if (id >= E_NO && id <= E_EA)
-		text->textures[id] = __set_texture(str);
+		text->textures[id] = __set_textures(str);
 	else if (id == E_FL || id == E_CE)
 		__set_color(text->colors[id - 4], str);
 	if (cnt == 6)

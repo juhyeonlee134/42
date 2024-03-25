@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 20:26:58 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:47:29 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:14:21 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	init_map(t_map *const map, int const fd)
 	spnt = 0;
 	while (map_str[spnt] && map_str[spnt] == '\n')
 		spnt++;
-	__init_map_size(map_str, &(map->h), &(map->w));
-	__init_map_context(map, map_str);
+	__init_map_size(map_str + spnt, &(map->h), &(map->w));
+	__init_map_context(map, map_str + spnt);
 	//__check_map(*map);
 	free(map_str);
 }

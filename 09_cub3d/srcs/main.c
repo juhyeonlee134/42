@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:13:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:41:05 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:02:57 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int	main(int argc, char *argv[])
 		srcs.text.colors[1][0], srcs.text.colors[1][1], srcs.text.colors[1][2]);
 	for (size_t h = 0; h < srcs.map.h; h++)
 		printf("%s\n", srcs.map.map[h]);
+	clear_textures(&srcs.text);
+	clear_map(&srcs.map);
 	return (0);
 }

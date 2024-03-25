@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 21:13:57 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:46:13 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:51:48 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,12 @@ t_color	__convert_to_num(char const *str)
 	}
 	free(ret_str);
 	return (ret_num);
+}
+
+void	clear_textures(t_text *const text)
+{
+	free(text->textures[0]);
+	free(text->textures[1]);
+	free(text->textures[2]);
+	free(text->textures[3]);
 }

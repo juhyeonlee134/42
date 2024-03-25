@@ -6,13 +6,14 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/25 21:45:57 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/25 21:59:15 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS		= includes
 GNL_SRCS	= srcs/gnl/gnl.c
-MAP_SRCS	= srcs/map/init_map.c
+MAP_SRCS	= srcs/map/init_map.c \
+			  srcs/map/check_map.c
 TXT_SRCS	= srcs/text/init_text1.c \
 			  srcs/text/init_text2.c
 SRCS_SRCS	= srcs/srcs/init_srcs.c
@@ -47,4 +48,4 @@ ${NAME}		: ${OBJS} ${LIBFT}
 ${LIBFT}	:
 	${MK} -C ${LIBFTDIR}
 %.o			: %.c
-	${CC} ${CFLAG} $< -o $@ -c
+	${CC} ${CFLAG} $< -o $@ -c -g3

@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 20:55:05 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:17:31 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:49:47 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ typedef struct s_text
 
 void	init_text(t_text *const text, int const fd);
 void	__set_color(t_color *color, char const *str);
-char	*__set_texture(char const *str);
+char	*__set_textures(char const *str);
 int		__init_textures(t_text *const text, char const *str);
 t_id	__get_id(char const *str);
 
 size_t	__check_string(char const *str);
 t_color	__convert_to_num(char const *str);
+
+void	clear_textures(t_text *const text);
 
 #endif
