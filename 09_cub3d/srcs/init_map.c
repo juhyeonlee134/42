@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 00:43:18 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 03:50:02 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:29:14 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,21 @@ void	__init_map(t_map *const map, int const fd)
 	__set_map_size(map_string + start_point, &map->map_h, &map->map_w);
 	__set_map(map, map_string + start_point);
 	free(map_string);
+}
+
+t_color	__convert_to_num(char const *string)
+{
+	t_color const	ret_num = ft_atoi(string);
+	char			*ret_str;
+
+	ret_str = ft_itoa(ret_num);
+	if (string[0] == '+' || (string [0]== '-' && string[1] == '0'))
+		string++;
+	if (ft_strncmp(string, ret_str, ft_strlen(ret_str)) != 0)
+	{
+		perror("invalid file");
+		exit(EXIT_FAILURE);
+	}
+	free(ret_str);
+	return (ret_num);
 }

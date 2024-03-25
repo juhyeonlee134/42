@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:15 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 03:12:57 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:25:06 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,15 @@ typedef enum e_id
 	E_CE
 }t_id;
 
-enum e_dir
-{
-	E_LEFT,
-	E_DOWN,
-	E_RIGHT,
-	E_UP
-};
+typedef unsigned char	t_color;
 
 typedef struct s_map
 {
-	char			*textures[4];
-	unsigned char	colors[2][3];
-	char			**map;
-	size_t			map_w;
-	size_t			map_h;
+	char	*textures[4];
+	t_color	colors[2][3];
+	char	**map;
+	size_t	map_w;
+	size_t	map_h;
 }t_map;
 
 void	init_map(t_map *const map, char const *const file_name);
@@ -56,8 +50,10 @@ void	__init_map(t_map *const map, int const fd);
 int		__set_sources(t_map *const map, char const *string);
 t_id	__get_id(char const *string);
 char	*__set_texture(char const *string);
-void	__set_color(unsigned char *color, char const *string);
 size_t	__check_string(char const *string);
+
+void	__set_color(unsigned char *color, char const *string);
+t_color	__convert_to_num(char const *string);
 
 void	__set_map(t_map *const map, char const *map_string);
 void	__set_map_size(char const *map_string, size_t *h, size_t *w);
