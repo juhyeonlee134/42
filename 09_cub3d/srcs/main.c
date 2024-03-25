@@ -15,11 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	check(void)
-{
-	system("leaks cub3d");
-}
-
 int	main(int argc, char *argv[])
 {
 	t_map	map;
@@ -39,6 +34,5 @@ int	main(int argc, char *argv[])
 	printf("colros : %d,%d,%d | %d,%d,%d\n", map.colors[0][0], map.colors[0][1], map.colors[0][2], map.colors[1][0], map.colors[1][1], map.colors[1][2]);
 	for (size_t h = 0; h < map.map_h; h++)
 		printf("%s\n", map.map[h]);
-	atexit(check);
 	return (0);
 }
