@@ -6,18 +6,16 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:13:16 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 03:33:18 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:41:05 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include <fcntl.h>
+#include "srcs.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 int	main(int argc, char *argv[])
 {
-	t_map	map;
+	t_srcs	srcs;
 
 	if (argc < 2)
 	{
@@ -29,10 +27,13 @@ int	main(int argc, char *argv[])
 		perror("Too many arguments");
 		return (1);
 	}
-	init_map(&map, argv[1]);
-	printf("textures : %s | %s | %s | %s\n", map.textures[0], map.textures[1], map.textures[2], map.textures[3]);
-	printf("colros : %d,%d,%d | %d,%d,%d\n", map.colors[0][0], map.colors[0][1], map.colors[0][2], map.colors[1][0], map.colors[1][1], map.colors[1][2]);
-	for (size_t h = 0; h < map.map_h; h++)
-		printf("%s\n", map.map[h]);
+	init_sources(&srcs, argv[1]);
+	printf("textures : %s | %s | %s | %s\n", \
+		srcs.text.textures[0], srcs.text.textures[1], srcs.text.textures[2], srcs.text.textures[3]);
+	printf("colros : %d,%d,%d | %d,%d,%d\n", \
+		srcs.text.colors[0][0], srcs.text.colors[0][1], srcs.text.colors[0][2], \
+		srcs.text.colors[1][0], srcs.text.colors[1][1], srcs.text.colors[1][2]);
+	for (size_t h = 0; h < srcs.map.h; h++)
+		printf("%s\n", srcs.map.map[h]);
 	return (0);
 }

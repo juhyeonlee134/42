@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_string.c                                       :+:      :+:    :+:   */
+/*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:52 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/22 01:56:01 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:34:42 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "gnl.h"
 
-char	*__get_string(int const fd)
+char	*get_next_line(int const fd)
 {
 	int			read_len;
 	char		read_buffer[BUFFER_SIZE + 1];
@@ -38,26 +38,13 @@ char	*__get_string(int const fd)
 	return (ret);
 }
 
-int	__is_not_contain(char const *string, char const delimiter)
-{
-	if (!string)
-		return (1);
-	while (*string)
-	{
-		if (*string == delimiter)
-			return (0);
-		string++;
-	}
-	return (1);
-}
-
-char	*__merge(char *dest, char const *org)
+char	*__merge(char *dst, char const *org)
 {
 	char			*ret;
-	size_t			dest_len;
+	size_t			dst_len;
 	size_t const	org_len = ft_strlen(org);
 
-	if (!dest)
+	if (!dst)
 	{
 		ret = (char *)malloc(sizeof(char) * (org_len + 1));
 		if (!ret)
@@ -65,48 +52,61 @@ char	*__merge(char *dest, char const *org)
 		ft_strlcpy(ret, org, org_len + 1);
 		return (ret);
 	}
-	dest_len = ft_strlen(dest);
-	ret = (char *)malloc(sizeof(char) * (dest_len + org_len) + 1);
+	dst_len = ft_strlen(dst);
+	ret = (char *)malloc(sizeof(char) * (dst_len + org_len) + 1);
 	if (!ret)
 		exit(EXIT_FAILURE);
-	ft_strlcpy(ret, dest, dest_len + 1);
-	ft_strlcat(ret, org, dest_len + org_len + 1);
-	free(dest);
+	ft_strlcpy(ret, dst, dst_len + 1);
+	ft_strlcat(ret, org, dst_len + org_len + 1);
+	free(dst);
 	return (ret);
 }
 
-char	*__extract_string(char const *string, char const delimiter)
+char	*__extract_string(char const *str, char const del)
 {
 	char	*ret;
 	size_t	len_to_del;
 
 	len_to_del = 0;
-	while (string[len_to_del] != delimiter)
+	while (str[len_to_del] != del)
 		len_to_del++;
 	if (len_to_del == 0)
 		len_to_del = 1;
 	ret = (char *)malloc(sizeof(char) * (len_to_del + 1));
 	if (!ret)
 		exit(EXIT_FAILURE);
-	ft_strlcpy(ret, string, len_to_del + 1);
+	ft_strlcpy(ret, str, len_to_del + 1);
 	return (ret);
 }
 
-void	__separate_string(char *string, char const delimiter)
+void	__separate_string(char *str, char const del)
 {
 	size_t	len_to_del;
 	size_t	index;
 
 	len_to_del = 0;
-	while (string[len_to_del] != delimiter)
+	while (str[len_to_del] != del)
 		len_to_del++;
 	if (len_to_del == 0)
 		len_to_del = 1;
 	index = 0;
-	while (string[len_to_del + index])
+	while (str[len_to_del + index])
 	{
-		string[index] = string[len_to_del + index];
+		str[index] = str[len_to_del + index];
 		index++;
 	}
-	string[index] = '\0';
+	str[index] = '\0';
+}
+
+int	__is_not_contain(char const *str, char const del)
+{
+	if (!str)
+		return (1);
+	while (*str)
+	{
+		if (*str == del)
+			return (0);
+		str++;
+	}
+	return (1);
 }
