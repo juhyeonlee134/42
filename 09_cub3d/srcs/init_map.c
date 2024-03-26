@@ -6,14 +6,13 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 20:26:58 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 22:14:21 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:21:44 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
-#include "gnl.h"
+#include "parse.h"
 
-void	init_map(t_map *const map, int const fd)
+void	__init_map(t_map *const map, int const fd)
 {
 	char	*in_str;
 	char	*map_str;

@@ -6,11 +6,11 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 12:33:52 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 20:34:42 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:15:42 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl.h"
+#include "parse.h"
 
 char	*get_next_line(int const fd)
 {

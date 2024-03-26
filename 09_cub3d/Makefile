@@ -6,22 +6,17 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/25 21:59:15 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/26 13:29:49 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS		= includes
-GNL_SRCS	= srcs/gnl/gnl.c
-MAP_SRCS	= srcs/map/init_map.c \
-			  srcs/map/check_map.c
-TXT_SRCS	= srcs/text/init_text1.c \
-			  srcs/text/init_text2.c
-SRCS_SRCS	= srcs/srcs/init_srcs.c
 SRCS		= srcs/main.c \
-			  ${GNL_SRCS} \
-			  ${MAP_SRCS} \
-			  ${TXT_SRCS} \
-			  ${SRCS_SRCS}
+			  srcs/init.c \
+			  srcs/gnl.c \
+			  srcs/init_text1.c \
+			  srcs/init_text2.c \
+			  srcs/init_map.c
 OBJS		= ${SRCS:.c=.o}
 LIBFTDIR	= libft
 LIBFT		= ${LIBFTDIR}/libft.a
@@ -44,7 +39,7 @@ fclean		: clean
 re			: fclean all
 
 ${NAME}		: ${OBJS} ${LIBFT}
-	${CC} $^ ${LFLAG} -o $@ -fsanitize=leak
+	${CC} $^ ${LFLAG} -o $@ #-fsanitize=leak
 ${LIBFT}	:
 	${MK} -C ${LIBFTDIR}
 %.o			: %.c

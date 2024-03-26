@@ -6,14 +6,13 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 21:03:12 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/25 21:54:52 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:29:01 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "text.h"
-#include <stdio.h>
+#include "parse.h"
 
-void	init_text(t_text *const text, int const fd)
+void	__init_map_info(t_map *const map, int const fd)
 {
 	char	*str;
 	int		is_full;
@@ -27,7 +26,7 @@ void	init_text(t_text *const text, int const fd)
 			perror("invalid file");
 			exit(EXIT_FAILURE);
 		}
-		is_full = __init_textures(text, str);
+		is_full = __init_textures(map, str);
 		free(str);
 	}
 }
@@ -63,7 +62,7 @@ char	*__set_textures(char const *str)
 	return (texture);
 }
 
-int	__init_textures(t_text *const text, char const *str)
+int	__init_textures(t_map *const map, char const *str)
 {
 	static size_t	cnt;
 	t_id const		id = __get_id(str);
@@ -76,9 +75,9 @@ int	__init_textures(t_text *const text, char const *str)
 	if (id > E_NL)
 		cnt++;
 	if (id >= E_NO && id <= E_EA)
-		text->textures[id] = __set_textures(str);
+		map->textures[id] = __set_textures(str);
 	else if (id == E_FL || id == E_CE)
-		__set_color(text->colors[id - 4], str);
+		__set_color(map->colors[id - 4], str);
 	if (cnt == 6)
 		return (1);
 	return (0);
