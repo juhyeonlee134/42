@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 13:16:50 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/26 13:29:49 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/26 20:03:44 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS		= srcs/main.c \
 			  srcs/gnl.c \
 			  srcs/init_text1.c \
 			  srcs/init_text2.c \
-			  srcs/init_map.c
+			  srcs/init_map1.c \
+			  srcs/init_map2.c
 OBJS		= ${SRCS:.c=.o}
 LIBFTDIR	= libft
 LIBFT		= ${LIBFTDIR}/libft.a
@@ -39,7 +40,7 @@ fclean		: clean
 re			: fclean all
 
 ${NAME}		: ${OBJS} ${LIBFT}
-	${CC} $^ ${LFLAG} -o $@ #-fsanitize=leak
+	${CC} $^ ${LFLAG} -o $@ 
 ${LIBFT}	:
 	${MK} -C ${LIBFTDIR}
 %.o			: %.c

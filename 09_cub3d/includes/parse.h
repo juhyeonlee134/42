@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: juhyelee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 13:14:57 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/26 13:23:32 by juhyelee         ###   ########.fr       */
+/*   Created: 2024/03/26 13:37:25 by juhyelee          #+#    #+#             */
+/*   Updated: 2024/03/26 20:03:42 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ typedef enum e_id
 	E_FL,
 	E_CE
 }t_id;
+
+typedef enum e_dir
+{
+	E_LEFT,
+	E_DOWN,
+	E_RIGHT,
+	E_UP
+}t_dir;
 
 typedef unsigned char	t_color;
 
@@ -53,11 +61,16 @@ size_t	__check_string(char const *str);
 t_color	__convert_to_num(char const *str);
 
 void	__init_map(t_map *const map, int const fd);
-void	__init_map_size(char const *map_str, size_t *h, size_t *w);
-void	__init_map_context(t_map *const map, char const *map_str);
-void	__full_blank(char *const map, size_t const w);
+size_t	__get_height(char const *str);
+size_t	__get_width(char const *const str);
 size_t	__get_line_len(char const *str);
-//void	__check_map(t_map map);
+void	__init_map_context(t_map *const map, char const *str);
+void	__full_blank(char *const map, size_t const w);
+
+void	__check_map(t_map const map);
+void	__check_element(t_map const map);
+void	__check_one_line(char const *str);
+void	__go_to_wall(t_map const map, size_t *const h, size_t *const w);
 
 char	*get_next_line(int const fd);
 char	*__merge(char *dst, char const *org);
