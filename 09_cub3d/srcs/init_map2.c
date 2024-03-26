@@ -6,7 +6,7 @@
 /*   By: juhyelee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:37:20 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/26 20:01:36 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:08:40 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	__check_map(t_map const map)
 	size_t	w;
 
 	__check_element(map);
-	puts("ok");
 	__go_to_wall(map, &h, &w);
+	__check_surround(map, h, w);
 }
 
 void	__check_element(t_map const map)

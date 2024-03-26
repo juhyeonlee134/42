@@ -6,7 +6,7 @@
 /*   By: juhyelee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:37:25 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/26 20:03:42 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:07:02 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void	__check_map(t_map const map);
 void	__check_element(t_map const map);
 void	__check_one_line(char const *str);
 void	__go_to_wall(t_map const map, size_t *const h, size_t *const w);
+void	__check_surround(t_map map, size_t const h, size_t const w);
+void	__walk_down(t_map *const map, size_t *const h, size_t *const w);
+void	__walk_left(t_map *const map, size_t *const h, size_t *const w);
+void	__walk_right(t_map *const map, size_t *const h, size_t *const w);
+void	__walk_up(t_map *const map, size_t *const h, size_t *const w);
 
 char	*get_next_line(int const fd);
 char	*__merge(char *dst, char const *org);
