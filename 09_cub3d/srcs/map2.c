@@ -6,30 +6,33 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:32 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 15:11:02 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:48:32 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	check_elements(t_map const *const map)
+void	check_elements(t_map const map)
 {
 	size_t	h;
 	size_t	w;
 	int		is_player;
 
 	h = 0;
-	while (h < map->h)
+	while (h < map.h)
 	{
 		w = 0;
-		while (w < map->w)
+		while (w < map.w)
 		{
-			is_player = check_player(map->map[h][w]);
-			if (map->map[h][w] != '1' && map->map[h][w] != '0' && \
-				map->map[h][w] != ' ' && map->map[h][w] != 'N' && \
-				map->map[h][w] != 'E' && map->map[h][w] != 'S' && \
-				map->map[h][w] != 'W')
-				print_error(E_MAP_INVAL);
+			is_player = check_player(map.map[h][w]);
+			if (map.map[h][w] != '1' && map.map[h][w] != '0' && \
+				map.map[h][w] != ' ' && map.map[h][w] != 'N' && \
+				map.map[h][w] != 'E' && map.map[h][w] != 'S' && \
+				map.map[h][w] != 'W')
+			{
+				printf("%zu %zu %d\n", h, w, map.map[h][w]);
+				print_error(E_MAP_OTHEL);
+			}
 			w++;
 		}
 		h++;
@@ -51,14 +54,17 @@ int	check_player(char const el)
 	return (num_p);
 }
 
-void	check_surround(t_map const *const map)
+void	check_surround(t_map const map)
 {
 	size_t	px;
 	size_t	py;
 	t_map	cmap;
 
-	find_player(*map, &py, &px);
-	copy_map(&cmap, *map);
+	find_player(map, &py, &px);
+	copy_map(&cmap, map);
+	while (py > 1 && cmap.map[py][px] != '1')
+		py--;
+	check_around(cmap, py, px);
 	clear_map(cmap);
 }
 

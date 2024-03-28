@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 10:43:32 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 15:03:43 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:32:48 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ enum e_error
 	E_COL_MANY,
 	E_COL_INVAL,
 	E_MAP_NOTFD,
+	E_MAP_OTHEL,
 	E_MAP_INVAL,
 	E_MAP_2PLAYER,
 	E_MAP_NOPLAYER
@@ -93,10 +94,16 @@ void	get_map_size(t_map *const map, char const *str);
 void	convert_map(t_map *const map, char const *str);
 size_t	get_line_len(char const *str);
 
-void	check_elements(t_map const *const map);
+void	check_elements(t_map const map);
 int		check_player(char const el);
-void	check_surround(t_map const *const map);
+void	check_surround(t_map const map);
 void	find_player(t_map const map, size_t *const y, size_t *const x);
 void	copy_map(t_map *const dst, t_map const org);
+
+void	check_around(t_map const map, size_t const y, size_t const x);
+int		check_up(t_map const map, size_t const y, size_t const x);
+int		check_left(t_map const map, size_t const y, size_t const x);
+int		check_down(t_map const map, size_t const y, size_t const x);
+int		check_right(t_map const map, size_t const y, size_t const x);
 
 #endif

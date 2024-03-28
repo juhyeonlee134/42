@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 11:02:51 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/28 14:38:52 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/28 16:04:16 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS = srcs/main.c \
 	   srcs/get_line.c \
 	   srcs/rsrc.c \
 	   srcs/map1.c \
-	   srcs/map2.c
+	   srcs/map2.c \
+	   srcs/map3.c
 OBJS = ${SRCS:.c=.o}
 
 MK = make -C

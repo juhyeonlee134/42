@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:21:33 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 14:58:07 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:49:50 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	init_map(t_map *const map, int const fd)
 	start_point = get_start_point(map_str);
 	get_map_size(map, map_str + start_point);
 	convert_map(map, map_str + start_point);
-	check_elements(map);
-	check_surround(map);
+	check_elements(*map);
+	check_surround(*map);
 	free(map_str);
 }
 
@@ -62,12 +62,12 @@ void	get_map_size(t_map *const map, char const *str)
 	}
 	map->w = 0;
 	index = 0;
-	while (str[index])
+	while (*str)
 	{
 		line_len = get_line_len(str);
 		if (map->w < line_len)
 			map->w = line_len;
-		index += line_len;
+		str += (line_len + 1);
 	}
 	if (map->h < 3 || map->w < 3)
 		print_error(E_MAP_INVAL);
@@ -89,7 +89,7 @@ void	convert_map(t_map *const map, char const *str)
 			print_error(E_ALLOC);
 		line_len = get_line_len(str);
 		ft_strlcpy(map->map[index], str, line_len + 1);
-		ft_memset(map->map[index], ' ', map->w - line_len);
+		ft_memset(map->map[index] + line_len, ' ', map->w - line_len);
 		map->map[index][map->w] = '\0';
 		str += (line_len + 1);
 		index++;

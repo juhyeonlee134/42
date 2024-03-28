@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:17:13 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 14:47:09 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:36:16 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	map_error(enum e_error num)
 {
 	if (num == E_MAP_NOTFD)
 		ft_putendl_fd("Not contain map data", 2);
+	else if (num == E_MAP_OTHEL)
+		ft_putendl_fd("There is other element", 2);
 	else if (num == E_MAP_INVAL)
 		ft_putendl_fd("Invalid map", 2);
 	else if (num == E_MAP_2PLAYER)
