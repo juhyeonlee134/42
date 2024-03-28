@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:14:08 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 14:45:42 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:04:30 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char *argv[])
 	for (size_t index = 0; index < map.h; index++)
 		puts(map.map[index]);
 	clear_resrouce(&rsrc);
-	clear_map(map.map, map.h);
+	clear_map(map);
 	close(fd);
 	return (0);
 }
@@ -68,15 +68,15 @@ void	clear_resrouce(t_rsrc *const rsrc)
 	free(rsrc->textures[3]);
 }
 
-void	clear_map(char **const map, size_t const h)
+void	clear_map(t_map const map)
 {
 	size_t	index;
 
 	index = 0;
-	while (index < h)
+	while (index < map.h)
 	{
-		free(map[index]);
+		free(map.map[index]);
 		index++;
 	}
-	free(map);
+	free(map.map);
 }

@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 10:43:32 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 14:54:48 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:03:43 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,15 @@ t_color	convert_color(char const *const str);
 
 void	init_map(t_map *const map, int const fd);
 size_t	get_start_point(char const *str);
-void	clear_map(char **const map, size_t const h);
+void	clear_map(t_map const map);
 void	get_map_size(t_map *const map, char const *str);
 void	convert_map(t_map *const map, char const *str);
 size_t	get_line_len(char const *str);
 
 void	check_elements(t_map const *const map);
 int		check_player(char const el);
+void	check_surround(t_map const *const map);
+void	find_player(t_map const map, size_t *const y, size_t *const x);
+void	copy_map(t_map *const dst, t_map const org);
 
 #endif

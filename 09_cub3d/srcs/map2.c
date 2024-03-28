@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:32 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 14:53:19 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:11:02 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,51 @@ int	check_player(char const el)
 		num_p = 1;
 	}
 	return (num_p);
+}
+
+void	check_surround(t_map const *const map)
+{
+	size_t	px;
+	size_t	py;
+	t_map	cmap;
+
+	find_player(*map, &py, &px);
+	copy_map(&cmap, *map);
+	clear_map(cmap);
+}
+
+void	find_player(t_map const map, size_t *const y, size_t *const x)
+{
+	*y = 0;
+	while (*y < map.h)
+	{
+		*x = 0;
+		while (*x < map.w)
+		{
+			if (map.map[*y][*x] == 'N' || map.map[*y][*x] == 'E' || \
+				map.map[*y][*x] == 'S' || map.map[*y][*x] == 'W')
+				return ;
+			(*x)++;
+		}
+		(*y)++;
+	}
+}
+
+void	copy_map(t_map *const dst, t_map const org)
+{
+	size_t	index;
+
+	dst->h = org.h;
+	dst->w = org.w;
+	dst->map = (char **)malloc(sizeof(char *) * org.h);
+	if (!dst->map)
+		print_error(E_ALLOC);
+	index = 0;
+	while (index < org.h)
+	{
+		dst->map[index] = ft_strdup(org.map[index]);
+		if (!dst->map[index])
+			print_error(E_ALLOC);
+		index++;
+	}
 }
