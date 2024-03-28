@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:59:12 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 13:57:39 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:10:47 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ t_type	get_type(char const *str)
 	return (-2);
 }
 
+int	is_white(char const ch)
+{
+	return (ch == ' ' || (ch >= 9 && ch <= 13));
+}
+
 char	*set_texture(char const *str)
 {
 	char	*texture;
@@ -101,19 +106,4 @@ void	set_color(t_color *const color, char const *str)
 	}
 	if (*str != '\0')
 		print_error(E_COL_MANY);
-}
-
-t_color	convert_color(char const *str)
-{
-	t_color	color;
-	char	*col_str;
-
-	color = ft_atoi(str);
-	col_str = ft_itoa(color);
-	if (!col_str)
-		print_error(E_ALLOC);
-	if (ft_strncmp(str, col_str, ft_strlen(col_str)) != 0)
-		print_error(E_COL_INVAL);
-	free(col_str);
-	return (color);
 }

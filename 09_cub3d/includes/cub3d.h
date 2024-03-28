@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 10:43:32 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 16:32:48 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:12:58 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ typedef enum e_type
 }t_type;
 
 typedef unsigned char	t_color;
+
 typedef struct s_resource
 {
 	char	*textures[4];
 	t_color	colors[2][3];
 }t_rsrc;
+
 typedef struct s_map
 {
 	char	**map;
@@ -77,29 +79,31 @@ char	*merge(char *const s1, char const *const s2);
 char	*extract(char const *const str);
 void	organize(char *const str);
 
+/* parsing */
+void	parse(t_map *const map, t_rsrc *const rsrc, \
+			char const *const file_name);
 int		open_file(char const *const file_name);
 
 void	init_resource(t_rsrc *const rsrc, int const fd);
-void	clear_resrouce(t_rsrc *const rsrc);
 t_type	get_type(char const *str);
 int		is_white(char const ch);
 char	*set_texture(char const *str);
 void	set_color(t_color *const color, char const *str);
 t_color	convert_color(char const *const str);
+void	clear_resrouce(t_rsrc *const rsrc);
 
 void	init_map(t_map *const map, int const fd);
 size_t	get_start_point(char const *str);
-void	clear_map(t_map const map);
 void	get_map_size(t_map *const map, char const *str);
 void	convert_map(t_map *const map, char const *str);
 size_t	get_line_len(char const *str);
-
 void	check_elements(t_map const map);
+int		is_player(char const el);
 int		check_player(char const el);
 void	check_surround(t_map const map);
 void	find_player(t_map const map, size_t *const y, size_t *const x);
 void	copy_map(t_map *const dst, t_map const org);
-
+void	clear_map(t_map const map);
 void	check_around(t_map const map, size_t const y, size_t const x);
 int		check_up(t_map const map, size_t const y, size_t const x);
 int		check_left(t_map const map, size_t const y, size_t const x);

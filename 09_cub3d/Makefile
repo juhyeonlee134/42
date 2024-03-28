@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 11:02:51 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/28 16:04:16 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/28 17:11:23 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ INCS = includes
 SRCS = srcs/main.c \
 	   srcs/error.c \
 	   srcs/get_line.c \
-	   srcs/rsrc.c \
+	   srcs/rsrc1.c \
+	   srcs/rsrc2.c \
 	   srcs/map1.c \
 	   srcs/map2.c \
 	   srcs/map3.c

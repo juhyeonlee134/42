@@ -6,7 +6,7 @@
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:32 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 16:48:32 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:14:39 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_elements(t_map const map)
 {
 	size_t	h;
 	size_t	w;
-	int		is_player;
+	int		p_one;
 
 	h = 0;
 	while (h < map.h)
@@ -24,11 +24,9 @@ void	check_elements(t_map const map)
 		w = 0;
 		while (w < map.w)
 		{
-			is_player = check_player(map.map[h][w]);
+			p_one = check_player(map.map[h][w]);
 			if (map.map[h][w] != '1' && map.map[h][w] != '0' && \
-				map.map[h][w] != ' ' && map.map[h][w] != 'N' && \
-				map.map[h][w] != 'E' && map.map[h][w] != 'S' && \
-				map.map[h][w] != 'W')
+				map.map[h][w] != ' ' && !is_player(map.map[h][w]))
 			{
 				printf("%zu %zu %d\n", h, w, map.map[h][w]);
 				print_error(E_MAP_OTHEL);
@@ -37,15 +35,20 @@ void	check_elements(t_map const map)
 		}
 		h++;
 	}
-	if (is_player == 0)
+	if (p_one == 0)
 		print_error(E_MAP_NOPLAYER);
+}
+
+int	is_player(char const el)
+{
+	return (el == 'N' || el == 'E' || el == 'S' || el == 'W');
 }
 
 int	check_player(char const el)
 {
 	static int	num_p;
 
-	if (el == 'N' || el == 'E' || el == 'S' || el == 'W')
+	if (is_player(el))
 	{
 		if (num_p != 0)
 			print_error(E_MAP_2PLAYER);
@@ -76,30 +79,10 @@ void	find_player(t_map const map, size_t *const y, size_t *const x)
 		*x = 0;
 		while (*x < map.w)
 		{
-			if (map.map[*y][*x] == 'N' || map.map[*y][*x] == 'E' || \
-				map.map[*y][*x] == 'S' || map.map[*y][*x] == 'W')
+			if (is_player(map.map[*y][*x]))
 				return ;
 			(*x)++;
 		}
 		(*y)++;
-	}
-}
-
-void	copy_map(t_map *const dst, t_map const org)
-{
-	size_t	index;
-
-	dst->h = org.h;
-	dst->w = org.w;
-	dst->map = (char **)malloc(sizeof(char *) * org.h);
-	if (!dst->map)
-		print_error(E_ALLOC);
-	index = 0;
-	while (index < org.h)
-	{
-		dst->map[index] = ft_strdup(org.map[index]);
-		if (!dst->map[index])
-			print_error(E_ALLOC);
-		index++;
 	}
 }
