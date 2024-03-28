@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rsrc1.c                                            :+:      :+:    :+:   */
+/*   rsrc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:59:12 by juhyelee          #+#    #+#             */
-/*   Updated: 2024/03/28 13:03:05 by juhyelee         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:57:39 by juhyelee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	open_file(char const *const file_name)
-{
-	size_t const	len = ft_strlen(file_name);
-	int				fd;
-
-	if (len < 4)
-		print_error(E_INVFILE);
-	if (ft_strncmp(file_name + (len - 4), ".cub", 4) != 0)
-		print_error(E_INVFILE);
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-		print_error(E_FDERR);
-	return (fd);
-}
 
 void	init_resource(t_rsrc *const rsrc, int const fd)
 {
@@ -38,7 +23,7 @@ void	init_resource(t_rsrc *const rsrc, int const fd)
 	{
 		line = get_line(fd);
 		if (!line)
-			print_error(E_LACKINFO);
+			print_error(E_RSRC_LACK);
 		line[ft_strlen(line) - 1] = '\0';
 		type = get_type(line);
 		if (type > T_NL)
@@ -69,13 +54,8 @@ t_type	get_type(char const *str)
 		return (T_WE);
 	else if (str[-1] == 'A' && str[-2] == 'E')
 		return (T_EA);
-	print_error(E_INVTYPE);
+	print_error(E_TYPE_INVAL);
 	return (-2);
-}
-
-int	is_white(char const ch)
-{
-	return (ch == ' ' || (ch >= 9 && ch <= 13));
 }
 
 char	*set_texture(char const *str)
@@ -86,16 +66,54 @@ char	*set_texture(char const *str)
 	while (*str && is_white(*str))
 		str++;
 	if (*str == '\0')
-		print_error(E_NOTXT);
+		print_error(E_TEXT_NOTFD);
 	index = 0;
 	while (str[index])
 	{
 		if (is_white(str[index]))
-			print_error(E_MANYTXT);
+			print_error(E_TEXT_MANY);
 		index++;
 	}
 	texture = ft_strdup(str);
 	if (!texture)
 		print_error(E_ALLOC);
 	return (texture);
+}
+
+void	set_color(t_color *const color, char const *str)
+{
+	size_t	index;
+
+	while (*str && is_white(*str))
+		str++;
+	if (*str == '\0')
+		print_error(E_COL_NOTFD);
+	index = 0;
+	while (index < 3)
+	{
+		color[index] = convert_color(str);
+		while (*str && ft_isdigit(*str))
+			str++;
+		str++;
+		if (index != 2 && *str == '\0')
+			print_error(E_COL_LACK);
+		index++;
+	}
+	if (*str != '\0')
+		print_error(E_COL_MANY);
+}
+
+t_color	convert_color(char const *str)
+{
+	t_color	color;
+	char	*col_str;
+
+	color = ft_atoi(str);
+	col_str = ft_itoa(color);
+	if (!col_str)
+		print_error(E_ALLOC);
+	if (ft_strncmp(str, col_str, ft_strlen(col_str)) != 0)
+		print_error(E_COL_INVAL);
+	free(col_str);
+	return (color);
 }

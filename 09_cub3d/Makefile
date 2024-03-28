@@ -6,7 +6,7 @@
 #    By: juhyelee <juhyelee@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 11:02:51 by juhyelee          #+#    #+#              #
-#    Updated: 2024/03/28 12:26:00 by juhyelee         ###   ########.fr        #
+#    Updated: 2024/03/28 14:38:52 by juhyelee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ INCS = includes
 SRCS = srcs/main.c \
 	   srcs/error.c \
 	   srcs/get_line.c \
-	   srcs/rsrc1.c \
-	   srcs/rsrc2.c
+	   srcs/rsrc.c \
+	   srcs/map1.c \
+	   srcs/map2.c
 OBJS = ${SRCS:.c=.o}
 
 MK = make -C
