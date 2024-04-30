@@ -1,20 +1,20 @@
-RM = rm -rf
-CPP = c++
-CFLAG = -std=c++98 -Wall -Wextra -Werror
-SRCS = Bureaucrat.cpp Form.cpp main.cpp
-OBJS = ${SRCS:.cpp=.o}
-NAME = ex01
+RM		= rm -rf
+CPP		= c++
+CFLAG	= -std=c++98 -Wall -Wextra -Werror
+SRCS	= Bureaucrat.cpp Form.cpp main.cpp
+OBJS	= ${SRCS:.cpp=.o}
+NAME	= ex01
 
-.PHONY : all clean fclean re
+.PHONY	: all clean fclean re
 
-all : ${NAME}
-clean :
+all		: ${NAME}
+clean	:
 	${RM} ${OBJS}
-fclean : clean
+fclean	: clean
 	${RM} ${NAME}
-re : fclean all
+re		: fclean all
 
-${NAME} : ${OBJS}
+${NAME}	: ${OBJS}
 	${CPP} ${OBJS} -o ${NAME}
-%.o : %.c
-	${CPP} ${CFLAG} $< -o $@
+%.o		: %.cpp
+	${CPP} ${CFLAG} $< -o $@ -c
