@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 Bureaucrat::Bureaucrat()
 	: mName("noname")
@@ -57,14 +58,36 @@ void Bureaucrat::decreaseGrade(void)
 	this->mGrade++;
 }
 
+void Bureaucrat::signForm(Form& f)
+{
+	if (f.beSigned(*this))
+	{
+		std::cout << this->getName() << " signed " << f.getName() << std::endl;
+	}
+	else
+	{
+		std::cout << this->getName() << " couldn't sign " << f.getName();
+		std::cout << " because ";
+		if (f.getToSignGrade() < this->getGrade())
+		{
+			std::cout << "grade too low";
+		}
+		else
+		{
+			std::cout << "already signed";
+		}
+		std::cout << std::endl;
+	}
+}
+
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return "Grade too high";
+	return "Bureaucrat grade too high";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return "Grade too low";
+	return "Bureaucrat grade too low";
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b)

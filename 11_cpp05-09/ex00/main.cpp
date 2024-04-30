@@ -5,7 +5,7 @@ int main(void)
 {
 	Bureaucrat a("A", 5);
 	Bureaucrat b("B", 10);
-	Bureaucrat c = b;
+	Bureaucrat c(b);
 
 	try
 	{
