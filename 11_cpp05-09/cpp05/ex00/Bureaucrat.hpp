@@ -8,27 +8,28 @@
 class Bureaucrat
 {
 public:
-	Bureaucrat();
-	Bureaucrat(std::string const name, unsigned int const grade);
-	Bureaucrat(Bureaucrat const & org);
-	Bureaucrat & operator = (Bureaucrat const & org);
+	Bureaucrat(std::string const name, int const grade);
+	~Bureaucrat();
 	std::string getName(void) const;
 	int getGrade(void) const;
 	void increaseGrade(void);
 	void decreaseGrade(void);
-	class GradeTooHighException : public std::exception
+	class GradeTooHighException : public std::logic_error
 	{
 	public:
-		const char * what(void) const throw();
+		GradeTooHighException(std::string const & msg);
 	};
-	class GradeTooLowException : public std::exception
+	class GradeTooLowException : public std::logic_error
 	{
 	public:
-		const char * what(void) const throw();
+		GradeTooLowException(std::string const & msg);
 	};
 private:
 	std::string const mName;
 	int mGrade;
+	Bureaucrat();
+	Bureaucrat(Bureaucrat const & org);
+	Bureaucrat & operator = (Bureaucrat const & org);
 };
 
 std::ostream & operator << (std::ostream & os, Bureaucrat const & b);

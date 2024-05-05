@@ -5,26 +5,23 @@ int main(void)
 {
 	try
 	{
-		Bureaucrat a;
-		Bureaucrat b("Bob", 70);
-		Bureaucrat c("Charlie", 1);
-		//Bureaucrat d("Daniel", -10);
-		//Bureaucrat e("Edward", 200);
-		std::cout << a << std::endl;
-		std::cout << b << std::endl;
-		std::cout << c << std::endl;
-		//std::cout << d << std::endl;
-		//std::cout << e << std::endl;
-		//a.increaseGrade();
-		//a.decreaseGrade();
-		//a.decreaseGrade();
+		Bureaucrat a("AAA", 1);
+		Bureaucrat b("BBB", 70);
+		Bureaucrat c("CCC", 150);
+		//Bureaucrat d("DDD", 0);
+		//Bureaucrat e("EEE", 200);
+		//Bureaucrat f("FFF", -1);
+		std::cout << a << '\n';
+		std::cout << b << '\n';
+		std::cout << c << '\n';
+
+		a.increaseGrade();
 		b.increaseGrade();
-		b.decreaseGrade();
-		//c.increaseGrade();
-		std::cout << "ret : " << b << std::endl;
+		c.increaseGrade();
 	}
-	catch(const std::exception& e)
+	catch(std::exception const & e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cout << e.what() << '\n';
 	}
+
 }

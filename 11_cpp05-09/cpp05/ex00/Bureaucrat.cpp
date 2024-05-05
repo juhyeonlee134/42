@@ -1,41 +1,22 @@
 #include "Bureaucrat.hpp"
 #include <string>
-#include <iostream>
 
-Bureaucrat::Bureaucrat()
-	: mName("noname")
-	, mGrade(150)
-{}
-
-Bureaucrat::Bureaucrat(std::string const name, unsigned int const grade)
+Bureaucrat::Bureaucrat(std::string const name, int const grade)
 	: mName(name)
 	, mGrade(grade)
 {
 	if (this->mGrade < 1)
 	{
-		throw Bureaucrat::GradeTooHighException();
+		throw Bureaucrat::GradeTooHighException("The initial rating is too high");
 	}
 	else if (this->mGrade > 150)
 	{
-		throw Bureaucrat::GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException("The initial rating is too low");
 	}
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat const & org)
-	: mName(org.getName())
-	, mGrade(org.getGrade())
+Bureaucrat::~Bureaucrat()
 {}
-
-Bureaucrat & Bureaucrat::operator = (Bureaucrat const & org)
-{
-	std::cout << "Copy only the Grade." << std::endl;
-	if (this == &org)
-	{
-		return *this;
-	}
-	this->mGrade = org.getGrade();
-	return *this;
-}
 
 std::string Bureaucrat::getName(void) const
 {
@@ -51,7 +32,7 @@ void Bureaucrat::increaseGrade(void)
 {
 	if (this->mGrade == 1)
 	{
-		throw Bureaucrat::GradeTooHighException();
+		throw Bureaucrat::GradeTooHighException("It's already the highest grade.");
 	}
 	this->mGrade--;
 }
@@ -60,23 +41,40 @@ void Bureaucrat::decreaseGrade(void)
 {
 	if (this->mGrade == 150)
 	{
-		throw Bureaucrat::GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException("It's already at its lowest grade.");
 	}
 	this->mGrade++;
 }
 
-const char * Bureaucrat::GradeTooHighException::what(void) const throw()
-{
-	return "Bureaucrat grade is too high";
-}
+Bureaucrat::GradeTooHighException::GradeTooHighException(std::string const & msg)
+	: std::logic_error(msg)
+{}
 
-const char * Bureaucrat::GradeTooLowException::what(void) const throw()
+Bureaucrat::GradeTooLowException::GradeTooLowException(std::string const & msg)
+	: std::logic_error(msg)
+{}
+
+Bureaucrat::Bureaucrat()
+	: mName("")
+	, mGrade(150)
+{}
+
+Bureaucrat::Bureaucrat(Bureaucrat const & org)
+	: mName(org.getName())
+	, mGrade(org.getGrade())
+{}
+
+Bureaucrat & Bureaucrat::operator = (Bureaucrat const & org)
 {
-	return "Bureaucrat grade is too low";
+	if (this == &org)
+	{
+		return *this;
+	}
+	return *this;
 }
 
 std::ostream & operator << (std::ostream & os, Bureaucrat const & b)
 {
-	os << b.getName() << ", bureaucrat grade " << b.getGrade() << std::endl;
+	os << b.getName() << ", bureaucrat grade " << b.getGrade();
 	return os;
 }
