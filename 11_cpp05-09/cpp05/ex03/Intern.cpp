@@ -4,6 +4,7 @@
 #include "PresidentialPardonForm.hpp"
 #include "AForm.hpp"
 #include <string>
+#include <iostream>
 
 Intern::Intern()
 {}
@@ -60,5 +61,6 @@ AForm * Intern::makeForm(std::string name, std::string target)
 	{
 		throw std::bad_alloc();
 	}
+	std::cout << "Intern creates " << form->getName() << '\n';
 	return form;
 }
