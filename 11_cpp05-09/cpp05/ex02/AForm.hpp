@@ -38,7 +38,7 @@ public:
 	class SignedExcpetion : public std::runtime_error
 	{
 	public:
-		SignedExcpetion();
+		SignedExcpetion(std::string const & msg);
 	};
 private:
 	std::string const mName;
@@ -49,6 +49,7 @@ private:
 	AForm();
 	AForm(AForm const & org);
 	AForm & operator = (AForm const & org);
+	Bureaucrat * mSign;
 };
 
 std::ostream & operator << (std::ostream & os, AForm const & f);

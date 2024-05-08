@@ -33,7 +33,13 @@ int main(void)
 		a.signForm(rForm);
 		a.signForm(pForm);
 		c.executeForm(sForm);
+		c.executeForm(rForm);
+		c.executeForm(pForm);
+		b.executeForm(sForm);
 		b.executeForm(rForm);
+		b.executeForm(pForm);
+		a.executeForm(sForm);
+		a.executeForm(rForm);
 		a.executeForm(pForm);
 	}
 	catch(std::exception const & e)

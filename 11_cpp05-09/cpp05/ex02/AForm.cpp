@@ -8,6 +8,7 @@ AForm::AForm(std::string const name, std::string const target, int const signGra
 	, mSignGrade(signGrade)
 	, mExecuteGrade(executeGrade)
 	, mIsSigned(false)
+	, mSign(NULL)
 {
 	if (this->mSignGrade < 1)
 	{
@@ -66,13 +67,18 @@ void AForm::beSigned(Bureaucrat const & b)
 		throw AForm::GradeTooLowException("the sign grade is low");
 	}
 	this->mIsSigned = true;
+	this->mSign = (Bureaucrat *)(&b);
 }
 
 void AForm::checkSignAndGrade(Bureaucrat const & executor) const
 {
 	if (!this->mIsSigned)
 	{
-		throw AForm::SignedExcpetion();
+		throw AForm::SignedExcpetion("need sign");
+	}
+	else if (this->mSign != &executor)
+	{
+		throw AForm::SignedExcpetion("not signed this form");
 	}
 	else if (executor.getGrade() > this->mExecuteGrade)
 	{
@@ -92,8 +98,8 @@ AForm::AlreadySigned::AlreadySigned()
 	: std::logic_error("already signed")
 {}
 
-AForm::SignedExcpetion::SignedExcpetion()
-	: std::runtime_error("need to sign")
+AForm::SignedExcpetion::SignedExcpetion(std::string const & msg)
+	: std::runtime_error(msg)
 {}
 
 AForm::AForm()

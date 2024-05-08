@@ -14,7 +14,8 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {
 	this->checkSignAndGrade(executor);
-	std::ofstream file(this->getTarget() + "_shrubbery");
+	std::string fileName(this->getTarget() + "_shrubbery");
+	std::ofstream file(fileName.c_str(), std::ios_base::out);
 	if (!file.is_open())
 	{
 		throw std::ios_base::failure("failed open file " + this->getTarget() + "_shrubbery");
