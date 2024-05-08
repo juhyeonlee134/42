@@ -39,6 +39,7 @@ AForm * Intern::makeForm(std::string name, std::string target)
 		if (stringArray[index] == name)
 		{
 			formNum = (enum EForm)(index + 1);
+			break;
 		}
 	}
 	switch(formNum)

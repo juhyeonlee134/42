@@ -47,10 +47,10 @@ private:
 	int const mSignGrade;
 	int const mExecuteGrade;
 	bool mIsSigned;
+	Bureaucrat * mSign;
 	AForm();
 	AForm(AForm const & org);
 	AForm & operator = (AForm const & org);
-	Bureaucrat * mSign;
 };
 
 std::ostream & operator << (std::ostream & os, AForm const & f);
