@@ -10,6 +10,6 @@ int main(void)
 	Base * base = creator.generate();
 	creator.identify(base);
 	Base & copy = *base;
-	creator.identify(copy);
+	creator.identify(copy);delete base;
 	return 0;
 }
