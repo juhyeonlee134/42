@@ -8,6 +8,7 @@ AForm::AForm(std::string const name, std::string const target, int const signGra
 	, mSignGrade(signGrade)
 	, mExecuteGrade(executeGrade)
 	, mIsSigned(false)
+	, mSign(NULL)
 {
 	if (this->mSignGrade < 1)
 	{
@@ -55,6 +56,11 @@ bool AForm::getIsSigned(void) const
 	return this->mIsSigned;
 }
 
+Bureaucrat * AForm::getSign(void) const
+{
+	return this->mSign;
+}
+
 void AForm::beSigned(Bureaucrat const & b)
 {
 	if (this->mIsSigned)
@@ -66,13 +72,18 @@ void AForm::beSigned(Bureaucrat const & b)
 		throw AForm::GradeTooLowException("the sign grade is low");
 	}
 	this->mIsSigned = true;
+	this->mSign = (Bureaucrat *)(&b);
 }
 
 void AForm::checkSignAndGrade(Bureaucrat const & executor) const
 {
 	if (!this->mIsSigned)
 	{
-		throw AForm::SignedExcpetion();
+		throw AForm::SignedExcpetion("need sign");
+	}
+	else if (this->mSign != &executor)
+	{
+		throw AForm::SignedExcpetion("not signed this form");
 	}
 	else if (executor.getGrade() > this->mExecuteGrade)
 	{
@@ -92,8 +103,8 @@ AForm::AlreadySigned::AlreadySigned()
 	: std::logic_error("already signed")
 {}
 
-AForm::SignedExcpetion::SignedExcpetion()
-	: std::runtime_error("need to sign")
+AForm::SignedExcpetion::SignedExcpetion(std::string const & msg)
+	: std::runtime_error(msg)
 {}
 
 AForm::AForm()
@@ -128,5 +139,10 @@ std::ostream & operator << (std::ostream & os, AForm const & f)
 	os << '\t' << "sign grade : " << f.getSignGrade() << '\n';
 	os << '\t' << "execute grade : " << f.getExecuteGrade() << '\n';
 	os << '\t' << "is signed : " << (f.getIsSigned() ? "O" : "X");
+	Bureaucrat * sign = f.getSign();
+	if (sign != NULL)
+	{
+		os << " by " << sign->getName();
+	}
 	return os;
 }

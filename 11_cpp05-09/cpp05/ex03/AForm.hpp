@@ -17,6 +17,7 @@ public:
 	int getSignGrade(void) const;
 	int getExecuteGrade(void) const;
 	bool getIsSigned(void) const;
+	Bureaucrat * getSign(void) const;
 	void beSigned(Bureaucrat const & b);
 	void checkSignAndGrade(Bureaucrat const & executor) const;
 	virtual void execute(Bureaucrat const & executor) const = 0;
@@ -38,7 +39,7 @@ public:
 	class SignedExcpetion : public std::runtime_error
 	{
 	public:
-		SignedExcpetion();
+		SignedExcpetion(std::string const & msg);
 	};
 private:
 	std::string const mName;
@@ -49,6 +50,7 @@ private:
 	AForm();
 	AForm(AForm const & org);
 	AForm & operator = (AForm const & org);
+	Bureaucrat * mSign;
 };
 
 std::ostream & operator << (std::ostream & os, AForm const & f);

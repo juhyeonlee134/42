@@ -14,24 +14,24 @@ int main(void)
 		Intern intern;
 		AForm * form = intern.makeForm("shrubbery creation", "house");
 		std::cout << *form << '\n';
-
 		a.signForm(*form);
+		std::cout << *form << '\n';
 		a.executeForm(*form);
 		delete form;
 
 		Bureaucrat b("BBB", 30);
 		form = intern.makeForm("robotomy request", "dog");
 		std::cout << *form << '\n';
-
 		b.signForm(*form);
+		std::cout << *form << '\n';
 		b.executeForm(*form);
 		delete form;
 
 		Bureaucrat c("CCC", 1);
 		form = intern.makeForm("presidential pardon", "who");
 		std::cout << *form << '\n';
-
 		c.signForm(*form);
+		std::cout << *form << '\n';
 		c.executeForm(*form);
 		delete form;
 	}
