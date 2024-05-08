@@ -32,6 +32,10 @@ int main(void)
 		a.signForm(sForm);
 		a.signForm(rForm);
 		a.signForm(pForm);
+		std::cout << sForm << '\n';
+		std::cout << rForm << '\n';
+		std::cout << pForm << '\n';
+		
 		c.executeForm(sForm);
 		c.executeForm(rForm);
 		c.executeForm(pForm);

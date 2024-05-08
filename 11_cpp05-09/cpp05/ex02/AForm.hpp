@@ -17,6 +17,7 @@ public:
 	int getSignGrade(void) const;
 	int getExecuteGrade(void) const;
 	bool getIsSigned(void) const;
+	Bureaucrat * getSign(void) const;
 	void beSigned(Bureaucrat const & b);
 	void checkSignAndGrade(Bureaucrat const & executor) const;
 	virtual void execute(Bureaucrat const & executor) const = 0;

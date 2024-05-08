@@ -56,6 +56,11 @@ bool AForm::getIsSigned(void) const
 	return this->mIsSigned;
 }
 
+Bureaucrat * AForm::getSign(void) const
+{
+	return this->mSign;
+}
+
 void AForm::beSigned(Bureaucrat const & b)
 {
 	if (this->mIsSigned)
@@ -134,5 +139,10 @@ std::ostream & operator << (std::ostream & os, AForm const & f)
 	os << '\t' << "sign grade : " << f.getSignGrade() << '\n';
 	os << '\t' << "execute grade : " << f.getExecuteGrade() << '\n';
 	os << '\t' << "is signed : " << (f.getIsSigned() ? "O" : "X");
+	Bureaucrat * sign = f.getSign();
+	if (sign != NULL)
+	{
+		os << " by " << sign->getName();
+	}
 	return os;
 }
