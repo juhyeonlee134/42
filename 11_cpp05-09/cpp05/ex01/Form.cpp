@@ -1,6 +1,7 @@
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
 #include <string>
+#include <ostream>
 
 Form::Form(std::string const name, int const signGrade, int const executeGrade)
 	: mName(name)

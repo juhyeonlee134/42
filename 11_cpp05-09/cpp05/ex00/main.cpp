@@ -28,5 +28,5 @@ int main(void)
 	{
 		std::cout << e.what() << '\n';
 	}
-
+	return 0;
 }

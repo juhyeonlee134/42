@@ -1,6 +1,7 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
 #include <string>
+#include <ostream>
 #include <iostream>
 
 Bureaucrat::Bureaucrat(std::string const name, int const grade)
