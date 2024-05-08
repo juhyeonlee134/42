@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 #include <cctype>
+#include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 ScalarConverter::ScalarConverter()
