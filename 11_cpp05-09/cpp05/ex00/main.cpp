@@ -15,9 +15,14 @@ int main(void)
 		std::cout << b << '\n';
 		std::cout << c << '\n';
 
+		a.decreaseGrade();
+		b.decreaseGrade();
+		// c.decreaseGrade();
+		std::cout << a << '\n' << b << '\n';
 		a.increaseGrade();
 		b.increaseGrade();
 		c.increaseGrade();
+		std::cout << a << '\n' << b << '\n' << c << '\n';
 	}
 	catch(std::exception const & e)
 	{
