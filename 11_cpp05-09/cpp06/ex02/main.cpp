@@ -6,10 +6,14 @@
 
 int main(void)
 {
-	Base creator;
-	Base * base = creator.generate();
-	creator.identify(base);
-	Base & copy = *base;
-	creator.identify(copy);delete base;
+	for (std::size_t cnt = 0; cnt < 10; cnt++)
+	{
+		Base creator;
+		Base * base = creator.generate();
+		creator.identify(base);
+		Base & copy = *base;
+		creator.identify(copy);
+		delete base;
+	}
 	return 0;
 }

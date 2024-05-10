@@ -3,7 +3,6 @@
 #include "B.hpp"
 #include "C.hpp"
 #include <cstdlib>
-#include <ctime>
 #include <iostream>
 
 Base::~Base()
@@ -12,7 +11,7 @@ Base::~Base()
 Base * Base::generate(void)
 {
 	Base * ret;
-	std::srand(time(NULL));
+	std::srand(static_cast<unsigned int>(clock()));
 	int randNum = std::rand() % 3;
 	switch(randNum)
 	{
