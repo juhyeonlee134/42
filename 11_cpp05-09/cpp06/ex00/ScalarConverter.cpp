@@ -38,7 +38,7 @@ void ScalarConverter::convert(char const * str)
 	}
 	else
 	{
-		printCharactor(static_cast<char>(num));
+		printCharactor(static_cast<int>(num));
 		std::cout << "int : " << static_cast<int>(num) << '\n';
 		printFloat(static_cast<float>(num));
 		printDouble(num);
