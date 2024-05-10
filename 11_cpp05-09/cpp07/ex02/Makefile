@@ -17,4 +17,4 @@ re		: fclean all
 ${NAME}	: ${OBJS}
 	${CPP} ${OBJS} ${TPPS} -o ${NAME}
 %.o		: %.cpp
-	${CPP} ${CFLAG} $< -o $@ -c
+	${CPP} ${CFLAG} -I. $< -o $@ -c

@@ -18,4 +18,6 @@ private:
 	Array();
 };
 
+#include "Array.tpp"
+
 #endif
