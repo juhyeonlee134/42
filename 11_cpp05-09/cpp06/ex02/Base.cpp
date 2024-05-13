@@ -11,7 +11,7 @@ Base::~Base()
 Base * Base::generate(void)
 {
 	Base * ret;
-	std::srand(static_cast<unsigned int>(clock()));
+	std::srand(clock());
 	int randNum = std::rand() % 3;
 	switch(randNum)
 	{
@@ -49,24 +49,21 @@ void Base::identify(Base & p)
 	try
 	{
 		A & testA = dynamic_cast<A &>(p);
-		std::cout << "addr : " << &testA << '\n';
-		std::cout << "This is A\n";
+		std::cout << "This is A - " << "addr : " << &testA << '\n';
 	}
 	catch (std::exception const & e)
 	{}
 	try
 	{
 		B & testB = dynamic_cast<B &>(p);
-		std::cout << "addr : " << &testB << '\n';
-		std::cout << "This is B\n";
+		std::cout << "This is B - " << "addr : " << &testB << '\n';
 	}
 	catch(const std::exception& e)
 	{}
 	try
 	{
 		C & testC = dynamic_cast<C &>(p);
-		std::cout << "addr : " << &testC << '\n';
-		std::cout << "This is C\n";
+		std::cout << "This is C - " << "addr : " << &testC << '\n';
 	}
 	catch(const std::exception& e)
 	{}

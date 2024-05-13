@@ -1,7 +1,7 @@
 #include "Serializer.hpp"
 #include "Data.hpp"
 #include <iostream>
-#include <stdint.h>
+#include <ios>
 
 int main(void)
 {

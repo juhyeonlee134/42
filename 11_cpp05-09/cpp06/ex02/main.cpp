@@ -13,6 +13,7 @@ int main(void)
 		creator.identify(base);
 		Base & copy = *base;
 		creator.identify(copy);
+		std::cout << '\n';
 		delete base;
 	}
 	return 0;

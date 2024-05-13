@@ -29,7 +29,7 @@ ScalarConverter & ScalarConverter::operator = (ScalarConverter const & org)
 void ScalarConverter::convert(char const * str)
 {
 	double num = toDouble(str);
-	if (std::isnan(num) && std::isinf(num))
+	if (std::isnan(num) || std::isinf(num))
 	{
 		std::cout << "char : impossible\n";
 		std::cout << "int : impossible\n";
@@ -38,9 +38,9 @@ void ScalarConverter::convert(char const * str)
 	}
 	else
 	{
-		printCharactor(static_cast<int>(num));
-		std::cout << "int : " << static_cast<int>(num) << '\n';
-		printFloat(static_cast<float>(num));
+		printCharactor(num);
+		printInt(num);
+		printFloat(num);
 		printDouble(num);
 	}
 }
@@ -87,10 +87,16 @@ void ScalarConverter::skipNumber(std::string const str, std::size_t & index)
 	}
 }
 
-void ScalarConverter::printCharactor(int const ch)
+void ScalarConverter::printCharactor(double const num)
 {
+	int const ch = static_cast<int>(num);
+
 	std::cout << "char : ";
-	if (std::isprint(ch))
+	if (num > 255 || num < 0)
+	{
+		std::cout << "impossible\n";
+	}
+	else if (std::isprint(ch))
 	{
 		std::cout << '\'' << static_cast<char>(ch) << "\'\n";
 	}
@@ -100,9 +106,26 @@ void ScalarConverter::printCharactor(int const ch)
 	}
 }
 
-void ScalarConverter::printFloat(float const num)
+void ScalarConverter::printInt(double const num)
 {
-	std::cout << "float : " << num;
+	int const z = static_cast<int>(num);
+
+	std::cout << "int : ";
+	if (num > 2147483647.0 || num < -2147483648.0)
+	{
+		std::cout << "impossible\n";
+	}
+	else
+	{
+		std::cout << z << '\n';
+	}
+}
+
+void ScalarConverter::printFloat(double const num)
+{
+	float const fNum = static_cast<float>(num);
+
+	std::cout << "float : " << fNum;
 	if (num - static_cast<int>(num) == 0)
 	{
 		std::cout << ".0f\n";

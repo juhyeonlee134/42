@@ -1,6 +1,5 @@
 #include "Serializer.hpp"
 #include "Data.hpp"
-#include <stdint.h>
 
 Serializer::Serializer()
 {}

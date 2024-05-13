@@ -3,7 +3,8 @@
 #define __SERIALIZER_H__
 
 #include "Data.hpp"
-#include <stdint.h>
+
+typedef unsigned long uintptr_t;
 
 class Serializer
 {
