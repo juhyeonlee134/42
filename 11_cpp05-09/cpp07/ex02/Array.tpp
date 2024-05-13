@@ -3,13 +3,17 @@
 #define __ARRAY_TPP__
 
 #include "Array.hpp"
-#include <stdexcept>
+#include <exception>
 
 template<typename T>
 Array<T>::Array(unsigned int const n)
 {
 	this->mArr = new T[n];
 	this->mSize = n;
+	for (unsigned int index = 0; index < n; index++)
+	{
+		this->mArr[index] = 0;
+	}
 }
 
 template<typename T>
@@ -45,7 +49,7 @@ T & Array<T>::operator [] (unsigned int const index)
 {
 	if (index >= this->mSize)
 	{
-		throw std::out_of_range("wrong access");
+		throw std::exception();
 	}
 	return this->mArr[index];
 }
