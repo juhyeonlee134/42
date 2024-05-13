@@ -11,11 +11,10 @@ int main(void)
 	data.r = 3.14f;
 	std::cout << "origin pointer : " << &data << '\n';
 
-	Serializer serializer;
-	uintptr_t ptr = serializer.serialize(&data);
+	uintptr_t ptr = Serializer::serialize(&data);
 	std::cout << "convert1 : " << ptr << '\n';
 	std::cout << "convert1 hex : " << std::hex << ptr << '\n';
-	Data * p = serializer.deserialize(ptr);
+	Data * p = Serializer::deserialize(ptr);
 	std::cout << "convert2 : " << p << '\n';
 	return 0;
 }
