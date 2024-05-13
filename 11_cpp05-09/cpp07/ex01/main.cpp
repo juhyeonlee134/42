@@ -16,6 +16,7 @@ int main(void)
 	std::string arrStr[] = {"aaa", "bbb", "ccc"};
 	size = sizeof(arrStr) / sizeof(arrStr[0]);
 	iter(arrStr, size, print<std::string>);
+	iter(arrStr, -1, print<std::string>);
 
 	return 0;
 }

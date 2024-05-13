@@ -5,26 +5,26 @@
 #include <iostream>
 
 template <typename T, typename F>
-void iter(T const * const arr, std::size_t const len, void (*func)(F const &))
+void iter(T const * const arr, int const len, void (*func)(F const &))
 {
-	if (arr == NULL || func == NULL)
+	if (arr == NULL || func == NULL || len <= 0)
 	{
 		return ;
 	}
-	for (std::size_t index = 0; index < len; index++)
+	for (int index = 0; index < len; index++)
 	{
 		func(arr[index]);
 	}
 }
 
 template<typename T, typename F>
-void iter(T * const arr, std::size_t const len, void (*func)(F &))
+void iter(T * const arr, int const len, void (*func)(F &))
 {
-	if (arr == NULL || func == NULL)
+	if (arr == NULL || func == NULL || len <= 0)
 	{
 		return ;
 	}
-	for (std::size_t index = 0; index < len; index++)
+	for (int index = 0; index < len; index++)
 	{
 		func(arr[index]);
 	}
