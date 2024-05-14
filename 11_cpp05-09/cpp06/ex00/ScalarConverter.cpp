@@ -6,6 +6,13 @@
 #include <cstdlib>
 #include <iostream>
 
+static double toDouble(std::string const str);
+static void skipNumber(std::string const str, std::size_t & index);
+static void printCharactor(double const num);
+static void printInt(double const num);
+static void printFloat(double const num);
+static void printDouble(double const num);
+
 ScalarConverter::ScalarConverter()
 {}
 
@@ -45,8 +52,16 @@ void ScalarConverter::convert(char const * str)
 	}
 }
 
-double ScalarConverter::toDouble(std::string const str)
+static double toDouble(std::string const str)
 {
+	if (str.size() == 0)
+	{
+		throw std::invalid_argument("invalid input");
+	}
+	if (str.size() == 1 && std::isprint(str[0]) && !std::isdigit(str[0]))
+	{
+		return static_cast<double>(str[0]);
+	}
 	double num = std::atof(str.c_str());
 	std::size_t index;
 	if (std::isnan(num) && (str == "nanf" || str == "nan"))
@@ -66,7 +81,7 @@ double ScalarConverter::toDouble(std::string const str)
 	return num;
 }
 
-void ScalarConverter::skipNumber(std::string const str, std::size_t & index)
+static void skipNumber(std::string const str, std::size_t & index)
 {
 	index = 0;
 	if (str[index] == '-' || str[index] == '+')
@@ -87,7 +102,7 @@ void ScalarConverter::skipNumber(std::string const str, std::size_t & index)
 	}
 }
 
-void ScalarConverter::printCharactor(double const num)
+static void printCharactor(double const num)
 {
 	int const ch = static_cast<int>(num);
 
@@ -106,7 +121,7 @@ void ScalarConverter::printCharactor(double const num)
 	}
 }
 
-void ScalarConverter::printInt(double const num)
+static void printInt(double const num)
 {
 	int const z = static_cast<int>(num);
 
@@ -121,7 +136,7 @@ void ScalarConverter::printInt(double const num)
 	}
 }
 
-void ScalarConverter::printFloat(double const num)
+static void printFloat(double const num)
 {
 	float const fNum = static_cast<float>(num);
 
@@ -136,7 +151,7 @@ void ScalarConverter::printFloat(double const num)
 	}
 }
 
-void ScalarConverter::printDouble(double const num)
+static void printDouble(double const num)
 {
 	std::cout << "double : " << num;
 	if (num - static_cast<int>(num) == 0)
