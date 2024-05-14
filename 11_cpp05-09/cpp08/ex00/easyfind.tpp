@@ -3,18 +3,17 @@
 #define __EASY_FIND_TPP__
 
 #include <iterator>
-#include <algorithm>
 #include <exception>
 
 template<typename T>
-bool easyfind(T t, int const n)
+bool easyfind(T & t, int const n)
 {
-    std::iterator it = std::find(t.begin(), t.end(), n);
-    if (it == t.end())
-    {
-        throw std::exception();
-    }
-    return true;
+	typename T::iterator it = find(t.begin(), t.end(), n);
+	if (it == t.end())
+	{
+		throw std::exception();
+	}
+	return true;
 }
 
 #endif

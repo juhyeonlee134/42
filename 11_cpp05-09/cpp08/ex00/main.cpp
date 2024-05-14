@@ -2,14 +2,35 @@
 #include <vector>
 #include <deque>
 #include <list>
+#include <exception>
+#include <iostream>
 
 int main(void)
 {
-    std::vector<int>vec = {1, 2, 3, 4};
-    easyfind(vec, 5);
-    std::deque<int>deq = {9, 8, 7, 6};
-    easyfind(deq, 9);
-    std::list<int>lst = {-1, 0, 1};
-    easyfind(lst, 0);
-    return 0;
+	try
+	{
+		std::vector<int>vec;
+		vec.push_back(1);
+		vec.push_back(2);
+		vec.push_back(3);
+		easyfind< std::vector<int> >(vec, 2);
+		std::cout << "find\n";
+		std::deque<int>deq;
+		deq.push_back(9);
+		deq.push_back(8);
+		deq.push_back(7);
+		easyfind< std::deque<int> >(deq, 9);
+		std::cout << "find\n";
+		std::list<int>lst;
+		lst.push_back(-1);
+		lst.push_back(0);
+		lst.push_back(1);
+		easyfind< std::list<int> >(lst, 0);
+		std::cout << "find\n";
+	}
+	catch(std::exception const & e)
+	{
+		std::cout << e.what() << '\n';
+	}
+	return 0;
 }
