@@ -1,3 +1,4 @@
+#include "functions.hpp"
 #include "Base.hpp"
 #include "A.hpp"
 #include "B.hpp"
@@ -8,11 +9,10 @@ int main(void)
 {
 	for (std::size_t cnt = 0; cnt < 10; cnt++)
 	{
-		Base creator;
-		Base * base = creator.generate();
-		creator.identify(base);
+		Base * base = generate();
+		identify(base);
 		Base & copy = *base;
-		creator.identify(copy);
+		identify(copy);
 		std::cout << '\n';
 		delete base;
 	}

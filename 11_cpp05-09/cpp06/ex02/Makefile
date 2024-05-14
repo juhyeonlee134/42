@@ -2,6 +2,7 @@ RM		= rm -rf
 CPP		= c++
 CFLAG	= -std=c++98 -Wall -Wextra -Werror
 SRCS	= main.cpp \
+		  functions.cpp \
 		  Base.cpp \
 		  A.cpp \
 		  B.cpp \
