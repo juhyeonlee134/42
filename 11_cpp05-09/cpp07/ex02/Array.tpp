@@ -4,6 +4,7 @@
 
 #include "Array.hpp"
 #include <exception>
+#include <cstdlib>
 
 template<typename T>
 Array<T>::Array(unsigned int const n)
@@ -19,7 +20,7 @@ Array<T>::Array(unsigned int const n)
 template<typename T>
 Array<T>::~Array()
 {
-	delete this->mArr;
+	delete[] this->mArr;
 }
 
 template<typename T>

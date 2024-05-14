@@ -2,7 +2,6 @@ RM		= rm -rf
 CPP		= c++
 CFLAG	= -std=c++98 -Wall -Wextra -Werror
 SRCS	= main.cpp
-TPPS	= Array.tpp
 OBJS	= ${SRCS:.cpp=.o}
 NAME	= ex02
 
@@ -15,6 +14,6 @@ fclean	: clean
 re		: fclean all
 
 ${NAME}	: ${OBJS}
-	${CPP} ${OBJS} ${TPPS} -o ${NAME}
+	${CPP} ${OBJS} -o ${NAME}
 %.o		: %.cpp
 	${CPP} ${CFLAG} -I. $< -o $@ -c
