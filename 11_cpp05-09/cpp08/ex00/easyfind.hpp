@@ -3,7 +3,7 @@
 #define __EASY_FIND_H__
 
 template<typename T>
-bool easyfind(T & t, int const n);
+typename T::iterator easyfind(T & t, int const n);
 
 #include "easyfind.tpp"
 

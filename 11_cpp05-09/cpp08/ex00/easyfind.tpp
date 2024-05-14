@@ -6,14 +6,14 @@
 #include <exception>
 
 template<typename T>
-bool easyfind(T & t, int const n)
+typename T::iterator easyfind(T & t, int const n)
 {
 	typename T::iterator it = find(t.begin(), t.end(), n);
 	if (it == t.end())
 	{
 		throw std::exception();
 	}
-	return true;
+	return it;
 }
 
 #endif
