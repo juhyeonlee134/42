@@ -49,5 +49,28 @@ int main(int, char**)
         numbers[i] = rand();
     }
     delete [] mirror;//
+
+	/* My test code */
+    // Array<float> arrF();
+    Array<double> arrD(2);
+    std::cout << arrD.size() << '\n';
+    arrD[0] = 1.2345;
+    arrD[1] = 9.8765;
+    try
+    {
+		// std::cout << arrD[-1] << '\n';
+        std::cout << arrD[0] << '\n';
+        std::cout << arrD[1] << '\n';
+        // std::cout << arrD[2] << '\n';
+    }
+	catch(std::exception & e)
+	{
+		std::cout << e.what() << '\n';
+	}
+	Array<std::string> arrStr(3);
+	arrStr[0] = "aaa";
+	arrStr[1] = "bbb";
+	arrStr[2] = "ccc";
+	std::cout << arrStr[0] << ' ' << arrStr[1] << ' ' << arrStr[2] << '\n';
     return 0;
 }

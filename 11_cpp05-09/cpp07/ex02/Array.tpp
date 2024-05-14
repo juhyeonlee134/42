@@ -11,10 +11,6 @@ Array<T>::Array(unsigned int const n)
 {
 	this->mArr = new T[n];
 	this->mSize = n;
-	for (unsigned int index = 0; index < n; index++)
-	{
-		this->mArr[index] = 0;
-	}
 }
 
 template<typename T>
