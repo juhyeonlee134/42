@@ -1,6 +1,5 @@
 #include "ScalarConverter.hpp"
 #include <string>
-#include <sstream>
 #include <cctype>
 #include <cmath>
 #include <cstdlib>
