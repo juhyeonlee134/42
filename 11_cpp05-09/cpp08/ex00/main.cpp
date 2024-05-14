@@ -30,6 +30,15 @@ int main(void)
 		std::list<int>::iterator lstIt = easyfind< std::list<int> >(lst, 0);
 		std::cout << *lstIt << '\n';
 
+		std::vector<unsigned int>vecU;
+		for (std::size_t cnt = 0; cnt < 10; cnt++)
+		{
+			vecU.push_back(static_cast<unsigned int>(cnt));
+		}
+		vecU.push_back(1);
+		std::vector<unsigned int>::iterator vecUIt = easyfind< std::vector<unsigned int> >(vecU, 1);
+		std::cout << std::distance(vecU.begin(), vecUIt) << '\n';
+
 		std::vector<double>vecD;
 		vecD.push_back(1.1);
 		vecD.push_back(2.2);
