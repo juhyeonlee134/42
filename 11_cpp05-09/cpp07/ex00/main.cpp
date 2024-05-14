@@ -30,12 +30,19 @@ int main(void)
 	std::cout << "min : " << ::min(f1, f2) << '\n';
 	std::cout << "max : " << ::max(f1, f2) << '\n';
 
-	double d1 = 10.101010f;
+	double d1 = 10.1f;
 	double d2 = 10.10102f;
 	::swap(d1, d2);
 	std::cout << d1 << ' ' << d2 << '\n';
 	std::cout << "min : " << ::min(d1, d2) << '\n';
 	std::cout << "max : " << ::max(d1, d2) << '\n';
+
+	std::string s1 = "abc";
+	std::string s2 = "xyz";
+	::swap(s1, s2);
+	std::cout << s1 << ' ' << s2 << '\n';
+	std::cout << "min : " << ::min(s1, s2) << '\n';
+	std::cout << "max : " << ::max(s1, s2) << '\n';
 
 	// char str1[6] = "abcde";
 	// char str2[4] = "abc";
