@@ -3,6 +3,7 @@
 #define __EASY_FIND_TPP__
 
 #include <iterator>
+#include <algorithm>
 #include <exception>
 
 template<typename T>
