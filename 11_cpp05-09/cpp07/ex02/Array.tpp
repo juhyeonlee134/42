@@ -39,6 +39,10 @@ Array<T>::~Array()
 template<typename T>
 Array<T>::Array(Array const & org)
 {
+	if (this == &org)
+	{
+		return;
+	}
 	if (org.size() == 0)
 	{
 		this->mSize = 0;

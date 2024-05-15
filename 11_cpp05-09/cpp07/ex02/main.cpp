@@ -52,6 +52,8 @@ int main(int, char**)
 
 	/* My test code */
     Array<float> arrF;
+    arrF = arrF;
+    std::cout << arrF.size() << '\n';
     Array<float> org(10);
     for (std::size_t index = 0; index < org.size(); index++)
     {
