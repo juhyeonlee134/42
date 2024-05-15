@@ -13,7 +13,13 @@ Span::Span(unsigned int const N)
 
 Span::Span(Span const & org)
 {
-	*this = org;
+	if (this == &org)
+	{
+		return;
+	}
+	this->N = org.N;
+	this->mLen = org.mLen;
+	this->mStored = org.mStored;
 }
 
 Span & Span::operator = (Span const & org)
