@@ -51,7 +51,23 @@ int main(int, char**)
     delete [] mirror;//
 
 	/* My test code */
-    // Array<float> arrF();
+    Array<float> arrF;
+    Array<float> org(10);
+    for (std::size_t index = 0; index < org.size(); index++)
+    {
+        org[index] = rand();
+    }
+    arrF = org;
+    for (std::size_t index = 0; index < org.size(); index++)
+    {
+        std::cout << index << " : " << org[index] << " | " << arrF[index] << '\n';
+    }
+    Array<float> dst(1);
+    dst = org;
+    Array<float> zero;
+    Array<float> copyZero = zero;
+    std::cout << zero.size() << ' ' << copyZero.size() << '\n';
+
     Array<double> arrD(2);
     std::cout << arrD.size() << '\n';
     arrD[0] = 1.2345;

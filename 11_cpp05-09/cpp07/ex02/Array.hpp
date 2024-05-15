@@ -6,6 +6,7 @@ template<typename T>
 class Array
 {
 public:
+	Array();
 	Array(unsigned int const n);
 	~Array();
 	Array(Array const & org);
@@ -15,7 +16,6 @@ public:
 private:
 	T * mArr;
 	unsigned int mSize;
-	Array();
 };
 
 #include "Array.tpp"

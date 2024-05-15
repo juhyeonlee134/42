@@ -7,22 +7,52 @@
 #include <cstdlib>
 
 template<typename T>
+Array<T>::Array()
+	: mArr(NULL)
+	, mSize(0)
+{}
+
+template<typename T>
 Array<T>::Array(unsigned int const n)
 {
-	this->mArr = new T[n];
-	this->mSize = n;
+	if (n == 0)
+	{
+		this->mArr = NULL;
+		this->mSize = 0;
+	}
+	else
+	{
+		this->mArr = new T[n];
+		this->mSize = n;
+	}
 }
 
 template<typename T>
 Array<T>::~Array()
 {
-	delete[] this->mArr;
+	if (this->mArr != NULL)
+	{
+		delete[] this->mArr;
+	}
 }
 
 template<typename T>
 Array<T>::Array(Array const & org)
 {
-	*this = org;
+	if (org.size() == 0)
+	{
+		this->mSize = 0;
+		this->mArr = NULL;
+	}
+	else
+	{
+		this->mSize = org.size();
+		this->mArr = new T[org.size()];
+		for (std::size_t index = 0; index < this->mSize; index++)
+		{
+			this->mArr[index] = org.mArr[index];
+		}
+	}
 }
 
 template<typename T>
@@ -33,6 +63,10 @@ Array<T> & Array<T>::operator = (Array const & org)
 		return *this;
 	}
 	this->mSize = org.size();
+	if (this->mArr != NULL)
+	{
+		delete[] this->mArr;
+	}
 	this->mArr = new T[this->mSize];
 	for (unsigned int index = 0; index < this->mSize; index++)
 	{
@@ -56,11 +90,5 @@ unsigned int Array<T>::size(void) const
 {
 	return this->mSize;
 }
-
-template<typename T>
-Array<T>::Array()
-	: mArr(NULL)
-	, mSize(0)
-{}
 
 #endif

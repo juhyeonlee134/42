@@ -1,6 +1,6 @@
 RM		= rm -rf
 CPP		= c++
-CFLAG	= -std=c++98 -Wall -Wextra -Werror
+CFLAG	= -std=c++98 -Wall -Wextra -Werror -g3
 SRCS	= main.cpp
 OBJS	= ${SRCS:.cpp=.o}
 NAME	= ex02
