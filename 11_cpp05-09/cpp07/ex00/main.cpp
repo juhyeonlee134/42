@@ -37,13 +37,6 @@ int main(void)
 	std::cout << "min : " << ::min(d1, d2) << '\n';
 	std::cout << "max : " << ::max(d1, d2) << '\n';
 
-	std::string s1 = "abc";
-	std::string s2 = "xyz";
-	::swap(s1, s2);
-	std::cout << s1 << ' ' << s2 << '\n';
-	std::cout << "min : " << ::min(s1, s2) << '\n';
-	std::cout << "max : " << ::max(s1, s2) << '\n';
-
 	// char str1[6] = "abcde";
 	// char str2[4] = "abc";
 	// ::swap(str1, str2);
