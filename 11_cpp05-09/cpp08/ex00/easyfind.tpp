@@ -4,15 +4,26 @@
 
 #include <iterator>
 #include <algorithm>
-#include <exception>
+#include <stdexcept>
 
 template<typename T>
-typename T::iterator easyfind(T & t, int const n)
+typename T::iterator easyfind(T & t, int const n) throw(std::logic_error)
 {
 	typename T::iterator it = find(t.begin(), t.end(), n);
 	if (it == t.end())
 	{
-		throw std::exception();
+		throw std::logic_error("Element is not found");
+	}
+	return it;
+}
+
+template<typename T>
+typename T::iterator easyfind(T const & t, int const n) throw(std::logic_error)
+{
+	typename T::iterator it = find(t.begin(), t.end(), n);
+	if (it == t.end())
+	{
+		throw std::logic_error("Element is not found");
 	}
 	return it;
 }

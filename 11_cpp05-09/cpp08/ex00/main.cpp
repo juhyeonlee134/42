@@ -42,7 +42,7 @@ int main(void)
 		std::vector<double>vecD;
 		vecD.push_back(1.1);
 		vecD.push_back(2.2);
-		std::vector<double>::iterator vecDIt = easyfind< std::vector<double> >(vecD, 2.2);
+		std::vector<double>::iterator vecDIt = easyfind< std::vector<double> >(vecD, 2);
 		std::cout << *vecDIt << '\n';
 	}
 	catch(std::exception const & e)
