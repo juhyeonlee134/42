@@ -77,19 +77,20 @@ unsigned int Span::longestSpan(void) const throw(std::logic_error)
 	{
 		throw std::logic_error("No element to compare");
 	}
-	unsigned int span = 0u;
-	std::vector<int>::const_iterator i;
-	for (i = this->mStored.begin(); i != this->mStored.end(); i++)
+	int max = -2147483648;
+	int min = 2147483647;
+	std::vector<int>::const_iterator it;
+	for (it = this->mStored.begin(); it != this->mStored.end(); it++)
 	{
-		std::vector<int>::const_iterator j;
-		for (j = i + 1; j != this->mStored.end(); j++)
+		if (max < *it)
 		{
-			unsigned int diff = std::abs(*i - *j);
-			if (span < diff)
-			{
-				span = diff;
-			}
+			max = *it;
+		}
+		if (min > *it)
+		{
+			min = *it;
 		}
 	}
+	unsigned int span = std::abs(max - min);
 	return span;
 }
