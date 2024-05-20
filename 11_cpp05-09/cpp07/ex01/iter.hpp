@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-template <typename T, typename F>
-void iter(T const * const arr, int const len, void (*func)(F const &))
+template <typename T>
+void iter(T const * const arr, int const len, void (*func)(T const &))
 {
 	if (arr == NULL || func == NULL || len <= 0)
 	{
@@ -17,8 +17,8 @@ void iter(T const * const arr, int const len, void (*func)(F const &))
 	}
 }
 
-template<typename T, typename F>
-void iter(T * const arr, int const len, void (*func)(F &))
+template<typename T>
+void iter(T * const arr, int const len, void (*func)(T &))
 {
 	if (arr == NULL || func == NULL || len <= 0)
 	{
@@ -30,6 +30,7 @@ void iter(T * const arr, int const len, void (*func)(F &))
 	}
 }
 
+// for test
 template<typename T>
 void print(T const & t)
 {

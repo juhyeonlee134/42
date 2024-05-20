@@ -6,13 +6,13 @@
 #include <exception>
 #include <cstdlib>
 
-template<typename T>
+template <typename T>
 Array<T>::Array()
 	: mArr(NULL)
 	, mSize(0)
 {}
 
-template<typename T>
+template <typename T>
 Array<T>::Array(unsigned int const n)
 {
 	if (n == 0)
@@ -27,7 +27,7 @@ Array<T>::Array(unsigned int const n)
 	}
 }
 
-template<typename T>
+template <typename T>
 Array<T>::~Array()
 {
 	if (this->mArr != NULL)

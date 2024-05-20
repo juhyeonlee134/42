@@ -52,7 +52,7 @@ int main(int, char**)
 
 	/* My test code */
     Array<float> arrF;
-    arrF = arrF;
+    //arrF = arrF;
     std::cout << arrF.size() << '\n';
     Array<float> org(10);
     for (std::size_t index = 0; index < org.size(); index++)
@@ -64,8 +64,7 @@ int main(int, char**)
     {
         std::cout << index << " : " << org[index] << " | " << arrF[index] << '\n';
     }
-    Array<float> dst(1);
-    dst = org;
+    Array<float> dst(org);
     Array<float> zero;
     Array<float> copyZero = zero;
     std::cout << zero.size() << ' ' << copyZero.size() << '\n';
