@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __MUTANT_STACK_H__
-#define __MUTANT_STACK_H__
+#ifndef __MUTANTSTACK_H__
+#define __MUTANTSTACK_H__
 
 #include <stack>
 #include <deque>
@@ -13,48 +13,20 @@ public:
 	MutantStack(MutantStack const & org);
 	~MutantStack();
 	MutantStack & operator = (MutantStack const & org);
-	T top(void) const;
-	bool empty(void) const;
-	unsigned int size(void) const;
-	void push(T const e);
-	void pop(void);
-
-	class iterator
+	class iterator : public std::deque<T>::iterator
 	{
 	public:
 		iterator();
-		iterator(typename std::deque<T>::iterator const itr);
+		iterator(typename std::deque<T>::iterator const & it);
 		iterator(iterator const & org);
-		~iterator();
 		iterator & operator = (iterator const & org);
-		iterator & operator ++ (void);
-		iterator & operator ++ (int tmp);
-		iterator & operator -- (void);
-		iterator & operator -- (int tmp);
-		T operator * (void) const;
-		bool operator == (iterator const & other) const;
-		bool operator != (iterator const & other) const;
+		~iterator();
 	private:
-		typename std::deque<T>::iterator mItr;
+		typename std::deque<T>::iterator it;
 	};
-	MutantStack<T>::iterator begin(void) const;
-	MutantStack<T>::iterator end(void) const;
-private:
-	std::stack<T, std::deque<T> > mStack;
+	MutantStack<T>::iterator begin(void);
+	MutantStack<T>::iterator end(void);
 };
-
-template <typename T>
-bool operator == (MutantStack<T> const & s1, MutantStack<T> const & s2);
-template <typename T>
-bool operator != (MutantStack<T> const & s1, MutantStack<T> const & s2);
-template <typename T>
-bool operator < (MutantStack<T> const & s1, MutantStack<T> const & s2);
-template <typename T>
-bool operator <= (MutantStack<T> const & s1, MutantStack<T> const & s2);
-template <typename T>
-bool operator > (MutantStack<T> const & s1, MutantStack<T> const & s2);
-template <typename T>
-bool operator >= (MutantStack<T> const & s1, MutantStack<T> const & s2);
 
 #include "MutantStack.tpp"
 

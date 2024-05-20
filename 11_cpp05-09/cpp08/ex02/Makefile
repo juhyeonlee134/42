@@ -1,8 +1,7 @@
 RM		= rm -rf
 CPP		= c++
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
-SRCS	= main.cpp \
-		  MutantStack.cpp
+SRCS	= main.cpp
 OBJS	= $(SRCS:.cpp=.o)
 NAME	= ex02
 
