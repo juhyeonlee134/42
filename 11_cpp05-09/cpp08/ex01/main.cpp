@@ -20,7 +20,7 @@ int main(void)
 {
 	Span sp = Span(5);
 	Span many = Span(100000);
-	Span e1 = Span(4);
+	Span test = Span(10);
 	try
 	{
 		sp.addNumber(6);
@@ -41,6 +41,23 @@ int main(void)
 
 		std::cout << many.shortestSpan() << std::endl;
 		std::cout << many.longestSpan() << std::endl;
+
+		std::deque<int> deq;
+		deq.clear();
+		deq.push_back(-7);
+		deq.push_back(99);
+		deq.push_back(5);
+		deq.push_back(100);
+		deq.push_back(11);
+		deq.push_back(20);
+		deq.push_back(5);
+		deq.push_back(-1);
+		deq.push_back(7);
+		deq.push_back(-100);
+		test.fillRange<std::deque<int> >(deq.begin(), deq.end());
+
+		std::cout << test.shortestSpan() << std::endl;
+		std::cout << test.longestSpan() << std::endl;
 
 		//std::deque<std::string> deq;
 		//deq.push_back("AAA");
