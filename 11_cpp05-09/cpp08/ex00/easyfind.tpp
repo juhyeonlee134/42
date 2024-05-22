@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 template <typename T>
-typename T::iterator easyfind(T & t, int const n) throw(std::logic_error)
+typename T::iterator easyfind(T & t, int const n)
 {
 	typename T::iterator it = find(t.begin(), t.end(), n);
 	if (it == t.end())
@@ -18,7 +18,7 @@ typename T::iterator easyfind(T & t, int const n) throw(std::logic_error)
 }
 
 template <typename T>
-typename T::iterator easyfind(T const & t, int const n) throw(std::logic_error)
+typename T::iterator easyfind(T const & t, int const n)
 {
 	typename T::const_iterator it = find(t.begin(), t.end(), n);
 	if (it == t.end())
