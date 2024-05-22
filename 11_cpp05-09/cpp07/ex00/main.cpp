@@ -19,9 +19,12 @@ int main(void)
 	char ch1 = 'A';
 	char ch2 = 'A';
 	::swap(ch1, ch2);
+	std::cout << (void *)&ch1 << ' ' << (void *)&ch2 << '\n';
 	std::cout << ch1 << ' ' << ch2 << '\n';
-	std::cout << "min : " << ::min(ch1, ch2) << '\n';
-	std::cout << "max : " << ::max(ch1, ch2) << '\n';
+	char & ret = ::max(ch1, ch2);
+	std::cout << (void *)&ret << '\n';
+	ret = ::min(ch1, ch2);
+	std::cout << (void *)&ret << '\n';
 
 	float f1 = 3.145f;
 	float f2 = 3.333f;

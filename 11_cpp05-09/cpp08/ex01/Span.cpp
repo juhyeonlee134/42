@@ -61,7 +61,8 @@ unsigned int Span::shortestSpan(void) const throw(std::logic_error)
 		std::vector<int>::const_iterator j;
 		for (j = i + 1; j != this->mStored.end(); j++)
 		{
-			unsigned int diff = std::abs(*i - *j);
+			long sub = *i - *j;
+			unsigned int diff = std::abs(sub);
 			if (span > diff)
 			{
 				span = diff;
@@ -91,6 +92,7 @@ unsigned int Span::longestSpan(void) const throw(std::logic_error)
 			min = *it;
 		}
 	}
-	unsigned int span = std::abs(max - min);
+	long sub = max - min;
+	unsigned int span = std::abs(sub);
 	return span;
 }

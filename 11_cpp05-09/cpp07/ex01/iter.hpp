@@ -3,13 +3,14 @@
 #define __ITER_H__
 
 #include <iostream>
+#include <stdexcept>
 
 template <typename T>
 void iter(T const * const arr, int const len, void (*func)(T const &))
 {
 	if (arr == NULL || func == NULL || len <= 0)
 	{
-		return ;
+		throw std::logic_error("invalid argument");
 	}
 	for (int index = 0; index < len; index++)
 	{
@@ -22,7 +23,7 @@ void iter(T * const arr, int const len, void (*func)(T &))
 {
 	if (arr == NULL || func == NULL || len <= 0)
 	{
-		return ;
+		throw std::logic_error("invalid argument");
 	}
 	for (int index = 0; index < len; index++)
 	{
