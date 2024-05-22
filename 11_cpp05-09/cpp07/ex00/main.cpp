@@ -40,6 +40,14 @@ int main(void)
 	std::cout << "min : " << ::min(d1, d2) << '\n';
 	std::cout << "max : " << ::max(d1, d2) << '\n';
 
+	char * str1 = (char *)"abcd";
+	char * str2 = (char *)"abc";
+	::swap(str1, str2);
+	std::cout << str1 << ' ' << str2 << '\n';
+	std::cout << (void *)str1 << ' ' << (void *)str2 << '\n';
+	std::cout << "min : " << ::min(str1, str2) << '\n';
+	std::cout << "max : " << ::max(str1, str2) << '\n';
+
 	// char str1[6] = "abcde";
 	// char str2[4] = "abc";
 	// ::swap(str1, str2);
