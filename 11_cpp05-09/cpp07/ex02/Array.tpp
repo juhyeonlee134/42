@@ -24,6 +24,12 @@ Array<T>::Array(unsigned int const n)
 	{
 		this->mArr = new T[n];
 		this->mSize = n;
+		T * tmp = new T;
+		for (std::size_t index = 0; index < n; index++)
+		{
+			this->mArr[index] = *tmp;
+		}
+		delete tmp;
 	}
 }
 
@@ -71,10 +77,17 @@ Array<T> & Array<T>::operator = (Array const & org)
 	{
 		delete[] this->mArr;
 	}
-	this->mArr = new T[this->mSize];
-	for (unsigned int index = 0; index < this->mSize; index++)
+	if (this->mSize == 0)
 	{
-		this->mArr[index] = org.mArr[index];
+		this->mArr = NULL;
+	}
+	else
+	{
+		this->mArr = new T[this->mSize];
+		for (unsigned int index = 0; index < this->mSize; index++)
+		{
+			this->mArr[index] = org.mArr[index];
+		}
 	}
 	return *this;
 }

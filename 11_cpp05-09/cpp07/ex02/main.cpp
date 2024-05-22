@@ -52,7 +52,8 @@ int main(int, char**)
 
 	/* My test code */
     Array<float> arrF;
-    //arrF = arrF;
+    Array<float> & r = arrF;
+    arrF = r;
     std::cout << arrF.size() << '\n';
     Array<float> org(10);
     for (std::size_t index = 0; index < org.size(); index++)
@@ -73,6 +74,12 @@ int main(int, char**)
     std::cout << arrD.size() << '\n';
     arrD[0] = 1.2345;
     arrD[1] = 9.8765;
+
+    Array<int> arrInt(5);
+    for (std::size_t index = 0; index < 5; index++)
+    {
+        std::cout << arrInt[index] << std::endl;
+    }
     try
     {
 		// std::cout << arrD[-1] << '\n';
@@ -85,6 +92,10 @@ int main(int, char**)
 		std::cout << e.what() << '\n';
 	}
 	Array<std::string> arrStr(3);
+    for (std::size_t index = 0; index < 3; index++)
+    {
+        std::cout << arrStr[index] << std::endl;
+    }
 	arrStr[0] = "aaa";
 	arrStr[1] = "bbb";
 	arrStr[2] = "ccc";
