@@ -11,6 +11,11 @@ int main(void)
 		iter(arrInt, size, addTwo<int>);
 		iter(arrInt, size, print<int>);
 
+		int const constInt[] = {9, 8, 7};
+		size = sizeof(constInt) / sizeof(int);
+		iter(constInt, size, print<int>);
+		// iter(constInt, size, addTwo<int>);
+
 		double arrDouble[] = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
 		size = sizeof(arrDouble) / sizeof(double);
 		iter(arrDouble, size, addTwo<double>);
