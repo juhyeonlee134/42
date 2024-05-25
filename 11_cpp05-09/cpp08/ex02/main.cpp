@@ -35,6 +35,20 @@ int main(void)
 	std::stack<int> s(mstack);
 	
 	std::cout << "\ntest" << std::endl;
+	MutantStack<int>::const_iterator i = mstack.begin();
+	MutantStack<int>::iterator j = mstack.begin();
+	std::cout << *i << ' ' << *j << std::endl;
+	// *i = 100;
+	*j = 100;
+	std::cout << *i << ' ' << *j << std::endl;
+
+	MutantStack<int>::const_reverse_iterator rIt;
+	for (rIt = mstack.rbegin(); rIt != mstack.rend(); rIt++)
+	{
+		std::cout << *rIt << ' ';
+	}
+	std::cout << std::endl;
+
 	MutantStack<double> mstackD;
 	mstackD.push(1.1);
 	mstackD.push(2.2);
