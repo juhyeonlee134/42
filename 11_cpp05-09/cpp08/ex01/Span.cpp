@@ -39,7 +39,7 @@ Span & Span::operator = (Span const & org)
 Span::~Span()
 {}
 
-void Span::addNumber(int const num) throw(std::logic_error)
+void Span::addNumber(int const num)
 {
 	if (this->mStored.size() == this->N)
 	{
@@ -48,11 +48,15 @@ void Span::addNumber(int const num) throw(std::logic_error)
 	this->mStored.push_back(num);
 }
 
-unsigned int Span::shortestSpan(void) const throw(std::logic_error)
+unsigned int Span::shortestSpan(void) const
 {
 	if (this->mStored.size() <= 1)
 	{
 		throw std::logic_error("No element to compare");
+	}
+	if (this->mStored.size() == 2)
+	{
+		throw std::logic_error("Not found shortest span");
 	}
 	unsigned int span = 4294967295u;
 	std::vector<int>::const_iterator i;
@@ -61,7 +65,7 @@ unsigned int Span::shortestSpan(void) const throw(std::logic_error)
 		std::vector<int>::const_iterator j;
 		for (j = i + 1; j != this->mStored.end(); j++)
 		{
-			long sub = *i - *j;
+			long sub = static_cast<long>(*i) - static_cast<long>(*j);
 			unsigned int diff = std::abs(sub);
 			if (span > diff)
 			{
@@ -72,11 +76,15 @@ unsigned int Span::shortestSpan(void) const throw(std::logic_error)
 	return span;
 }
 
-unsigned int Span::longestSpan(void) const throw(std::logic_error)
+unsigned int Span::longestSpan(void) const
 {
 	if (this->mStored.size() <= 1)
 	{
 		throw std::logic_error("No element to compare");
+	}
+	if (this->mStored.size() == 2)
+	{
+		throw std::logic_error("Not found longest span");
 	}
 	int max = -2147483648;
 	int min = 2147483647;
@@ -92,7 +100,7 @@ unsigned int Span::longestSpan(void) const throw(std::logic_error)
 			min = *it;
 		}
 	}
-	long sub = max - min;
+	long sub = static_cast<long>(max) - static_cast<long>(min);
 	unsigned int span = std::abs(sub);
 	return span;
 }

@@ -15,9 +15,9 @@ public:
 	Span(Span const & org);
 	~Span();
 	Span & operator = (Span const & org);
-	void addNumber(int const num) throw(std::logic_error);
+	void addNumber(int const num);
 	template <typename C>
-	void fillRange(typename C::iterator const & start, typename C::iterator const & end) throw(std::logic_error)
+	void fillRange(typename C::iterator const & start, typename C::iterator const & end)
 	{
 		typename C::iterator it;
 		for (it = start; it != end; it++)
@@ -36,8 +36,8 @@ public:
 			this->mStored.push_back(*it);
 		}
 	}
-	unsigned int shortestSpan(void) const throw(std::logic_error);
-	unsigned int longestSpan(void) const throw(std::logic_error);
+	unsigned int shortestSpan(void) const;
+	unsigned int longestSpan(void) const;
 private:
 	unsigned int N;
 	std::vector<int> mStored;

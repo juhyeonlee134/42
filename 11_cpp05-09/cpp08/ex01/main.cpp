@@ -23,8 +23,16 @@ int main(void)
 	Span sp = Span(5);
 	Span many = Span(100000);
 	Span test = Span(10);
+	Span zero = Span();
+	Span two = Span(3);
 	try
 	{
+		// std::cout << zero.shortestSpan() << std::endl;
+		// std::cout << zero.longestSpan() << std::endl;
+
+		// std::cout << sp.shortestSpan() << std::endl;
+		// std::cout << sp.longestSpan() << std::endl;
+
 		sp.addNumber(6);
 		sp.addNumber(3);
 		sp.addNumber(17);
@@ -60,6 +68,12 @@ int main(void)
 
 		std::cout << test.shortestSpan() << std::endl;
 		std::cout << test.longestSpan() << std::endl;
+
+		two.addNumber(-2147483648);
+		two.addNumber(0);
+		two.addNumber(2147483647);
+		std::cout << two.shortestSpan() << std::endl;
+		std::cout << two.longestSpan() << std::endl;
 
 		//std::deque<std::string> deq;
 		//deq.push_back("AAA");
