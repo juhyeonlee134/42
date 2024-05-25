@@ -73,5 +73,19 @@ int main(void)
 	{
 		std::cout << *sIt << std::endl;
 	}
+
+	std::cout << "\ncopy to list" << std::endl;
+	std::list<std::string> strList;
+	while(!strs.empty())
+	{
+		strList.push_back(strs.top());
+		strs.pop();
+	}
+	std::list<std::string>::iterator lIt;
+	for (lIt = strList.begin(); lIt != strList.end(); lIt++)
+	{
+		std::cout << *lIt << std::endl;
+	}
+	std::cout << strs.size() << std::endl;
 	return 0;
 }
