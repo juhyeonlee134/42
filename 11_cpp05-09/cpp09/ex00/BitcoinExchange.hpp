@@ -4,19 +4,21 @@
 
 #include <map>
 #include <string>
-#include <stdexcept>
 
-class Exchanger
+class BitcoinExchange
 {
 public:
-    Exchanger() throw(std::invalid_argument);
-    ~Exchanger();
-    Exchanger(Exchanger const & org);
-    Exchanger & operator = (Exchanger const & org);
-    static bool isValidDate(std::string const & date) throw();
-    static bool isValieValue(int const & value) throw();
+    BitcoinExchange();
+    BitcoinExchange(BitcoinExchange const & org);
+    ~BitcoinExchange();
+    BitcoinExchange & operator = (BitcoinExchange const & org);
+    static void addData(std::map<std::string, double> & db, std::string const & str);
 private:
     std::map<std::string, double> mDB;
+    static void isValidFromat(std::string const & str, std::string const & del);
+    static void isValidDate(std::string const & date);
+    static bool isAllNum(std::string const & str);
+    static bool isNum(std::string const & str);
 };
 
 #endif

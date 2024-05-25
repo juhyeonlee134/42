@@ -1,81 +1,202 @@
-#include "BitcoinExchagne.hpp"
+#include "BitcoinExchange.hpp"
 #include <map>
 #include <string>
 #include <stdexcept>
 #include <fstream>
-#include <algorithm>
+#include <iostream>
 
-Exchanger::Exchanger() throw(std::invalid_argument)
+BitcoinExchange::BitcoinExchange()
 {
-    std::ifstream dbFile;
-    dbFile.ioen("data.csv");
-    if (!dbFile.is_open())
+    this->mDB.clear();
+
+    std::ifstream file;
+    file.open("data.csv");
+    if (!file.is_open())
     {
-        throw std::invalid_argument("not found DB file");
+        throw std::logic_error("not found DB file");
     }
+
     std::string line;
-    dbFile >> line;
-    while (!dbFile.eof())
+    if (!std::getline(file, line))
     {
-        dbFile >> line;
-        std::size_t sp = line.find(',');
-        std::string date = line.substr(0, sp);
-        if (!isValidDate(date))
+        throw std::logic_error("no data in DB file");
+    }
+    try
+    {
+        isValidFromat(line, ",");
+        while (std::getline(file, line))
         {
-            throw std::invalid_argument("invalid date");
-        }
-        std::string valueStr = line.substr(sp + 1, line.length());
-        if (!isValidValue())
-        {
-            throw std::invalid_argument("invalid value");
-        }
-        double value = std::atof(valueStr.c_str());
-        std::map<std::stgring, double>::iterator it = this->mDB.find(date);
-        if (it == this->mDB.end())
-        {
-            this->mDB[date] = value;
+            addData(this->mDB, line);
         }
     }
-    dbFile.close();
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+        file.close();
+    }
+    file.close();
 }
 
-Exchanger::~Exchanger()
-{}
-
-Exchanger::Exchanger(Exchanger const & org)
+BitcoinExchange::BitcoinExchange(BitcoinExchange const & org)
 {
     *this = org;
 }
 
-Exchanger & Exchanger::operator = (Exchanger const & org)
+BitcoinExchange::~BitcoinExchange()
+{
+    this->mDB.clear();
+}
+
+BitcoinExchange & BitcoinExchange::operator = (BitcoinExchange const & org)
 {
     if (this != &org)
     {
-        this->mDb = org.mDB;
+        this->mDB = org.mDB;
     }
     return *this;
 }
 
-bool Exchanger::isValidDate(std::string const & date) throw()
+void BitcoinExchange::isValidFromat(std::string const & str, std::string const & del)
 {
-    std::size_t firstSp = date.find('-');
-    std::string buff = date.substr(sp + 1, date.length());
-    std::size_t secondSp = buff.find('-');
-
-    std::string year date.substr(0, firstSp);
-    std::string month = date.substr(firstSp + 1, secondSp);
-    std::string day = date.substr(secondSp + 1, date.length());
-
-    unsigned int nYear = std::atoi(year.c_str())
-    if (year.length() < 4 || nYear < 2009 || nYear > 2022)
+    std::string diff = "date" + del + "exchange_rate";
+    if (str.compare(diff) != 0)
     {
-        return false;
+        throw std::logic_error("invalid format specification : \"date,exchange_rate\"");
     }
-    unsigned int nMonth = std::atoi(month.c_str());
+}
+
+void BitcoinExchange::addData(std::map<std::string, double> & db, std::string const & str)
+{
+    std::size_t spLoc = str.find(',');
+    if (spLoc == std::string::npos)
+    {
+        throw std::logic_error("invalid format : only \"day,value\"");
+    }
+    
+    std::string date = str.substr(0, spLoc);
+    isValidDate(date);
+    
+    std::string vStr = str.substr(spLoc + 1, str.length() - spLoc - 1);
+    double value = std::atof(vStr.c_str());
+    if (!isNum(vStr))
+    {
+        throw std::logic_error("invalid format : number only");
+    }
+
+    std::map<std::string, double>::iterator it = db.find(date);
+    if (it == db.end())
+    {
+        db[date] = value;
+    }
+}
+
+void BitcoinExchange::isValidDate(std::string const & date)
+{
+    std::size_t firstHyphen = date.find('-');
+    if (firstHyphen == std::string::npos)
+    {
+        throw std::logic_error("invalid date : YYYY-MM-DD");
+    }
+
+    std::size_t secondHyphen = date.rfind('-');
+    if (secondHyphen == std::string::npos)
+    {
+        throw std::logic_error("invalid date : YYYY-MM-DD");
+    }
+
+    std::string year = date.substr(0, firstHyphen);
+    std::string month = date.substr(firstHyphen + 1, secondHyphen - firstHyphen - 1);
+    std::string day = date.substr(secondHyphen + 1, date.length() - secondHyphen - 1);
+    if (!isAllNum(year) || !isAllNum(month) || !isAllNum(day))
+    {
+        throw std::logic_error("invalid date : contain only number");
+    }
+
+    int nYear = std::atoi(year.c_str());
+    if (nYear < 2009)
+    {
+        throw std::logic_error("invalid year : only after 2009");
+    }
+
+    int nMonth = std::atoi(month.c_str());
     if (nMonth < 1 || nMonth > 12)
     {
-        return false;
+        throw std::logic_error("invalid month : only between 1 ~ 12");
     }
-    unsigned int nDay = std::atoi(day.c_str());
+
+    bool isLeap = false;
+    if (nYear % 4 == 0)
+    {
+        isLeap = true;
+        if (nYear % 100 == 0)
+        {
+            isLeap = false;
+            if (nYear % 400 == 0)
+            {
+                isLeap = true;
+            }
+        }
+    }
+
+    bool is30Day = (nMonth == 4 || nMonth == 6 || nMonth == 9 || nMonth == 11);
+    bool is31Day = (nMonth == 1 || nMonth == 3 || nMonth == 5 || nMonth == 7 || nMonth == 8 || nMonth == 10 || nMonth == 12);
+
+    int nDay = std::atoi(day.c_str());
+    if (is30Day)
+    {
+        if (nDay < 1 || nDay > 30)
+        {
+            throw std::logic_error("invalid day : in 1, 3, 5, 7, 9, 10, 12, only able between 1 ~ 30");
+        }
+    }
+    else if (is31Day)
+    {
+        if (nDay < 1 || nDay > 31)
+        {
+            throw std::logic_error("invalid day : in 4, 6, 9, 11, only albe between 1 ~ 31");
+        }
+    }
+    else if (isLeap)
+    {
+        if (nDay < 1 || nDay > 29)
+        {
+            throw std::logic_error("invalid day : in February leap year, only able between 1 ~ 29");
+        }
+    }
+    else
+    {
+        if (nDay < 1 || nDay > 28)
+        {
+            throw std::logic_error("invalid day : in February, only able between 1 ~ 28");
+        }
+    }
+}
+
+bool BitcoinExchange::isAllNum(std::string const & str)
+{
+    for (std::size_t index = 0; index < str.length(); index++)
+    {
+        if (!isnumber(str[index]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool BitcoinExchange::isNum(std::string const & str)
+{
+    std::size_t index;
+    for (index = 0; index < str.length() && isnumber(str[index]); index++);
+    if (str[index] == '.')
+    {
+        for (std::size_t cnt = index + 1; cnt < str.length(); cnt++)
+        {
+            if (!isnumber(str[cnt]))
+            {
+                return false;
+            }
+        }
+    }
     return true;
 }
