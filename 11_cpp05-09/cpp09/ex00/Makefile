@@ -1,6 +1,6 @@
 RM		= rm -rf 
 CPP		= c++
-CFLAG	= -std=c++98 -Wall -Wextra -Werror -g3
+CFLAG	= -std=c++98 -Wall -Wextra -Werror
 SRCS	= main.cpp BitcoinExchange.cpp
 OBJS	= ${SRCS:.cpp=.o}
 NAME	= btc
