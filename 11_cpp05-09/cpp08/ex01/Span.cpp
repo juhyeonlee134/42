@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+#include <algorithm>
 
 Span::Span()
 	: N(0)
@@ -48,7 +49,7 @@ void Span::addNumber(int const num)
 	this->mStored.push_back(num);
 }
 
-unsigned int Span::shortestSpan(void) const
+unsigned int Span::shortestSpan(void)
 {
 	if (this->mStored.size() <= 1)
 	{
@@ -58,25 +59,22 @@ unsigned int Span::shortestSpan(void) const
 	{
 		throw std::logic_error("Not found shortest span");
 	}
+	Span buff(*this);
+	std::sort(this->mStored.begin(), this->mStored.end());
 	unsigned int span = 4294967295u;
-	std::vector<int>::const_iterator i;
-	for (i = this->mStored.begin(); i != this->mStored.end(); i++)
+	for (std::size_t index = 1; index < this->mStored.size(); index++)
 	{
-		std::vector<int>::const_iterator j;
-		for (j = i + 1; j != this->mStored.end(); j++)
+		long sub = static_cast<long>(this->mStored[index - 1]) - static_cast<long>(this->mStored[index]);
+		unsigned int diff = std::abs(sub);
+		if (span > diff)
 		{
-			long sub = static_cast<long>(*i) - static_cast<long>(*j);
-			unsigned int diff = std::abs(sub);
-			if (span > diff)
-			{
-				span = diff;
-			}
+			span = diff;
 		}
 	}
 	return span;
 }
 
-unsigned int Span::longestSpan(void) const
+unsigned int Span::longestSpan(void)
 {
 	if (this->mStored.size() <= 1)
 	{
@@ -88,7 +86,7 @@ unsigned int Span::longestSpan(void) const
 	}
 	int max = -2147483648;
 	int min = 2147483647;
-	std::vector<int>::const_iterator it;
+	std::vector<int>::iterator it;
 	for (it = this->mStored.begin(); it != this->mStored.end(); it++)
 	{
 		if (max < *it)

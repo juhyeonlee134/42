@@ -36,8 +36,8 @@ public:
 			this->mStored.push_back(*it);
 		}
 	}
-	unsigned int shortestSpan(void) const;
-	unsigned int longestSpan(void) const;
+	unsigned int shortestSpan(void);
+	unsigned int longestSpan(void);
 private:
 	unsigned int N;
 	std::vector<int> mStored;
