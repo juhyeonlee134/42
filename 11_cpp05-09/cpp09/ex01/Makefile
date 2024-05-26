@@ -3,7 +3,7 @@ CPP		= c++
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 SRCS	= main.cpp
 OBJS	= $(SRCS:.cpp=.o)
-NAME	= ex02
+NAME	= RPN
 
 .PHONY: all clean fclean re
 all		: $(NAME)
