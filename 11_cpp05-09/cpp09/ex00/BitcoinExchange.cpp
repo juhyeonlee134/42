@@ -25,14 +25,14 @@ BitcoinExchange::BitcoinExchange()
     }
     if (line.compare("date,exchange_rate") != 0)
     {
-        throw std::logic_error("Error : invalid format in DB.");
+        throw std::logic_error("Error : invalid DB data format.");
     }
     while (std::getline(file, line))
     {
         std::size_t comma = line.find(',');
         if (comma == std::string::npos)
         {
-            throw std::logic_error("Error : invalid format in DB.");
+            throw std::logic_error("Error : invalid DB data format.");
         }
         std::string date = line.substr(0, comma);
         std::string value = line.substr(comma + 1, line.length() - comma - 1);
@@ -81,11 +81,15 @@ void BitcoinExchange::exchange(std::string const & line) const
     std::string dateStr = line.substr(0, bar - 1);
     std::string valueStr = line.substr(bar + 2, line.length() - bar - 2);
     double value = convertValue(valueStr);
-    if (value < 0 || value > 100)
+    checkDate(dateStr);
+    if (value < 0)
     {
-        throw std::logic_error("Error : invalid value.");
+        throw std::logic_error("Error : not a positive number.");
     }
-
+    else if (value > 100)
+    {
+        throw std::logic_error("Error : too large a number.");
+    }
     std::map<std::string, double>::const_iterator it = this->findData(dateStr);
     if (it != this->mDB.end())
     {
@@ -96,10 +100,9 @@ void BitcoinExchange::exchange(std::string const & line) const
 
 std::map<std::string, double>::const_iterator BitcoinExchange::findData(std::string const & date) const
 {
-    checkDate(date);
     if (date.compare(this->mDB.begin()->first) < 0)
     {
-        throw std::logic_error("Error : invalid year.");
+        throw std::logic_error("Error : It's too far in the past.");
     }
     std::map<std::string, double>::const_iterator it = this->mDB.find(date);
     if (it != this->mDB.end())
@@ -166,7 +169,7 @@ double convertValue(std::string const & str)
     }
     if (index != str.length())
     {
-        throw std::logic_error("Error : invliad value.");
+        throw std::logic_error("Error : only integer and float values are allowed.");
     }
 
     double value = std::atof(str.c_str());
@@ -175,6 +178,10 @@ double convertValue(std::string const & str)
 
 void checkDate(std::string const & str)
 {
+    if (str.size() == 0)
+    {
+        throw std::logic_error("Error : empty date.");
+    }
     if (str.size() < 10)
     {
         throw std::logic_error("Error : invalid date format.");
@@ -184,7 +191,7 @@ void checkDate(std::string const & str)
     bool notFound = (firstHyphen == std::string::npos || secondHyphen == std::string::npos);
     if (notFound || firstHyphen == secondHyphen)
     {
-        throw std::logic_error("Error : invalid date.");
+        throw std::logic_error("Error : invalid date format.");
     }
 
     std::string year = str.substr(0, firstHyphen);
@@ -192,15 +199,19 @@ void checkDate(std::string const & str)
     std::string day = str.substr(secondHyphen + 1, str.length() - secondHyphen - 1);
     if (!isAllNum(year) || !isAllNum(month) || !isAllNum(day))
     {
-        throw std::logic_error("Error : invalid date.");
+        throw std::logic_error("Error : date only conatin number.");
     }
 
     int nYear = std::atoi(year.c_str());
     int nMonth = std::atoi(month.c_str());
     int nDay = std::atoi(day.c_str());
-    if (nYear < 2009 || nYear > 2023)
+    if (nYear < 2009)
     {
-        throw std::logic_error("Error : invalid year.");
+        throw std::logic_error("Error : it's too far in the past.");
+    }
+    else if (nYear > 2023)
+    {
+        throw std::logic_error("Error : are you from the future?");
     }
     if (nMonth < 1 || nMonth > 12)
     {
@@ -231,18 +242,18 @@ void checkDate(std::string const & str)
     bool is31 = (nMonth == 1 || nMonth == 3 || nMonth == 5 || nMonth == 7 || nMonth == 8 || nMonth == 10 || nMonth == 12);
     if (isLeap && nMonth == 2 && (nDay < 1 || nDay > 29))
     {
-        throw std::logic_error("Error : invalid day.");
+        throw std::logic_error("Error : not a valid day in a leap month.");
     }
     else if (!isLeap && nMonth == 2 && (nDay < 1 || nDay > 28))
     {
-        throw std::logic_error("Error : invalid day.");
+        throw std::logic_error("Error : not a valid day in february.");
     }
     else if (is31 && (nDay < 1 || nDay > 31))
     {
-        throw std::logic_error("Error : invliad day.");
+        throw std::logic_error("Error : not a valid day.");
     }
     else if (is30 && (nDay < 1 || nDay > 30))
     {
-        throw std::logic_error("Error : invalid day.");
+        throw std::logic_error("Error : not a valid day.");
     }
 }

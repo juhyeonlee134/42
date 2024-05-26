@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
         }
         if (line.compare("data | value") != 0)
         {
-            throw std::logic_error("Error : invalid format in data file.");
+            throw std::logic_error("Error : invalid data format.");
         }
         if (!std::getline(dataFile, line))
         {
