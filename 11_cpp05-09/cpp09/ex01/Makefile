@@ -1,7 +1,7 @@
 RM		= rm -rf
 CPP		= c++
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
-SRCS	= main.cpp
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -g3
+SRCS	= main.cpp RPN.cpp
 OBJS	= $(SRCS:.cpp=.o)
 NAME	= RPN
 
