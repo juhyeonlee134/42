@@ -28,6 +28,10 @@ void RPN::calculate(std::string const & exp)
 {
     std::size_t index = 0;
     bool isNum = true; /* false is space */
+    if (exp.length() <= 1)
+    {
+        throw std::logic_error("invalid expression.");
+    }
     while (index < exp.length())
     {
         while (index < exp.length() && !isOperator(exp[index], isNum))
@@ -35,7 +39,7 @@ void RPN::calculate(std::string const & exp)
             this->pushNum(exp[index], isNum);
             index++;
         }
-        if (this->mMemory.empty() || this->mMemory.size() < 2)
+        if (index == exp.length() || this->mMemory.empty() || this->mMemory.size() < 2)
         {
             throw std::logic_error("invalid expression.");
         }
