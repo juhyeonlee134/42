@@ -16,7 +16,7 @@ public:
 private:
     std::stack<int> mMemory;
     void pushNum(int const & ch, bool & isNum);
-    static bool isOperator(int const & ch);
+    static bool isOperator(int const & ch, bool & isNum);
 };
 
 #endif

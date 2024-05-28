@@ -30,12 +30,11 @@ void RPN::calculate(std::string const & exp)
     bool isNum = true; /* false is space */
     while (index < exp.length())
     {
-        while (index < exp.length() && !isOperator(exp[index]))
+        while (index < exp.length() && !isOperator(exp[index], isNum))
         {
             this->pushNum(exp[index], isNum);
             index++;
         }
-
         if (this->mMemory.empty() || this->mMemory.size() < 2)
         {
             throw std::logic_error("invalid expression.");
@@ -56,6 +55,10 @@ void RPN::calculate(std::string const & exp)
                 this->mMemory.push(n1 * n2);
                 break;
             case '/' :
+                if (n2 == 0)
+                {
+                    throw std::logic_error("dividing 0 is not allowed.");
+                }
                 this->mMemory.push(n1 / n2);
                 break;
         }
@@ -89,19 +92,22 @@ void RPN::pushNum(int const & ch, bool & isNum)
     }
 }
 
-bool RPN::isOperator(int const & ch)
+bool RPN::isOperator(int const & ch, bool & isNum)
 {
-    if (std::isdigit(ch))
+    if (std::isdigit(ch) || ch == ' ')
     {
         return false;
     }
-    else if (ch == ' ')
+    else if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
     {
-        return false;
-    }
-    else if (ch == '+' || ch == '-' || ch == '/' || ch == '*')
-    {
-        return true;
+        if (isNum)
+        {
+            return true;
+        }
+        else
+        {
+            throw std::logic_error("invalid expression : usage [num/op][space] ... [num/op]");
+        }
     }
     throw std::logic_error("unrecognized element.");
     return false;
