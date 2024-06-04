@@ -1,178 +1,109 @@
 #include "PmergeMe.hpp"
-#include <ctime>
-#include <cstdlib>
-#include <deque>
-#include <vector>
-#include <string>
+#include <sstream>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
-#include <exception>
 
-PmergeMe::PmergeMe(void)
+PmergeMe::PmergeMe()
 {
-    throw std::exception();
+	throw std::exception();
 }
 
-PmergeMe::PmergeMe(char **strs, std::size_t const& size)
+PmergeMe::PmergeMe(char const * const strs[], long const & size)
 {
-	if (size == 0)
+	if (size <= 0 || strs == NULL || strs[0] == NULL)
 	{
 		throw std::exception();
 	}
 	this->mArr = new unsigned int[size];
-	this->mSize = size;
-
-	for (std::size_t index = 0; index < size; index++)
+	this->mSize = static_cast<std::size_t>(size);
+	this->mTime = 0;
+	for (std::size_t index = 0; index < this->mSize; index++)
 	{
 		long num = std::atol(strs[index]);
 		std::stringstream stream;
-		std::string toCheck;
+		std::string str;
 		stream << num;
-		stream >> toCheck;
-		if (toCheck.compare(strs[index]) != 0 || num < 0)
+		stream >> str;
+		if (num < 0 || str.compare(strs[index]) != 0)
 		{
 			throw std::exception();
 		}
 		this->mArr[index] = static_cast<unsigned int>(num);
 	}
+}
 
-	std::cout << "Before: ";
-	for (std::size_t index = 0; index < this->mSize; index++)
+PmergeMe::PmergeMe(PmergeMe const & org)
+{
+	if (org.mSize == 0 || org.mArr == NULL)
 	{
-		std::cout << this->mArr[index] << ' ';
+		throw std::exception();
 	}
-	std::cout << std::endl;
+	this->mArr = new unsigned int[org.mSize];
+	this->mSize = org.mSize;
+	this->mTime = org.mTime;
+	std::copy(org.mArr, org.mArr + org.mSize, this->mArr);
 }
 
-PmergeMe::PmergeMe(PmergeMe const& org)
+PmergeMe::~PmergeMe()
 {
-    if (org.mSize == 0)
-    {
-        throw std::exception();
-    }
-    this->mArr = new unsigned int[org.mSize];
-    this->mSize = org.mSize;
-    for (std::size_t index = 0; index < this->mSize; index++)
-    {
-        this->mArr[index] = org.mArr[index];
-    }
-}
-
-PmergeMe::~PmergeMe(void)
-{
-	if (this->mArr)
+	if (this->mArr != NULL)
 	{
 		delete[] this->mArr;
 	}
 }
 
-PmergeMe& PmergeMe::operator = (PmergeMe const& org)
+PmergeMe & PmergeMe::operator = (PmergeMe const & org)
 {
 	if (this != &org)
 	{
-		if (this->mArr)
+		if (org.mSize == 0 || org.mArr == NULL)
+		{
+			throw std::exception();
+		}
+		if (this->mArr != NULL)
 		{
 			delete[] this->mArr;
 		}
-		if (org.mSize == 0)
-		{
-            throw std::exception();
-		}
-		this->mArr = new unsigned int[org.mSize];
+		this->mArr = new unsigned int(org.mSize);
 		this->mSize = org.mSize;
-		for (std::size_t index = 0; index < this->mSize; index++)
-		{
-			this->mArr[index] = org.mArr[index];
-		}
+		this->mTime = org.mTime;
+		std::copy(org.mArr, org.mArr + org.mSize, this->mArr);
 	}
 	return *this;
 }
 
-void PmergeMe::sort(void)
+bool PmergeMe::isSorted(void) const
 {
-	clock_t start, end;
-	double vTime, dTime;
-
-	std::vector<unsigned int> vec, vRet;
-	std::deque<unsigned int> deq, dRet;
-	std::vector<std::pair<unsigned int, unsigned int> > vPairs;
-	std::deque<std::pair<unsigned int, unsigned int> > dPairs;
-	for (std::size_t index = 0; index < this->mSize; index++)
+	if (this->mSize == 1)
 	{
-		vec.push_back(this->mArr[index]);
-		deq.push_back(this->mArr[index]);
+		return true;
 	}
-
-	start = clock();
-	setPairs(vec, vPairs);
-	merge<std::vector<std::pair<unsigned int, unsigned int> > >(vPairs.begin(), vPairs.end());
-	vRet.push_back(vPairs[0].second);
-	vRet.push_back(vPairs[0].first);
-	insert(vRet, vPairs.begin(), vPairs.end(), 1);
-	for (std::size_t index = 0; index < vec.size(); index++)
+	for (std::size_t index = 1; index < this->mSize; index++)
 	{
-		vec[index] = vRet[index];
-	}
-	end = clock();
-	vTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-
-	start = clock();
-	setPairs(deq, dPairs);
-	merge<std::deque<std::pair<unsigned int, unsigned int> > >(dPairs.begin(), dPairs.end());
-	insert(dRet, dPairs.begin(), dPairs.end(), 1);
-	for (std::size_t index = 0; index < deq.size(); index++)
-	{
-		deq[index] = dRet[index];
-	}
-	end = clock();
-	dTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-
-	for (std::size_t index = 0; index < this->mSize; index++)
-	{
-		if (vRet[index] != dRet[index])
+		if (this->mArr[index - 1] > this->mArr[index])
 		{
-			std::cout << "Fail to sort" << std::endl;
-			return;
+			return false;
 		}
-		this->mArr[index] = vRet[index];
 	}
-	std::cout << "After:  ";
+	return true;
+}
+
+void PmergeMe::printArr(void) const
+{
 	for (std::size_t index = 0; index < this->mSize; index++)
 	{
 		std::cout << this->mArr[index] << ' ';
 	}
 	std::cout << std::endl;
-    std::cout << "Time to process a range of " << std::setw(3) << std::right << this->mSize;
-	std::cout << " element with std::vector : " << std::fixed << std::setprecision(6) << vTime << " us" << std::endl;
-	std::cout << "Time to process a range of " << std::setw(3) << std::right << this->mSize;
-    std::cout << " element with std::deque : " << std::fixed << std::setprecision(6) << dTime << " us" << std::endl;
 }
 
-void PmergeMe::printArr(void) const
+void PmergeMe::printTime(char const * const type) const
 {
-    std::cout << "After:  ";
-    for (std::size_t index = 0; index < this->mSize; index++)
-    {
-        std::cout << this->mArr[index] << ' ';
-    }
-    std::cout << std::endl;
-    std::cout << "Time to process a range of " << std::setw(3) << std::right << this->mSize;
-    std::cout << " elements with std::vector : 0.000000 us" << std::endl;
-    std::cout << "Time to process a range of " << std::setw(3) << std::right << this->mSize;
-    std::cout << " elements with std::deque : 0.000000 us" << std::endl;
-}
-
-bool PmergeMe::isSorted(void) const
-{
-    for (std::size_t index = 1; index < this->mSize; index++)
-    {
-        if (this->mArr[index - 1] > this->mArr[index])
-        {
-            return false;
-        }
-    }
-    return true;
+	std::cout << "Time to process a range of ";
+	std::cout << std::setw(3) << std::right << this->mSize;
+	std::cout << " elements with " << type << " : ";
+	std::cout << std::fixed << std::setprecision(6) << this->mTime;
+	std::cout << " us" << std::endl;
 }
 
 unsigned long PmergeMe::getJacopsthal(std::size_t const& index)
@@ -189,8 +120,8 @@ unsigned long PmergeMe::getJacopsthal(std::size_t const& index)
 		buffer.push_back(1);
 		return 1;
 	}
-	unsigned long n = this->getJacopsthal(index - 1);
-	unsigned long m = this->getJacopsthal(index - 2);
+	unsigned long n = getJacopsthal(index - 1);
+	unsigned long m = getJacopsthal(index - 2);
 	unsigned long ret = n + 2 * m;
 	buffer.push_back(ret);
 	return ret;

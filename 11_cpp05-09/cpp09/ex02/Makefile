@@ -1,6 +1,6 @@
 RM		= rm -rf
 CPP		= c++
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -g3
 SRCS	= main.cpp PmergeMe.cpp
 OBJS	= $(SRCS:.cpp=.o)
 NAME	= PmergeMe
