@@ -1,37 +1,42 @@
 #include "PmergeMe.hpp"
+#include <deque>
+#include <vector>
 #include <iostream>
-#include <exception>
 
 int main(int argc, char* argv[])
 {
-	if (argc < 2)
-	{
-		std::cout << "Error" << std::endl;
-		return 1;
-	}
-	try
-	{
-		long size = argc - 1;
-		PmergeMe org(argv + 1, size);
-		PmergeMe vec(org);
-		PmergeMe deq(org);
-		std::cout << "Before: ";
-		org.printArr();
+    if (argc < 2)
+    {
+        std::cout << "Error: no elements to sort" << std::endl;
+        return 1;
+    }
+    try
+    {
+        PmergeMe org(argv + 1, argc - 1);
+        PmergeMe vec(org);
+        PmergeMe deq(org);
 
-		if (!org.isSorted())
-		{
-			vec.sort<std::vector<unsigned int>, std::vector<std::pair<unsigned int, unsigned int> > >();
-			deq.sort<std::deque<unsigned int>, std::deque<std::pair<unsigned int, unsigned int> > >();
-			org = vec;
-		}
-		std::cout << "After:  ";
-		org.printArr();
-		vec.printTime("std::vector");
-		deq.printTime("std::deque");
-	}
-	catch(std::exception const& e)
-	{
-		std::cout << "Error" << std::endl;
-	}
-	return 0;
+        std::cout << "Before: ";
+        org.printArr();
+
+        vec.sort<std::vector<int> >();
+        deq.sort<std::deque<int> >();
+        vec.isSorted();
+        deq.isSorted();
+        vec.checkSame(deq);
+        deq.checkSame(vec);
+        
+        org = vec;
+        std::cout << "After: ";
+        org.printArr();
+
+        vec.printTime("std::vector");
+        deq.printTime("std::deque");
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    return 0;
 }

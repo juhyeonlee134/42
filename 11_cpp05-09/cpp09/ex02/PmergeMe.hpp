@@ -3,82 +3,64 @@
 #define __P_MERGE_ME_H__
 
 #include <ctime>
-#include <deque>
-#include <vector>
-#include <utility>
-#include <cstdlib>
+
+typedef int idx_t;
 
 class PmergeMe
 {
 public:
-	PmergeMe();
-	PmergeMe(char const * const strs[], long const & size);
-	PmergeMe(PmergeMe const & org);
+	PmergeMe(char const* const strs[], int const size);
+	PmergeMe(PmergeMe const& org);
 	~PmergeMe();
-	PmergeMe & operator = (PmergeMe const & org);
-	bool isSorted(void) const;
+	PmergeMe& operator=(PmergeMe const& org);
 	void printArr(void) const;
-	void printTime(char const * const type) const;
-
-	template <typename C, typename P>
-	void sort(void)
-	{
-		clock_t start, end;
-		C con;
-		P pairs;
-
-		con.clear();
-		start = clock();
-		this->setPairs<C, P>(con, pairs);
-		merge<P>(pairs.begin(), pairs.end());
-		con.push_back(pairs[0].second);
-		con.push_back(pairs[0].first);
-		insert<C, typename P::iterator>(con, pairs.begin(), pairs.end(), 1);
-		if (this->mSize % 2 == 1)
-		{
-			std::size_t toInsert = search<C>(con, this->mArr[this->mSize - 1]);
-			con.insert(con.begin() + toInsert, this->mArr[this->mSize - 1]);
-		}
-		for (std::size_t index = 0; index < this->mSize; index++)
-		{
-			this->mArr[index] = con[index];
-		}
-		end = clock();
-		this->mTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	}
-private:
-	unsigned int * mArr;
-	std::size_t mSize;
-	double mTime;
-
-	static unsigned long getJacopsthal(std::size_t const& index);
-
-	template <typename C, typename P>
-	void setPairs(C const & c, P & pairs)
-	{
-		long size = (c.size() % 2 == 0 ? this->mSize : this->mSize - 1);
-		for (std::size_t index = 1; index < static_cast<std::size_t>(size); index += 2)
-		{
-			unsigned int big = (this->mArr[index - 1] < this->mArr[index] ? this->mArr[index] : this->mArr[index - 1]);
-			unsigned int small = (this->mArr[index - 1] >= this->mArr[index] ? this->mArr[index] : this->mArr[index - 1]);
-			pairs.push_back(std::make_pair(big, small));
-		}
-	}
+	void isSorted(void) const;
+	void checkSame(PmergeMe const& other);
+	void printTime(char const* const type) const;
 
 	template <typename C>
-	static std::size_t search(C & c, unsigned int const& num)
+	void sort(void)
 	{
-		int first, mid, last;
-		first = 0;
-		last = static_cast<unsigned int>(c.size()) - 1;
+		C c;
+		for (int index = 0; index < this->mSize; index++)
+		{
+			c.push_back(this->mArr[index]);
+		}
+		if (!isSorted<C>(c))
+		{
+			clock_t start = clock();
+			fordJohnson<C>(c, 1);
+			clock_t end = clock();
+			this->mTime = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
+		}
+		for (int index = 0; index < this->mSize; index++)
+		{
+			this->mArr[index] = c[index];
+		}
+	}
+
+
+private:
+	int* mArr;
+	int mSize;
+	double mTime;
+
+	PmergeMe();
+	idx_t jacobsthal(int const n);
+
+	template <typename C>
+	idx_t search(C const c, int const toFind, std::size_t const span)
+	{
+		idx_t first = 0, last = c.size() / span - 1;
+		
 		while (first < last)
 		{
-			mid = first + (last - first) / 2;
-			if (num == c[mid])
+			idx_t mid = first + (last - first) / 2;
+			if (toFind == c[span * mid])
 			{
 				return mid;
 			}
-			else if (num < c[mid])
+			else if (toFind < c[span * mid])
 			{
 				last = mid - 1;
 			}
@@ -87,96 +69,115 @@ private:
 				first = mid + 1;
 			}
 		}
-		return static_cast<std::size_t>(num < c[first] ? first : first + 1);
+		if (first == last)
+		{
+			return (toFind <= c[span * first] ? first : first + 1);
+		}
+		return first;
 	}
 
 	template <typename C>
-	static void merge(typename C::iterator start, typename C::iterator end)
+	bool isSorted(C const c)
 	{
-		std::size_t dist = std::distance(start, end);
-		if (dist <= 1)
+		for (std::size_t index = 1; index < c.size(); index++)
 		{
-			return;
-		}
-		else if (dist == 2)
-		{
-			if (*start > *(start + 1))
+			if (c[index - 1] > c[index])
 			{
-				std::swap(*start, *(start + 1));
+				return false;
 			}
+		}
+		return true;
+	}
+
+	template <typename C>
+	void swap(C& c, idx_t const idx, std::size_t const span)
+	{
+		int const fIdx = 2 * span * idx;
+		int const bIdx = span + fIdx;
+
+		if (c[fIdx] < c[bIdx])
+		{
+			for (std::size_t cnt = 0; cnt < span; cnt++)
+			{
+				int tmp = c[fIdx + cnt];
+				c[fIdx + cnt] = c[bIdx + cnt];
+				c[bIdx + cnt] = tmp;
+			}
+		}
+	}
+
+	template <typename C>
+	void push(C& d, C& o, idx_t const idx, std::size_t const span)
+	{
+		for (std::size_t cnt = 0; cnt < span; cnt++)
+		{
+			d.push_back(o[span * idx]);
+			o.erase(o.begin() + span * idx);
+		}
+	}
+
+	template <typename C>
+	void insert(C& d, idx_t const dIdx, C& o, idx_t const oIdx, std::size_t const span)
+	{
+		for (std::size_t cnt = 0; cnt < span; cnt++)
+		{
+			d.insert(d.begin() + span * dIdx + cnt, o[span * oIdx]);
+			o.erase(o.begin() + span * oIdx);
+		}
+	}
+
+	template <typename C>
+	void moveAll(C& d, C& o)
+	{
+		while (!o.empty())
+		{
+			d.push_back(o[0]);
+			o.erase(o.begin());
+		}
+	}
+
+	template <typename C>
+	void fordJohnson(C& c, std::size_t const span)
+	{
+		if (2 * span >= c.size())
+		{
 			return;
 		}
-
-		typename C::iterator mid = start + dist / 2;
-		merge<C>(start, mid);
-		merge<C>(mid, end);
+		int size = c.size() / span / 2;
+		for (idx_t index = 0; index < size; index++)
+		{
+			swap<C>(c, index, span);
+		}
+		fordJohnson(c, 2 * span);
 
 		C tmp;
-		typename C::iterator i, j;
-		i = start;
-		j = mid;
-		while (i != mid && j != end)
+		idx_t idx = (c[0] <= c[span] ? 0 : 1);
+		push<C>(tmp, c, idx, span);
+		push<C>(tmp, c, 0, span);
+		int n = 1;
+		while (c.size() >= 2 * span)
 		{
-			if (*i <= *j)
+			idx_t jNum = jacobsthal(n);
+			jNum = (jNum <= static_cast<idx_t>(c.size() / span / 2) ? jNum : c.size() / span / 2);
+			for (int cnt = 0; cnt < jNum; cnt++)
 			{
-				tmp.push_back(*i);
-				i++;
+				push<C>(tmp, c, cnt, span);
 			}
-			else
+			for (idx_t index = jNum - 1; index >= 0; index--)
 			{
-				tmp.push_back(*j);
-				j++;
+				idx_t toInsert = search<C>(tmp, c[span * index], span);
+				insert<C>(tmp, toInsert, c, index, span);
 			}
+			n++;
 		}
-
-		if (i == mid)
+		if (c.size() >= span)
 		{
-			while (j != end)
-			{
-				tmp.push_back(*j);
-				j++;
-			}
+			idx_t toInsert = search<C>(tmp, c[0], span);
+			insert<C>(tmp, toInsert, c, 0, span);
 		}
-		else
-		{
-			while (i != mid)
-			{
-				tmp.push_back(*i);
-				i++;
-			}
-		}
-
-		typename C::iterator orgIt = start;
-		typename C::iterator tmpIt = tmp.begin();
-		while (orgIt != end && tmpIt != tmp.end())
-		{
-			*orgIt = *tmpIt;
-			orgIt++;
-			tmpIt++;
-		}
-	}
-
-	template <typename C, typename P>
-	static void insert(C & c, P start, P end, std::size_t const& index)
-	{
-		std::size_t dist = std::distance(start, end);
-		if (dist <= 1)
-		{
-			return;
-		}
-		unsigned long jacopNum = getJacopsthal(index);
-		jacopNum = (jacopNum < dist ? jacopNum : dist - 1);
-		std::size_t toInsert;
-		for (P it = start + jacopNum; it != start; it--)
-		{
-			toInsert = search<C>(c, it->second);
-			c.insert(c.begin() + toInsert, it->second);
-			toInsert = search<C>(c, it->first);
-			c.insert(c.begin() + toInsert, it->first);
-		}
-		insert<C, P>(c, start + jacopNum, end, index + 1);
+		moveAll<C>(tmp, c);
+		moveAll<C>(c, tmp);
 	}
 };
-
 
 #endif

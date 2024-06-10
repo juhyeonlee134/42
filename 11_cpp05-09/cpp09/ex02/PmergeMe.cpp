@@ -1,128 +1,117 @@
 #include "PmergeMe.hpp"
-#include <sstream>
+#include <string>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include <strstream>
+#include <stdexcept>
 
 PmergeMe::PmergeMe()
-{
-	throw std::exception();
-}
+{}
 
-PmergeMe::PmergeMe(char const * const strs[], long const & size)
+PmergeMe::PmergeMe(char const * const strs[], int const size)
 {
-	if (size <= 0 || strs == NULL || strs[0] == NULL)
+	if (size == 0)
 	{
-		throw std::exception();
+		throw std::logic_error("Error: no elements to ");
 	}
-	this->mArr = new unsigned int[size];
-	this->mSize = static_cast<std::size_t>(size);
+	this->mArr = new int[size];
+	this->mSize = size;
 	this->mTime = 0;
-	for (std::size_t index = 0; index < this->mSize; index++)
+	for (int index = 0; index < size; index++)
 	{
 		long num = std::atol(strs[index]);
-		std::stringstream stream;
-		std::string str;
-		stream << num;
-		stream >> str;
-		if (num < 0 || str.compare(strs[index]) != 0)
+		std::strstream ss;
+		std::string toCheck;
+		ss << num;
+		ss >> toCheck;
+		if (toCheck != strs[index] || num < 0)
 		{
-			throw std::exception();
+			throw std::logic_error("Error: invalid input");
 		}
-		this->mArr[index] = static_cast<unsigned int>(num);
+		this->mArr[index] = num;
 	}
 }
 
-PmergeMe::PmergeMe(PmergeMe const & org)
+PmergeMe::PmergeMe(PmergeMe const& org)
 {
-	if (org.mSize == 0 || org.mArr == NULL)
-	{
-		throw std::exception();
-	}
-	this->mArr = new unsigned int[org.mSize];
+	this->mArr = new int[org.mSize];
 	this->mSize = org.mSize;
 	this->mTime = org.mTime;
-	std::copy(org.mArr, org.mArr + org.mSize, this->mArr);
+	for (int index = 0; index < this->mSize; index++)
+	{
+		this->mArr[index] = org.mArr[index];
+	}
 }
 
 PmergeMe::~PmergeMe()
 {
-	if (this->mArr != NULL)
-	{
-		delete[] this->mArr;
-	}
+	delete[] this->mArr;
 }
 
-PmergeMe & PmergeMe::operator = (PmergeMe const & org)
+PmergeMe& PmergeMe::operator=(PmergeMe const& org)
 {
-	if (this != &org)
+	delete[] this->mArr;
+	this->mArr = new int[org.mSize];
+	this->mSize = org.mSize;
+	this->mTime = org.mTime;
+	for (int index = 0; index < this->mSize; index++)
 	{
-		if (org.mSize == 0 || org.mArr == NULL)
-		{
-			throw std::exception();
-		}
-		if (this->mArr != NULL)
-		{
-			delete[] this->mArr;
-		}
-		this->mArr = new unsigned int(org.mSize);
-		this->mSize = org.mSize;
-		this->mTime = org.mTime;
-		std::copy(org.mArr, org.mArr + org.mSize, this->mArr);
+		this->mArr[index] = org.mArr[index];
 	}
 	return *this;
 }
 
-bool PmergeMe::isSorted(void) const
-{
-	if (this->mSize == 1)
-	{
-		return true;
-	}
-	for (std::size_t index = 1; index < this->mSize; index++)
-	{
-		if (this->mArr[index - 1] > this->mArr[index])
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
 void PmergeMe::printArr(void) const
 {
-	for (std::size_t index = 0; index < this->mSize; index++)
+	for (int index = 0; index < this->mSize; index++)
 	{
 		std::cout << this->mArr[index] << ' ';
 	}
 	std::cout << std::endl;
 }
 
-void PmergeMe::printTime(char const * const type) const
+void PmergeMe::isSorted(void) const
 {
-	std::cout << "Time to process a range of ";
-	std::cout << std::setw(3) << std::right << this->mSize;
-	std::cout << " elements with " << type << " : ";
-	std::cout << std::fixed << std::setprecision(6) << this->mTime;
-	std::cout << " us" << std::endl;
+	for (int index = 1; index < this->mSize; index++)
+	{
+		if (this->mArr[index - 1] > this->mArr[index])
+		{
+			throw std::logic_error("Error: not sorted");
+		}
+	}
 }
 
-unsigned long PmergeMe::getJacopsthal(std::size_t const& index)
+void PmergeMe::checkSame(PmergeMe const& other)
 {
-	static std::vector<unsigned long> buffer;
+	if (this->mSize != other.mSize)
+	{
+		throw std::logic_error("Error: different sizes");
+	}
+	for (int index = 0; index < this->mSize; index++)
+	{
+		if (this->mArr[index] != other.mArr[index])
+		{
+			throw std::logic_error("Error: different elements");
+		}
+	}
+}
 
-	if (index < buffer.size())
+void PmergeMe::printTime(char const* const type) const
+{
+	std::cout << "Time to process a range of " << std::setw(3) << this->mSize;
+	std::cout << " elementss with " << type << " : ";
+	std::cout << std::fixed << std::setprecision(6) << this->mTime << " us" << std::endl;
+}
+
+idx_t PmergeMe::jacobsthal(int const n)
+{
+	static int buffer[20] = { 0,1 };
+	static int size = 2;
+	if (n >= size)
 	{
-		return buffer[index];
+		buffer[n] = jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+		size++;
 	}
-	else if (index == 1)
-	{
-		buffer.push_back(0);
-		buffer.push_back(1);
-		return 1;
-	}
-	unsigned long n = getJacopsthal(index - 1);
-	unsigned long m = getJacopsthal(index - 2);
-	unsigned long ret = n + 2 * m;
-	buffer.push_back(ret);
-	return ret;
+	return buffer[n];
 }
