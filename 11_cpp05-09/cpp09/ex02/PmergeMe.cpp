@@ -1,9 +1,9 @@
 #include "PmergeMe.hpp"
 #include <string>
 #include <cstdlib>
+#include <sstream>
 #include <iomanip>
 #include <iostream>
-#include <strstream>
 #include <stdexcept>
 
 PmergeMe::PmergeMe()
@@ -21,7 +21,7 @@ PmergeMe::PmergeMe(char const * const strs[], int const size)
 	for (int index = 0; index < size; index++)
 	{
 		long num = std::atol(strs[index]);
-		std::strstream ss;
+		std::stringstream ss;
 		std::string toCheck;
 		ss << num;
 		ss >> toCheck;

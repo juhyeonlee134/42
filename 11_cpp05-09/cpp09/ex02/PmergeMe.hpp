@@ -31,7 +31,7 @@ public:
 			clock_t start = clock();
 			fordJohnson<C>(c, 1);
 			clock_t end = clock();
-			this->mTime = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
+			this->mTime = (static_cast<double>(end - start) / CLOCKS_PER_SEC) * 1000;
 		}
 		for (int index = 0; index < this->mSize; index++)
 		{
