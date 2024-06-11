@@ -39,7 +39,7 @@ void RPN::calculate(std::string const & exp)
             this->pushNum(exp[index], isNum);
             index++;
         }
-        if (index == exp.length() || this->mMemory.empty() || this->mMemory.size() < 2)
+        if (index == exp.length() || this->mMemory.size() < 2)
         {
             throw std::logic_error("invalid expression.");
         }
