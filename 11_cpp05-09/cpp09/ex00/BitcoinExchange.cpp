@@ -86,7 +86,7 @@ void BitcoinExchange::exchange(std::string const & line) const
     {
         throw std::logic_error("Error : not a positive number.");
     }
-    else if (value > 100)
+    else if (value > 1000)
     {
         throw std::logic_error("Error : too large a number.");
     }

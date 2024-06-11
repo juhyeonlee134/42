@@ -26,7 +26,7 @@ int main(int argc, char * argv[])
         {
             throw std::logic_error("Error : data file is empty.");
         }
-        if (line.compare("data | value") != 0)
+        if (line.compare("date | value") != 0)
         {
             throw std::logic_error("Error : invalid data format.");
         }
