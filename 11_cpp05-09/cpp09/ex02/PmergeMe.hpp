@@ -134,7 +134,7 @@ private:
 	template <typename C>
 	void fordJohnson(C& c, std::size_t const span)
 	{
-		if (2 * span >= c.size())
+		if (2 * span > c.size())
 		{
 			return;
 		}
