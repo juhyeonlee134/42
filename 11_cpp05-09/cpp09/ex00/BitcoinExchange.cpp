@@ -36,7 +36,7 @@ BitcoinExchange::BitcoinExchange()
         }
         std::string date = line.substr(0, comma);
         std::string value = line.substr(comma + 1, line.length() - comma - 1);
-        addData(this->mDB, date, value);
+        addData(date, value);
     }
 
     if (this->mDB.empty())
@@ -124,18 +124,19 @@ std::map<std::string, double>::const_iterator BitcoinExchange::findData(std::str
     return prev;
 }
 
-void addData(std::map<std::string, double> & db, std::string const & date, std::string const & value)
+void BitcoinExchange::addData(std::string const & date, std::string const & value)
 {
     checkDate(date);
     double valueData = convertValue(value);
-    std::map<std::string, double>::iterator it = db.find(date);
-    if (it == db.end())
+    std::map<std::string, double>::iterator it = this->mDB.find(date);
+    if (it != this->mDB.end())
     {
-        db[date] = valueData;
+        throw std::logic_error("Error : duplicate date in DB.");
     }
+    this->mDB[date] = valueData;
 }
 
-bool isAllNum(std::string const & str)
+bool BitcoinExchange::isAllNum(std::string const & str)
 {
     for (std::size_t index = 0; index < str.length(); index++)
     {
@@ -147,7 +148,7 @@ bool isAllNum(std::string const & str)
     return true;
 }
 
-double convertValue(std::string const & str)
+double BitcoinExchange::convertValue(std::string const & str)
 {
     if (str.size() == 0)
     {
@@ -176,7 +177,7 @@ double convertValue(std::string const & str)
     return value;
 }
 
-void checkDate(std::string const & str)
+void BitcoinExchange::checkDate(std::string const & str)
 {
     if (str.size() == 0)
     {

@@ -74,7 +74,7 @@ void RPN::calculate(std::string const & exp)
     this->mMemory.pop();
     if (!this->mMemory.empty())
     {
-        throw std::logic_error("invalid expression : left one number.");
+        throw std::logic_error("invalid expression : left number.");
     }
     std::cout << ret << std::endl;
 }

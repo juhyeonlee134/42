@@ -16,11 +16,11 @@ public:
     std::map<std::string, double>::const_iterator findData(std::string const & date) const;
 private:
     std::map<std::string, double> mDB;
+    void addData(std::string const & date, std::string const & value);
+    static bool isAllNum(std::string const & str);
+    static double convertValue(std::string const & str);
+    static void checkDate(std::string const & str);
 };
 
-void addData(std::map<std::string, double> & db, std::string const & date, std::string const & value);
-void checkDate(std::string const & str);
-bool isAllNum(std::string const & str);
-double convertValue(std::string const & str);
 
 #endif
