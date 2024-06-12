@@ -3,6 +3,7 @@
 #define __P_MERGE_ME_H__
 
 #include <ctime>
+#include <iostream>
 
 typedef int idx_t;
 
@@ -46,12 +47,12 @@ private:
 	double mTime;
 
 	PmergeMe();
-	idx_t jacobsthal(int const n);
+	int jacobsthal(int const n);
 
 	template <typename C>
-	idx_t search(C const c, int const toFind, std::size_t const span)
+	idx_t search(C const c, int const size, int const toFind, std::size_t const span)
 	{
-		idx_t first = 0, last = c.size() / span - 1;
+		idx_t first = 0, last = size - 1;
 		
 		while (first < last)
 		{
@@ -73,7 +74,7 @@ private:
 		{
 			return (toFind <= c[span * first] ? first : first + 1);
 		}
-		return first;
+		return (toFind <= c[span * first] ? first : first + 1);
 	}
 
 	template <typename C>
@@ -92,17 +93,11 @@ private:
 	template <typename C>
 	void swap(C& c, idx_t const idx, std::size_t const span)
 	{
-		int const fIdx = 2 * span * idx;
-		int const bIdx = span + fIdx;
-
-		if (c[fIdx] < c[bIdx])
+		for (std::size_t cnt = 0; cnt < span; cnt++)
 		{
-			for (std::size_t cnt = 0; cnt < span; cnt++)
-			{
-				int tmp = c[fIdx + cnt];
-				c[fIdx + cnt] = c[bIdx + cnt];
-				c[bIdx + cnt] = tmp;
-			}
+			int tmp = c[span * idx + cnt];
+			c[span * idx + cnt] = c[span * (idx - 1) + cnt];
+			c[span * (idx - 1) + cnt] = tmp;
 		}
 	}
 
@@ -143,23 +138,97 @@ private:
 		{
 			return;
 		}
-		int size = c.size() / span / 2;
-		for (idx_t index = 0; index < size; index++)
+		for (idx_t index = 1; index < static_cast<idx_t>(c.size() / span); index += 2)
 		{
-			swap<C>(c, index, span);
+			if (c[span * (index - 1)] < c[span * index])
+			{
+				swap<C>(c, index, span);
+			}
 		}
 		fordJohnson(c, 2 * span);
 
+		std::cout << std::endl << "span : " << span << std::endl;
+		for (std::size_t index = 0; index < c.size(); index++)
+		{
+			if (index % span == 0)
+				std::cout << "| ";
+			std::cout << c[index] << ' ';
+		}
+
+		C big, small;
+		idx_t idx = (c[0] <= c[span] ? 0 : 1);
+		push<C>(big, c, idx, span);
+		push<C>(big, c, 0, span);
+
+		std::size_t size = c.size() / span / 2;
+
+		for (std::size_t cnt = 0; cnt < size; cnt++)
+		{
+			push<C>(big, c, 0, span);
+			push<C>(small, c, 0, span);
+			std::cout << cnt << ' ';
+		}
+		std::cout << std::endl;
+		std::cout << std::endl << "big : ";
+		for (std::size_t index = 0; index < big.size(); index++)
+		{
+			if (index % span == 0)
+				std::cout << "| ";
+			std::cout << big[index]<< ' ';
+		}
+		std::cout << std::endl;
+		std::cout << "small : ";
+		for (std::size_t index = 0; index < small.size(); index++)
+		{
+			if (index % span == 0)
+				std::cout << "| ";
+			std::cout << small[index] << ' ';
+		}
+		std::cout << std::endl;
+
+		int n = 3, pJnum = 1, sortedSize = 2;
+		while (!small.empty())
+		{
+			int jnum = jacobsthal(n);
+			int last = (jnum - pJnum <= static_cast<int>(small.size() / span) ? jnum - pJnum : small.size() / span) - 1;
+			for (idx_t index = last; index >= 0; index--)
+			{
+				idx_t toInsert = search<C>(big, sortedSize + last, small[span * index], span);
+				std::cout << "to insert : " << toInsert << std::endl;
+				insert<C>(big, toInsert, small, index, span);
+			}
+			sortedSize += (2 * last);
+			pJnum = jnum;
+			n++;
+		}
+		if (c.size() >= span)
+		{
+			idx_t toInsert = search<C>(big, big.size() / span, c[0], span);
+			insert<C>(big, toInsert, c, 0, span);
+		}
+		moveAll(big, c);
+		moveAll(c, big);
+
+		std::cout << "ret : ";
+		for (std::size_t index = 0; index < c.size(); index++)
+		{
+			if (index % span == 0)
+				std::cout << "| ";
+			std::cout << c[index] << ' ';
+		}
+		std::cout << std::endl << std::endl;
+	}
+/*
 		C tmp;
 		idx_t idx = (c[0] <= c[span] ? 0 : 1);
 		push<C>(tmp, c, idx, span);
 		push<C>(tmp, c, 0, span);
-		int n = 1;
+		int n = 3;
 		while (c.size() >= 2 * span)
 		{
-			idx_t jNum = jacobsthal(n);
-			jNum = (jNum <= static_cast<idx_t>(c.size() / span / 2) ? jNum : c.size() / span / 2);
-			for (int cnt = 0; cnt < jNum; cnt++)
+			idx_t jnum = jacobsthal(n);
+			jnum = (jnum <= static_cast<idx_t>(c.size() / span / 2) ? jnum : c.size() / span / 2);
+			for (int cnt = 0; cnt < jnum; cnt++)
 			{
 				push<C>(tmp, c, cnt, span);
 			}
@@ -178,6 +247,12 @@ private:
 		moveAll<C>(tmp, c);
 		moveAll<C>(c, tmp);
 	}
+*/
 };
 
 #endif
+
+// 97 76 90 46 54 53 40 3 96 18 70 22 84 13 77 26 94 43 67 24 87 63 71 59 82 37 61 20 68 12 25 9 
+// 99 73 49 4 74 29 39 33 98 52 80 28 93 60 17 14 86 1 65 44 79 38 56 36 83 6 21 15 58 42 27 10 
+// 100 95 92 72 62 31 57 48 88 32 85 5 55 8 50 7 89 11 41 19 66 30 51 4578 2 35 23 75 64 47 34 
+// 91 81 69 16 

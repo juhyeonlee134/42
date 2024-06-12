@@ -104,7 +104,7 @@ void PmergeMe::printTime(char const* const type) const
 	std::cout << std::fixed << std::setprecision(6) << this->mTime << " us" << std::endl;
 }
 
-idx_t PmergeMe::jacobsthal(int const n)
+int PmergeMe::jacobsthal(int const n)
 {
 	static int buffer[20] = { 0,1 };
 	static int size = 2;
