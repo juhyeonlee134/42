@@ -1,0 +1,13 @@
+server {
+    listen 433;
+    server_name localhost;
+    root /var/www/html/nginx;
+    index index.php index.html;
+    location / {
+        try_files $url $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    }
+}

@@ -1,0 +1,31 @@
+version: '2'
+services:
+  nginx:
+    build: ./requierments/nginx
+    ports:
+      - "433:433"
+    volumes:
+      - /home/$USER/wordpress:/var/www/nginx
+    depends_on:
+      - wordpress
+  wordpress:
+    build: ./requierments/wordpress
+    ports:
+      - "9000:9000"
+    volumes:
+      - /home/$USER/wordpress:/var/www/wordpress
+    depends_on:
+      - mariadb
+  mariadb:
+    build: ./requierments/mariadb
+    env_file:
+      - ./mariadb/conf/default.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/$USER/wordpress:/var/lib/mysql
+
+
+# sudo service docker start
+# ls -l /var/run/docker.sock
+# sudo chmod 666 /var/run/docker.sock
