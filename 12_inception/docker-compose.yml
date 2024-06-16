@@ -1,0 +1,10 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - /home/$USER/wordpress:/var/www/nginx
+    env_file:
+      - .env

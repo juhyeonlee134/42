@@ -1,0 +1,9 @@
+server {
+    listen 443 ssl;
+    server_name juhyelee@42.fr;
+    root /var/www/nginx;
+
+    ssl_certificate /etc/nginx/ssl/nginx.crt; #SSL 인증서 경로
+    ssl_certificate_key /etc/nginx/ssl/nginx.key; #SSL 키 파일 경로
+    ssl_protocols TLSv1.3; #SSL 프로토콜 버전
+}
