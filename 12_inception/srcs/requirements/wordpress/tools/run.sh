@@ -3,8 +3,9 @@
 cd /var/www/html;
 wget https://wordpress.org/latest.tar.gz;
 tar -xvf latest.tar.gz;
+rm -rf /var/www/html/wp-admin /var/www/html/wp-content /var/www/html/wp-includes;
 mv wordpress/* /var/www/html/;
-RUN rm -rf latest.tar.gz wordpress;
+rm -rf latest.tar.gz wordpress;
 
 mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 mv /wp-config.php /var/www/html/wp-config.php

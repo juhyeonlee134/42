@@ -1,4 +1,4 @@
-.PHONY	: build up down all re
+.PHONY	: build up down log all re
 
 build	:
 	docker-compose -f ./srcs/docker-compose.yml build
@@ -9,5 +9,7 @@ down	:
 	docker rmi nginx
 	docker rmi wordpress
 	docker rmi mariadb
+log		:
+	docker-compose logs -f
 all		: build up
 re		: down build up
