@@ -11,7 +11,7 @@ services:
     networks:
       - inception
     volumes:
-      - /home/$USER/wordpress:/var/www/html
+      - /home/$USER/data/wordpress:/var/www/html
     env_file:
       - .env
     depends_on:
@@ -25,7 +25,21 @@ services:
     networks:
       - inception
     volumes:
-      - /home/$USER/wordpress:/var/www/html
+      - /home/$USER/data/wordpress:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    restart: always
+  mariadb:
+    image: mariadb
+    build: ./requirements/mariadb
+    ports:
+      - "3306:3306"
+    networks:
+      - inception
+    volumes:
+      - /home/$USER/data/mariadb:/var/lib/mysql
     env_file:
       - .env
     restart: always

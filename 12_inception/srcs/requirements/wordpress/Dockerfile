@@ -7,6 +7,7 @@ RUN apt-get install -y php-fpm php-mysql;
 RUN apt-get install -y wget;
 
 COPY tools/run.sh /etc/php/run.sh
+COPY conf/wp-config.php /wp-config.php
 
 EXPOSE 9000
 
