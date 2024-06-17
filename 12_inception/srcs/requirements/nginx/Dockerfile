@@ -6,6 +6,8 @@ RUN apt-get install -y nginx openssl;
 COPY conf/default /etc/nginx/sites-available/default
 COPY tools/run.sh /etc/nginx/run.sh
 
+WORKDIR /var/www/html
+
 EXPOSE 443
 
 ENTRYPOINT [ "/bin/bash", "/etc/nginx/run.sh" ]

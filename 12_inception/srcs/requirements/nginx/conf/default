@@ -8,6 +8,10 @@ server {
 
     index index.php;
     root /var/www/html;
+
+    location = / {
+        return 301 /index.php; #redirection
+    }
     
     location ~ \.php$ {
         fastcgi_pass wordpress:9000; #FastCGI 서버 주소 (컨테이너 이름:포트번호)

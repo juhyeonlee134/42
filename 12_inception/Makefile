@@ -1,11 +1,11 @@
-.PHONY	: up down re
+.PHONY	: build up down re
 
+build	:
+	docker-compose -f ./srcs/docker-compose.yml build
 up		:
-	docker build -t nginx ./nginx
-	docker build -t wordpress ./wordpress
-	docker-compose up -d
+	docker-compose -f ./srcs/docker-compose.yml up -d
 down	:
-	docker-compose down -v
+	docker-compose -f ./srcs/docker-compose.yml down
 	docker rmi nginx
 	docker rmi wordpress
-re		: down up
+re		: down build up
