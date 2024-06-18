@@ -10,3 +10,4 @@ RUN chmod +x /etc/nginx/run.sh
 WORKDIR /var/www/html
 
 ENTRYPOINT [ "/bin/bash", "/etc/nginx/run.sh" ]
+
