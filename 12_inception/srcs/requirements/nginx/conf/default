@@ -1,21 +1,21 @@
 server {
     listen 443 ssl;
-    server_name juhyelee@42.fr;
+    listen [::]:443 ssl;
+    # server_name juhyelee.42.fr;
 
     ssl_certificate /etc/nginx/ssl/nginx.crt; #SSL 인증서 경로
     ssl_certificate_key /etc/nginx/ssl/nginx.key; #SSL 키 파일 경로
     ssl_protocols TLSv1.3; #SSL 프로토콜 버전
 
-    index index.php;
+    index index.php index.html index.htm;
     root /var/www/html;
 
-    location = / {
-        return 301 /index.php; #redirection
+    location / {
     }
     
     location ~ \.php$ {
+        try_files $uri $uri/ =404;
         fastcgi_pass wordpress:9000; #FastCGI 서버 주소 (컨테이너 이름:포트번호)
-        fastcgi_index index.php; #디렉토리인 경우 기본 응답
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; #디렉토리 루트 경로의 요청한 파일을 매개변수로 전달
         include fastcgi_params; #기본적인 FastCGI 매개변수(표준 FastCGI)를 설정
     }

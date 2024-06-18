@@ -1,15 +1,16 @@
-.PHONY	: build up down log all re
+.PHONY	: build start down start stop
 
 build	:
-	docker-compose -f ./srcs/docker-compose.yml build
+	@docker-compose -f ./srcs/docker-compose.yml build
+
+start	:
+	@docker-compose -f ./srcs/docker-compose.yml start
+
 up		:
-	docker-compose -f ./srcs/docker-compose.yml up -d
+	@docker-compose -f ./srcs/docker-compose.yml up
+
 down	:
-	docker-compose -f ./srcs/docker-compose.yml down
-	docker rmi nginx
-	docker rmi wordpress
-	docker rmi mariadb
-log		:
-	docker-compose logs -f
-all		: build up
-re		: down build up
+	@docker-compose -f ./srcs/docker-compose.yml down -v
+
+stop	:
+	@docker-compose -f ./srcs/docker-compose.yml stop
